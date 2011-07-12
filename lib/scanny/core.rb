@@ -1,0 +1,1 @@
+require 'scanny/core/runner'
