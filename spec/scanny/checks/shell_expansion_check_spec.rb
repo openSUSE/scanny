@@ -5,7 +5,7 @@ describe Scanny::Checks::ShellExpansionCheck do
     @scanny = Scanny::Core::Runner.new(Scanny::Checks::ShellExpansionCheck.new)
   end
 
-  it "should not report regular method calls" do
+  it "does not report regular method calls" do
     content = <<-EOT
       foo
     EOT
@@ -16,7 +16,7 @@ describe Scanny::Checks::ShellExpansionCheck do
     issues.should be_empty
   end
 
-  it "should report \"exec\" calls" do
+  it "reports \"exec\" calls" do
     content = <<-EOT
       exec
     EOT
@@ -28,7 +28,7 @@ describe Scanny::Checks::ShellExpansionCheck do
     issues[0].to_s.should == "[high] dummy-file.rb:2 - The \"exec\" method can pass the executed command through shell exapnsion."
   end
 
-  it "should report \"system\" calls" do
+  it "reports \"system\" calls" do
     content = <<-EOT
       system
     EOT
