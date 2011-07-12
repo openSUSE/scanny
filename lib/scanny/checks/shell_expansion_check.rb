@@ -2,7 +2,7 @@ require 'scanny/checks/check'
 
 module Scanny
   module Checks
-    # Checks for methods executing external commands that can pass the command
+    # Checks for methods executing external commands that pass the command
     # through shell expansion. This can cause unwanted code execution if the
     # command includes unescaped input.
     class ShellExpansionCheck < Check
@@ -14,8 +14,11 @@ module Scanny
 
       def evaluate_start_call(node)
         name = node[2]
+        args = node[3][1..-1]
 
-        if SHELL_EXPANDING_METHODS.include?(name)
+        # The command goes through shell exapnsion only if it is passed as one
+        # argument.
+        if SHELL_EXPANDING_METHODS.include?(name) && args.size == 1
           add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
         end
       end
