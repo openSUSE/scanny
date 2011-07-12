@@ -49,10 +49,10 @@ module Scanny
         print(filename, File.read(filename))
       end
 
-      def errors
+      def issues
         @checks ||= []
-        all_errors = @checks.collect {|check| check.errors}
-        all_errors.flatten
+        all_issues = @checks.collect {|check| check.issues}
+        all_issues.flatten
       end
 
       private

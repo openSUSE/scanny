@@ -14,8 +14,8 @@ ARGV.each do |arg|
   Dir.glob(arg).each { |file| runner.check_file(file) }
 end
 
-runner.errors.each {|error| puts error}
+runner.issues.each {|issue| puts issue}
 
-puts "\nFound #{runner.errors.size} errors."
+puts "\nFound #{runner.issues.size} issues."
 
-exit runner.errors.size
+exit runner.issues.size

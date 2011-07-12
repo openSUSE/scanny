@@ -11,9 +11,9 @@ describe Scanny::Checks::ShellExpansionCheck do
     EOT
 
     @scanny.check_content(content)
-    errors = @scanny.errors
+    issues = @scanny.issues
 
-    errors.should be_empty
+    issues.should be_empty
   end
 
   it "should report \"exec\" calls" do
@@ -22,10 +22,10 @@ describe Scanny::Checks::ShellExpansionCheck do
     EOT
 
     @scanny.check_content(content)
-    errors = @scanny.errors
+    issues = @scanny.issues
 
-    errors.size.should == 1
-    errors[0].to_s.should == "dummy-file.rb:2 - The \"exec\" method can pass the executed command through shell exapnsion."
+    issues.size.should == 1
+    issues[0].to_s.should == "dummy-file.rb:2 - The \"exec\" method can pass the executed command through shell exapnsion."
   end
 
   it "should report \"system\" calls" do
@@ -34,10 +34,10 @@ describe Scanny::Checks::ShellExpansionCheck do
     EOT
 
     @scanny.check_content(content)
-    errors = @scanny.errors
+    issues = @scanny.issues
 
-    errors.size.should == 1
-    errors[0].to_s.should == "dummy-file.rb:2 - The \"system\" method can pass the executed command through shell exapnsion."
+    issues.size.should == 1
+    issues[0].to_s.should == "dummy-file.rb:2 - The \"system\" method can pass the executed command through shell exapnsion."
   end
 end
 

@@ -19,7 +19,7 @@ describe Scanny::Core::Runner do
         end
       RUBY
       @runner.check_content(content)
-      @runner.errors.should be_empty
+      @runner.issues.should be_empty
     end
   end
 end

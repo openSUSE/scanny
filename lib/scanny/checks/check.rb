@@ -1,4 +1,4 @@
-require 'scanny/core/error'
+require 'scanny/core/issue'
 
 module Scanny
   module Checks
@@ -6,7 +6,7 @@ module Scanny
       NODE_TYPES = [:defn, :module, :resbody, :lvar, :cvar, :class, :if, :while, :until, :for, :rescue, :case, :when, :and, :or]
 
       def initialize
-        @errors = []
+        @issues = []
       end
 
       NODE_TYPES.each do |node|
@@ -48,13 +48,13 @@ module Scanny
         evaluate_end(node)
       end
 
-      def add_error(error, filename = @node.file, line = @node.line)
-        @errors ||= []
-        @errors << Scanny::Core::Error.new("#{filename}", "#{line}", error)
+      def add_issue(issue, filename = @node.file, line = @node.line)
+        @issues ||= []
+        @issues << Scanny::Core::Error.new("#{filename}", "#{line}", issue)
       end
 
-      def errors
-        @errors
+      def issues
+        @issues
       end
     end
   end
