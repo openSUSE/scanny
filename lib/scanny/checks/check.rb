@@ -50,7 +50,7 @@ module Scanny
 
       def add_issue(issue, filename = @node.file, line = @node.line)
         @issues ||= []
-        @issues << Scanny::Core::Error.new("#{filename}", "#{line}", issue)
+        @issues << Scanny::Core::Issue.new("#{filename}", "#{line}", issue)
       end
 
       def issues
