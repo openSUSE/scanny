@@ -16,7 +16,7 @@ module Scanny
         name = node[2]
 
         if SHELL_EXPANDING_METHODS.include?(name)
-          add_issue "The \"#{name}\" method can pass the executed command through shell exapnsion."
+          add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
         end
       end
 

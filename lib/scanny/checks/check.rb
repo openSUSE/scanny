@@ -48,9 +48,9 @@ module Scanny
         evaluate_end(node)
       end
 
-      def add_issue(issue, filename = @node.file, line = @node.line)
+      def add_issue(impact, issue, filename = @node.file, line = @node.line)
         @issues ||= []
-        @issues << Scanny::Core::Issue.new("#{filename}", "#{line}", issue)
+        @issues << Scanny::Core::Issue.new("#{filename}", "#{line}", impact, issue)
       end
 
       def issues

@@ -25,7 +25,7 @@ describe Scanny::Checks::ShellExpansionCheck do
     issues = @scanny.issues
 
     issues.size.should == 1
-    issues[0].to_s.should == "dummy-file.rb:2 - The \"exec\" method can pass the executed command through shell exapnsion."
+    issues[0].to_s.should == "[high] dummy-file.rb:2 - The \"exec\" method can pass the executed command through shell exapnsion."
   end
 
   it "should report \"system\" calls" do
@@ -37,7 +37,7 @@ describe Scanny::Checks::ShellExpansionCheck do
     issues = @scanny.issues
 
     issues.size.should == 1
-    issues[0].to_s.should == "dummy-file.rb:2 - The \"system\" method can pass the executed command through shell exapnsion."
+    issues[0].to_s.should == "[high] dummy-file.rb:2 - The \"system\" method can pass the executed command through shell exapnsion."
   end
 end
 
