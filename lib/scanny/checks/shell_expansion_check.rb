@@ -13,14 +13,17 @@ module Scanny
       end
 
       def evaluate_start_call(node)
-        name = node[2]
-        args = node[3][1..-1]
+        receiver = node[1]
+        name     = node[2]
+        args     = node[3][1..-1]
 
+        return unless SHELL_EXPANDING_METHODS.include?(name)
         # The command goes through shell exapnsion only if it is passed as one
         # argument.
-        if SHELL_EXPANDING_METHODS.include?(name) && args.size == 1
-          add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
-        end
+        return unless args.size == 1
+        return unless receiver.nil? || receiver == Sexp.new(:const, :Kernel)
+
+        add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
       end
 
       def evaluate_end_call(node)
