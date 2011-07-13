@@ -1,6 +1,4 @@
-$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + "/../lib"))
 require 'scanny'
-require 'rspec'
 
 RSpec::Matchers.define :parse do |content|
   chain :without_issues do
