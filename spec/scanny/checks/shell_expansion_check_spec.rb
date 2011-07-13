@@ -6,11 +6,7 @@ module Scanny::Checks
       @scanny = Scanny::Runner.new(ShellExpansionCheck.new)
     end
 
-    it "does not report regular method calls" do
-      @scanny.should parse('foo').without_issues
-    end
-
-    describe "reported methods" do
+    describe "method call reporting" do
       it "reports \"Kernel.`\" calls" do
         @scanny.should parse('Kernel.` "ls -l"').with_issue(:high,
           "The \"`\" method can pass the executed command through shell exapnsion.")
@@ -59,9 +55,7 @@ module Scanny::Checks
       it "does not report \"system\" calls on random objects" do
         @scanny.should parse('foo.system "ls -l"').without_issues
       end
-    end
 
-    describe "argument counts" do
       it "does not report calls with no arguments" do
         @scanny.should parse('exec').without_issues
       end
@@ -76,24 +70,26 @@ module Scanny::Checks
       end
     end
 
-    it "reports backticks without interpolation" do
-      @scanny.should parse('`ls -l`').with_issue(:high,
-        "Backticks and %x{...} pass the executed command through shell exapnsion.")
-    end
+    describe "backticks and %{...} reporting" do
+      it "reports backticks without interpolation" do
+        @scanny.should parse('`ls -l`').with_issue(:high,
+          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+      end
 
-    it "reports backticks with interpolation" do
-      @scanny.should parse('`ls #{options}`').with_issue(:high,
-        "Backticks and %x{...} pass the executed command through shell exapnsion.")
-    end
+      it "reports backticks with interpolation" do
+        @scanny.should parse('`ls #{options}`').with_issue(:high,
+          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+      end
 
-    it "reports %x{...} without interpolation" do
-      @scanny.should parse('`ls -l`').with_issue(:high,
-        "Backticks and %x{...} pass the executed command through shell exapnsion.")
-    end
+      it "reports %x{...} without interpolation" do
+        @scanny.should parse('`ls -l`').with_issue(:high,
+          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+      end
 
-    it "reports %x{...} with interpolation" do
-      @scanny.should parse('`ls #{options}`').with_issue(:high,
-        "Backticks and %x{...} pass the executed command through shell exapnsion.")
+      it "reports %x{...} with interpolation" do
+        @scanny.should parse('`ls #{options}`').with_issue(:high,
+          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+      end
     end
   end
 end
