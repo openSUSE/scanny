@@ -11,6 +11,19 @@ module Scanny::Checks
     end
 
     describe "reported methods" do
+      it "reports \"Kernel.`\" calls" do
+        @scanny.should parse('Kernel.` "ls -l"').with_issue(:high,
+          "The \"`\" method can pass the executed command through shell exapnsion.")
+      end
+
+      it "does not report \"`\" calls on other classes/modules" do
+        @scanny.should parse('Foo.` "ls -l"').without_issues
+      end
+
+      it "does not report \"`\" calls on random objects" do
+        @scanny.should parse('foo.` "ls -l"').without_issues
+      end
+
       it "reports \"exec\" calls without a receiver" do
         @scanny.should parse('exec "ls -l"').with_issue(:high,
           "The \"exec\" method can pass the executed command through shell exapnsion.")

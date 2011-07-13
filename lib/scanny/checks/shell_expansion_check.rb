@@ -6,7 +6,7 @@ module Scanny
     # through shell expansion. This can cause unwanted code execution if the
     # command includes unescaped input.
     class ShellExpansionCheck < Check
-      SHELL_EXPANDING_METHODS = [:exec, :system]
+      SHELL_EXPANDING_METHODS = [:`, :exec, :system]
 
       def interesting_nodes
         [:call]
