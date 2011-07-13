@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Scanny::Checks::ShellExpansionCheck do
   before :each do
-    @scanny = Scanny::Core::Runner.new(Scanny::Checks::ShellExpansionCheck.new)
+    @scanny = Scanny::Runner.new(Scanny::Checks::ShellExpansionCheck.new)
   end
 
   it "does not report regular method calls" do

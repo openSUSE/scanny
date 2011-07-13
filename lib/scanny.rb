@@ -1,2 +1,2 @@
 require 'scanny/checks'
-require 'scanny/core'
+require 'scanny/runner'
