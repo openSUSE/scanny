@@ -75,5 +75,25 @@ module Scanny::Checks
         @scanny.should parse('exec "ls", "-l"').without_issues
       end
     end
+
+    it "reports backticks without interpolation" do
+      @scanny.should parse('`ls -l`').with_issue(:high,
+        "Backticks and %x{...} pass the executed command through shell exapnsion.")
+    end
+
+    it "reports backticks with interpolation" do
+      @scanny.should parse('`ls #{options}`').with_issue(:high,
+        "Backticks and %x{...} pass the executed command through shell exapnsion.")
+    end
+
+    it "reports %x{...} without interpolation" do
+      @scanny.should parse('`ls -l`').with_issue(:high,
+        "Backticks and %x{...} pass the executed command through shell exapnsion.")
+    end
+
+    it "reports %x{...} with interpolation" do
+      @scanny.should parse('`ls #{options}`').with_issue(:high,
+        "Backticks and %x{...} pass the executed command through shell exapnsion.")
+    end
   end
 end

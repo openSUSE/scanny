@@ -9,7 +9,7 @@ module Scanny
       SHELL_EXPANDING_METHODS = [:`, :exec, :system]
 
       def interesting_nodes
-        [:call]
+        [:call, :xstr, :dxstr]
       end
 
       def evaluate_start_call(node)
@@ -27,6 +27,22 @@ module Scanny
       end
 
       def evaluate_end_call(node)
+        # Nothing to do.
+      end
+
+      def evaluate_start_xstr(node)
+        add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
+      end
+
+      def evaluate_end_xstr(node)
+        # Nothing to do.
+      end
+
+      def evaluate_start_dxstr(node)
+        add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
+      end
+
+      def evaluate_end_dxstr(node)
         # Nothing to do.
       end
     end
