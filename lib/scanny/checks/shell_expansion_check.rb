@@ -1,5 +1,3 @@
-require 'scanny/checks/check'
-
 module Scanny
   module Checks
     # Checks for methods executing external commands that pass the command

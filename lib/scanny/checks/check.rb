@@ -3,6 +3,8 @@ require 'scanny/issue'
 module Scanny
   module Checks
     class Check
+      include Helpers
+
       NODE_TYPES = [:defn, :module, :resbody, :lvar, :cvar, :class, :if, :while, :until, :for, :rescue, :case, :when, :and, :or]
 
       def initialize
