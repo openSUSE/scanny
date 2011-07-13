@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'ruby_parser'
 
 module Scanny
