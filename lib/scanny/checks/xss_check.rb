@@ -11,10 +11,11 @@ module Scanny
       def evaluate_start_call(node)
         name = node[2]
 
-        return unless node[2] == :send_file
-        params = node_to_hash node.find_node(:arglist).find_node(:hash)
-        if params[:disposition] == :inline
-          add_issue :high, "XSS issue"
+        if name == :send_file || name == :send_data
+          params = node_to_hash node.find_node(:arglist).find_node(:hash)
+          if params[:disposition] == 'inline'
+            add_issue :high, "XSS issue"
+          end
         end
        end
 

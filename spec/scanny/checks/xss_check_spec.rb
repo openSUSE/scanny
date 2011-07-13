@@ -10,9 +10,26 @@ module Scanny::Checks
       @scanny.should parse('foo').without_issues
     end
 
-    it "find issues caused by send_file when :disposition is :inline" do
-      @scanny.should parse("send_file :disposition => :inline").with_issue(:high,
-        "XSS issue")
+    describe "inspect send_file" do
+      it "reports issues when :disposition is set to inline" do
+        @scanny.should parse("send_file :disposition => 'inline' ").with_issue(:high,
+          "XSS issue")
+      end
+
+      it "does not report issues when :disposition is not set to inline" do
+        @scanny.should parse("send_file :disposition => 'attachment' ").without_issues
+      end
+    end
+
+    describe "inspect send_data" do
+      it "reports issues when :disposition is set to inline" do
+        @scanny.should parse("send_data :disposition => 'inline' ").with_issue(:high,
+          "XSS issue")
+      end
+
+      it "does not report issues when :disposition is not set to inline" do
+        @scanny.should parse("send_data :disposition => 'attachment' ").without_issues
+      end
     end
   end
 end
