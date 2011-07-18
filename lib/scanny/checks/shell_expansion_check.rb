@@ -1,3 +1,4 @@
+#TODO: get the code work with melbourne
 module Scanny
   module Checks
     # Checks for methods executing external commands that pass the command
@@ -10,7 +11,7 @@ module Scanny
         [:call, :xstr, :dxstr]
       end
 
-      def evaluate_start_call(node)
+      def evaluate_node(node)
         receiver = node[1]
         name     = node[2]
         args     = node[3][1..-1]
@@ -22,10 +23,6 @@ module Scanny
         return unless receiver.nil? || receiver == Sexp.new(:const, :Kernel)
 
         add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
-      end
-
-      def evaluate_end_call(node)
-        # Nothing to do.
       end
 
       def evaluate_start_xstr(node)

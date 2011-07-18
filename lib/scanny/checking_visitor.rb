@@ -1,14 +1,25 @@
 module Scanny
   class CheckingVisitor
-    def initialize(*checks)
+    def initialize(checks, filename)
+      @file     = filename
       @checks ||= {}
-      checks.first.each do |check|
+      checks.each do |check|
         nodes = check.interesting_nodes
         nodes.each do |node|
           @checks[node] ||= []
           @checks[node] << check
           @checks[node].uniq!
         end
+      end
+    end
+
+    def send node_name, node, parent
+      checks = @checks[node_name]
+      return unless checks
+      checks.each do |check|
+        check.file = @file
+        check.line = node.line
+        check.evaluate_node(node)
       end
     end
 

@@ -3,7 +3,6 @@ require 'yaml'
 
 require 'scanny/checking_visitor'
 require 'scanny/parser'
-require 'scanny/visitable_sexp'
 
 module Scanny
   class Runner
@@ -19,11 +18,9 @@ module Scanny
 
     def check(filename, content)
       @checks ||= load_checks
-      @checker ||= CheckingVisitor.new(@checks)
-      @checks.each {|check| check.start_file(filename)}
+      @checker ||= CheckingVisitor.new(@checks, filename)
       node = parse(filename, content)
-      node.accept(@checker) if node
-      @checks.each {|check| check.end_file(filename)}
+      node.visit(@checker) if node
     end
 
     def check_content(content, filename = "dummy-file.rb")

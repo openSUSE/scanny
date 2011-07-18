@@ -1,5 +1,3 @@
-require 'ruby_parser'
-
 module Scanny
   class Parser
     def parse(content, filename)
@@ -20,8 +18,7 @@ module Scanny
     end
 
     def silent_parse(content, filename)
-      @parser ||= RubyParser.new
-      @parser.parse(content, filename)
+      content.to_ast
     end
   end
 end
