@@ -16,12 +16,12 @@ module Scanny
         args     = node[3][1..-1]
 
         return unless SHELL_EXPANDING_METHODS.include?(name)
-        # The command goes through shell exapnsion only if it is passed as one
+        # The command goes through shell expansion only if it is passed as one
         # argument.
         return unless args.size == 1
         return unless receiver.nil? || receiver == Sexp.new(:const, :Kernel)
 
-        add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
+        add_issue :high, "The \"#{name}\" method can pass the executed command through shell expansion."
       end
 
       def evaluate_end_call(node)
@@ -29,7 +29,7 @@ module Scanny
       end
 
       def evaluate_start_xstr(node)
-        add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
+        add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion."
       end
 
       def evaluate_end_xstr(node)
@@ -37,7 +37,7 @@ module Scanny
       end
 
       def evaluate_start_dxstr(node)
-        add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
+        add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion."
       end
 
       def evaluate_end_dxstr(node)
