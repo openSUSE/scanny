@@ -21,7 +21,7 @@ module Scanny
         return unless args.size == 1
         return unless receiver.nil? || receiver == Sexp.new(:const, :Kernel)
 
-        add_issue :high, "The \"#{name}\" method can pass the executed command through shell expansion."
+        add_issue :high, "The \"#{name}\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)"
       end
 
       def evaluate_end_call(node)
@@ -29,7 +29,7 @@ module Scanny
       end
 
       def evaluate_start_xstr(node)
-        add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion."
+        add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
       end
 
       def evaluate_end_xstr(node)
@@ -37,7 +37,7 @@ module Scanny
       end
 
       def evaluate_start_dxstr(node)
-        add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion."
+        add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
       end
 
       def evaluate_end_dxstr(node)
