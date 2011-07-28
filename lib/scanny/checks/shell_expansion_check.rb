@@ -1,4 +1,3 @@
-#TODO: get the code work with melbourne
 module Scanny
   module Checks
     # Checks for methods executing external commands that pass the command
@@ -8,37 +7,24 @@ module Scanny
       SHELL_EXPANDING_METHODS = [:`, :exec, :system]
 
       def interesting_nodes
-        [:call, :xstr, :dxstr]
+        %w(send_with_arguments execute_string dynamic_execute_string)
       end
 
       def evaluate_node(node)
-        receiver = node[1]
-        name     = node[2]
-        args     = node[3][1..-1]
+        if node.is_a?(Rubinius::AST::ExecuteString) || node.is_a?(Rubinius::AST::DynamicExecuteString)
+          add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
+        else
+          return unless SHELL_EXPANDING_METHODS.include?(node.name)
+          # The command goes through shell exapnsion only if it is passed as one
+          # argument.
+          return unless node.arguments.size == 1
+          unless node.receiver.is_a?(Rubinius::AST::Self) ||
+              (node.receiver.is_a?(Rubinius::AST::ConstantAccess) && node.receiver.name == :Kernel)
+            return
+          end
 
-        return unless SHELL_EXPANDING_METHODS.include?(name)
-        # The command goes through shell exapnsion only if it is passed as one
-        # argument.
-        return unless args.size == 1
-        return unless receiver.nil? || receiver == Sexp.new(:const, :Kernel)
-
-        add_issue :high, "The \"#{name}\" method can pass the executed command through shell exapnsion."
-      end
-
-      def evaluate_start_xstr(node)
-        add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
-      end
-
-      def evaluate_end_xstr(node)
-        # Nothing to do.
-      end
-
-      def evaluate_start_dxstr(node)
-        add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
-      end
-
-      def evaluate_end_dxstr(node)
-        # Nothing to do.
+          add_issue :high, "The \"#{node.name}\" method can pass the executed command through shell exapnsion."
+        end
       end
     end
   end
