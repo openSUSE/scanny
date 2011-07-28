@@ -7,7 +7,7 @@ module Scanny
     end
 
     def to_s
-      "[#{@impact}] #{@file}:#{@line} - #{@message}"
+      "[#{@impact}] #{@file}:#{@line}: #{@message}"
     end
   end
 end
