@@ -12,10 +12,10 @@ module Scanny
 
       def evaluate_node(node)
         if node.is_a?(Rubinius::AST::ExecuteString) || node.is_a?(Rubinius::AST::DynamicExecuteString)
-          add_issue :high, "Backticks and %x{...} pass the executed command through shell exapnsion."
+          add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
         else
           return unless SHELL_EXPANDING_METHODS.include?(node.name)
-          # The command goes through shell exapnsion only if it is passed as one
+          # The command goes through shell expansion only if it is passed as one
           # argument.
           return unless node.arguments.size == 1
           unless node.receiver.is_a?(Rubinius::AST::Self) ||
@@ -23,7 +23,7 @@ module Scanny
             return
           end
 
-          add_issue :high, "The \"#{node.name}\" method can pass the executed command through shell exapnsion."
+          add_issue :high, "The \"#{node.name}\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)"
         end
       end
     end
