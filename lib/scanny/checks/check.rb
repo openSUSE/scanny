@@ -14,7 +14,7 @@ module Scanny
       end
 
       def issue(impact, message)
-        @issues << Scanny::Issue.new(@file, @line, impact, message)
+        @issues << Issue.new(@file, @line, impact, message)
       end
     end
   end
