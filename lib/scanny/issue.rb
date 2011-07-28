@@ -6,6 +6,14 @@ module Scanny
       @file, @line, @impact, @message = file, line, impact, message
     end
 
+    def ==(other)
+      other.instance_of?(self.class) &&
+        @file == other.file &&
+        @line == other.line &&
+        @impact == other.impact &&
+        @message == other.message
+    end
+
     def to_s
       "[#{@impact}] #{@file}:#{@line}: #{@message}"
     end
