@@ -7,7 +7,7 @@ module Scanny
       SHELL_EXPANDING_METHODS = [:`, :exec, :system]
 
       def pattern
-        'SendWithArguments'
+        'SendWithArguments<receiver = Self | ConstantAccess<name = :Kernel>>'
       end
 
       def check(node)
@@ -15,10 +15,6 @@ module Scanny
         # The command goes through shell expansion only if it is passed as one
         # argument.
         return unless node.arguments.size == 1
-        unless node.receiver.is_a?(Rubinius::AST::Self) ||
-            (node.receiver.is_a?(Rubinius::AST::ConstantAccess) && node.receiver.name == :Kernel)
-          return
-        end
 
         issue :high, "The \"#{node.name}\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)"
       end
