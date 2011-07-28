@@ -1,16 +1,13 @@
 module Scanny
   class Issue
-    attr_reader :filename, :line_number, :impact, :message
+    attr_reader :file, :line, :impact, :message
 
-    def initialize(filename, line_number, impact, message)
-      @filename = filename
-      @line_number = line_number
-      @impact = impact
-      @message = message
+    def initialize(file, line, impact, message)
+      @file, @line, @impact, @message = file, line, impact, message
     end
 
     def to_s
-      "[#{@impact}] #{@filename}:#{@line_number} - #{@message}"
+      "[#{@impact}] #{@file}:#{@line} - #{@message}"
     end
   end
 end
