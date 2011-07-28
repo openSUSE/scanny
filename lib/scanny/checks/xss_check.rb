@@ -9,7 +9,7 @@ module Scanny
         'SendWithArguments'
       end
 
-      def evaluate_node(node)
+      def check(node)
         if [:send_file, :send_data].include? node.name
           node.arguments.array.each do |arg|
             next unless arg.is_a? Rubinius::AST::HashLiteral

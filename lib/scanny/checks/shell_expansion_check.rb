@@ -10,7 +10,7 @@ module Scanny
         'SendWithArguments | ExecuteString | DynamicExecuteString'
       end
 
-      def evaluate_node(node)
+      def check(node)
         if node.is_a?(Rubinius::AST::ExecuteString) || node.is_a?(Rubinius::AST::DynamicExecuteString)
           add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
         else

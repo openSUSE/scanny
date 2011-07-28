@@ -19,7 +19,7 @@ module Scanny
       ast = parse(filename, content)
       @checks.each do |check|
         Machete.find(ast, check.pattern).each do |node|
-          check.evaluate_node(node)
+          check.check(node)
         end
       end
     end
