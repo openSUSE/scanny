@@ -2,7 +2,6 @@ require 'pp'
 require 'yaml'
 
 require 'scanny/checking_visitor'
-require 'scanny/parser'
 
 module Scanny
   class Runner
@@ -13,7 +12,6 @@ module Scanny
     def initialize(*checks)
       @config = DEFAULT_CONFIG
       @checks = checks unless checks.empty?
-      @parser = Parser.new
     end
 
     def check(filename, content)
@@ -32,7 +30,7 @@ module Scanny
     end
 
     def print(filename, content)
-      node = @parser.parse(content, filename)
+      node = content.to_ast
       puts "Line: #{node.line}"
       pp node
     end
@@ -55,7 +53,7 @@ module Scanny
 
     def parse(filename, content)
       begin
-        @parser.parse(content, filename)
+        content.to_ast
       rescue Exception => e
         puts "#{filename} looks like it's not a valid Ruby file.  Skipping..." if ENV["ROODI_DEBUG"]
         nil
