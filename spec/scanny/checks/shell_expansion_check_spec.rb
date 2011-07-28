@@ -9,7 +9,7 @@ module Scanny::Checks
     describe "method call reporting" do
       it "reports \"Kernel.`\" calls" do
         @scanny.should parse('Kernel.` "ls -l"').with_issue(:high,
-          "The \"`\" method can pass the executed command through shell exapnsion.")
+          "The \"`\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "does not report \"`\" calls on other classes/modules" do
@@ -22,12 +22,12 @@ module Scanny::Checks
 
       it "reports \"exec\" calls without a receiver" do
         @scanny.should parse('exec "ls -l"').with_issue(:high,
-          "The \"exec\" method can pass the executed command through shell exapnsion.")
+          "The \"exec\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "reports \"Kernel.exec\" calls" do
         @scanny.should parse('Kernel.exec "ls -l"').with_issue(:high,
-          "The \"exec\" method can pass the executed command through shell exapnsion.")
+          "The \"exec\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "does not report \"exec\" calls on other classes/modules" do
@@ -40,12 +40,12 @@ module Scanny::Checks
 
       it "reports \"system\" calls without a receiver" do
         @scanny.should parse('system "ls -l"').with_issue(:high,
-          "The \"system\" method can pass the executed command through shell exapnsion.")
+          "The \"system\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "reports \"Kernel.system\" calls" do
         @scanny.should parse('Kernel.system "ls -l"').with_issue(:high,
-          "The \"system\" method can pass the executed command through shell exapnsion.")
+          "The \"system\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "does not report \"system\" calls on other classes/modules" do
@@ -62,7 +62,7 @@ module Scanny::Checks
 
       it "reports calls with one argument" do
         @scanny.should parse('exec "ls -l"').with_issue(:high,
-          "The \"exec\" method can pass the executed command through shell exapnsion.")
+          "The \"exec\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "does not report calls with multiple arguments" do
@@ -73,22 +73,22 @@ module Scanny::Checks
     describe "backticks and %{...} reporting" do
       it "reports backticks without interpolation" do
         @scanny.should parse('`ls -l`').with_issue(:high,
-          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+          "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "reports backticks with interpolation" do
         @scanny.should parse('`ls #{options}`').with_issue(:high,
-          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+          "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "reports %x{...} without interpolation" do
         @scanny.should parse('`ls -l`').with_issue(:high,
-          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+          "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
 
       it "reports %x{...} with interpolation" do
         @scanny.should parse('`ls #{options}`').with_issue(:high,
-          "Backticks and %x{...} pass the executed command through shell exapnsion.")
+          "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
       end
     end
   end
