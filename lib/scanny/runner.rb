@@ -1,7 +1,6 @@
 require 'pp'
 require 'yaml'
-
-require 'scanny/checking_visitor'
+require 'machete'
 
 module Scanny
   class Runner
@@ -16,9 +15,13 @@ module Scanny
 
     def check(filename, content)
       @checks ||= load_checks
-      @checker ||= CheckingVisitor.new(@checks, filename)
-      node = parse(filename, content)
-      node.visit(@checker) if node
+
+      ast = parse(filename, content)
+      @checks.each do |check|
+        Machete.find(ast, check.pattern).each do |node|
+          check.evaluate_node(node)
+        end
+      end
     end
 
     def check_content(content, filename = "dummy-file.rb")

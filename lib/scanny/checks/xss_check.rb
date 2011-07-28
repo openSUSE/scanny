@@ -5,8 +5,8 @@ module Scanny
     # through shell expansion. This can cause unwanted code execution if the
     # command includes unescaped input.
     class XssCheck < Check
-      def interesting_nodes
-        %w(send_with_arguments)
+      def pattern
+        'SendWithArguments'
       end
 
       def evaluate_node(node)

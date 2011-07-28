@@ -6,8 +6,8 @@ module Scanny
     class ShellExpansionCheck < Check
       SHELL_EXPANDING_METHODS = [:`, :exec, :system]
 
-      def interesting_nodes
-        %w(send_with_arguments execute_string dynamic_execute_string)
+      def pattern
+        'SendWithArguments | ExecuteString | DynamicExecuteString'
       end
 
       def evaluate_node(node)
