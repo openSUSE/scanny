@@ -1,4 +1,3 @@
-require 'pp'
 require 'yaml'
 require 'machete'
 
@@ -32,20 +31,6 @@ module Scanny
 
     def check_file(filename)
       check(filename, File.read(filename))
-    end
-
-    def print(filename, content)
-      node = content.to_ast
-      puts "Line: #{node.line}"
-      pp node
-    end
-
-    def print_content(content)
-      print("dummy-file.rb", content)
-    end
-
-    def print_file(filename)
-      print(filename, File.read(filename))
     end
 
     private
