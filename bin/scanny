@@ -1,10 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-
-$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + "/../lib"))
-
-require 'scanny'
+require "rubygems"
+require File.expand_path(File.dirname(__FILE__) + "/../lib/scanny")
 
 runner = Scanny::Runner.new
 

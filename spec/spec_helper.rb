@@ -1,4 +1,4 @@
-require 'scanny'
+require "scanny"
 
 RSpec::Matchers.define :parse do |content|
   chain :without_issues do

@@ -1,5 +1,5 @@
-require 'yaml'
-require 'machete'
+require "yaml"
+require "machete"
 
 module Scanny
   class Runner

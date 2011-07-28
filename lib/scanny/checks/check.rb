@@ -1,5 +1,3 @@
-require 'scanny/issue'
-
 module Scanny
   module Checks
     class Check
