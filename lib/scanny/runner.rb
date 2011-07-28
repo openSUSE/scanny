@@ -6,6 +6,7 @@ module Scanny
   class Runner
     DEFAULT_CONFIG = File.join(File.dirname(__FILE__), "..", "..", "scanny.yml")
 
+    attr_reader :issues
     attr_writer :config
 
     def initialize(*checks)
@@ -15,11 +16,12 @@ module Scanny
 
     def check(filename, content)
       @checks ||= load_checks
+      @issues = []
 
       ast = parse(filename, content)
       @checks.each do |check|
         Machete.find(ast, check.pattern).each do |node|
-          check.check(node)
+          @issues += check.visit(filename, node)
         end
       end
     end
@@ -44,12 +46,6 @@ module Scanny
 
     def print_file(filename)
       print(filename, File.read(filename))
-    end
-
-    def issues
-      @checks ||= []
-      all_issues = @checks.collect {|check| check.issues}
-      all_issues.flatten
     end
 
     private

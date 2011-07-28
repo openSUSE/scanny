@@ -3,23 +3,18 @@ require 'scanny/issue'
 module Scanny
   module Checks
     class Check
-      attr_accessor :file, :line
-
-      def initialize
+      def visit(file, node)
+        @file = file
+        @line = node.line
         @issues = []
-      end
 
-     def position(offset = 0)
-        "#{@line[2]}:#{@line[1] + offset}"
-      end
+        check(node)
 
-      def issue(impact, message, filename = @file, line = @line)
-        @issues ||= []
-        @issues << Scanny::Issue.new("#{filename}", "#{line}", impact, message)
-      end
-
-      def issues
         @issues
+      end
+
+      def issue(impact, message)
+        @issues << Scanny::Issue.new(@file, @line, impact, message)
       end
     end
   end
