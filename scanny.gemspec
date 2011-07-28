@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version     = '0.0.1'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Flavio Castelli', 'David Majda']
-  s.email       = ['fcastelli@novell.com','dmajda@novell.com']
+  s.email       = ['fcastelli@novell.com','dmajda@suse.cz']
   s.homepage    = "https://github.com/dmadja/scanny"
   s.summary     = "Ruby security scanner"
   s.description = "Find all security issues affecting your code."
