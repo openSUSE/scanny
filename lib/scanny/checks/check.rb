@@ -13,7 +13,7 @@ module Scanny
         "#{@line[2]}:#{@line[1] + offset}"
       end
 
-      def add_issue(impact, message, filename = @file, line = @line)
+      def issue(impact, message, filename = @file, line = @line)
         @issues ||= []
         @issues << Scanny::Issue.new("#{filename}", "#{line}", impact, message)
       end

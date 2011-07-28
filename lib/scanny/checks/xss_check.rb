@@ -22,7 +22,7 @@ module Scanny
               next unless key.value == :disposition
               next unless value.is_a? Rubinius::AST::StringLiteral
               if value.string == 'inline'
-                add_issue :high, "XSS issue"
+                issue :high, "XSS issue"
               end
             end
           end

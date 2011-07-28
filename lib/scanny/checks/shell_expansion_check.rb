@@ -12,7 +12,7 @@ module Scanny
 
       def check(node)
         if node.is_a?(Rubinius::AST::ExecuteString) || node.is_a?(Rubinius::AST::DynamicExecuteString)
-          add_issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
+          issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
         else
           return unless SHELL_EXPANDING_METHODS.include?(node.name)
           # The command goes through shell expansion only if it is passed as one
@@ -23,7 +23,7 @@ module Scanny
             return
           end
 
-          add_issue :high, "The \"#{node.name}\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)"
+          issue :high, "The \"#{node.name}\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)"
         end
       end
     end
