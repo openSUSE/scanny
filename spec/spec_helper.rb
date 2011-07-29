@@ -20,7 +20,7 @@ module Scanny
   end
 end
 
-RSpec::Matchers.define :parse do |input|
+RSpec::Matchers.define :check do |input|
   chain :without_issues do
     @impact = nil
     @message = nil

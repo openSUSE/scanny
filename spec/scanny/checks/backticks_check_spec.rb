@@ -7,22 +7,22 @@ module Scanny::Checks
     end
 
     it "reports backticks without interpolation" do
-      @runner.should parse('`ls -l`').with_issue(:high,
+      @runner.should check('`ls -l`').with_issue(:high,
         "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
     end
 
     it "reports backticks with interpolation" do
-      @runner.should parse('`ls #{options}`').with_issue(:high,
+      @runner.should check('`ls #{options}`').with_issue(:high,
         "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
     end
 
     it "reports %x{...} without interpolation" do
-      @runner.should parse('`ls -l`').with_issue(:high,
+      @runner.should check('`ls -l`').with_issue(:high,
         "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
     end
 
     it "reports %x{...} with interpolation" do
-      @runner.should parse('`ls #{options}`').with_issue(:high,
+      @runner.should check('`ls #{options}`').with_issue(:high,
         "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)")
     end
   end
