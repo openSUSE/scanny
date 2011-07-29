@@ -3,14 +3,15 @@ require "machete"
 
 module Scanny
   class Runner
-    DEFAULT_CONFIG = File.join(File.dirname(__FILE__), "..", "..", "scanny.yml")
-
     attr_reader :issues
-    attr_writer :config
 
     def initialize(*checks)
-      @config = DEFAULT_CONFIG
-      @checks = checks unless checks.empty?
+      if checks.empty?
+        names = Scanny::Checks.constants.grep(/.+Check$/).map
+        @checks = names.map { |name| Scanny::Checks.const_get(name).new }
+      else
+        @checks = checks
+      end
     end
 
     def check(filename, content)
@@ -42,16 +43,6 @@ module Scanny
         puts "#{filename} looks like it's not a valid Ruby file.  Skipping..." if ENV["ROODI_DEBUG"]
         nil
       end
-    end
-
-    def load_checks
-      check_objects = []
-      checks = YAML.load_file @config
-      checks.each do |check|
-        klass = eval("Scanny::Checks::#{check[0]}")
-        check_objects << (check[1].empty? ? klass.new : klass.new(check[1]))
-      end
-      check_objects
     end
   end
 end

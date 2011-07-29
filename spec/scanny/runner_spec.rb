@@ -5,7 +5,6 @@ module Scanny
     describe "given a custom config file" do
       before do
         @runner = Runner.new
-        @runner.config= File.expand_path(File.dirname(__FILE__) + '/scanny.yml')
       end
 
       it "uses check from it" do

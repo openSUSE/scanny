@@ -5,10 +5,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/scanny")
 
 runner = Scanny::Runner.new
 
-config_param = ARGV.detect {|arg| arg =~ /-config=.*/}
-runner.config = config_param.split("=")[1] if config_param
-ARGV.delete config_param
-
 ARGV.each do |arg|
   Dir.glob(arg).each { |file| runner.check_file(file) }
 end

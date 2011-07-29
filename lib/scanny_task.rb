@@ -1,13 +1,11 @@
 class ScannyTask < Rake::TaskLib
   attr_accessor :name
   attr_accessor :patterns
-  attr_accessor :config
   attr_accessor :verbose
 
-  def initialize name = :scanny, patterns = nil, config = nil
+  def initialize name = :scanny, patterns = nil
     @name      = name
     @patterns  = patterns || %w(app/**/*.rb lib/**/*.rb spec/**/*.rb test/**/*.rb)
-    @config    = config
     @verbose   = Rake.application.options.trace
 
     yield self if block_given?
@@ -19,8 +17,6 @@ class ScannyTask < Rake::TaskLib
     desc "Check for security issues in: #{patterns.join(', ')}"
     task name do
       runner = Scanny::Runner.new
-
-      runner.config = config if config
 
       patterns.each do |pattern|
         Dir.glob(pattern).each { |file| runner.check_file(file) }
