@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/scanny/issue")
-require File.expand_path(File.dirname(__FILE__) + "/scanny/checks/check")
-require File.expand_path(File.dirname(__FILE__) + "/scanny/checks/shell_expanding_methods_check")
-require File.expand_path(File.dirname(__FILE__) + "/scanny/checks/backticks_check")
-require File.expand_path(File.dirname(__FILE__) + "/scanny/checks/xss_check")
 require File.expand_path(File.dirname(__FILE__) + "/scanny/runner")
+require File.expand_path(File.dirname(__FILE__) + "/scanny/checks/check")
+
+Dir[File.expand_path(File.dirname(__FILE__) + "/scanny/checks/*_check.rb")].each do |file|
+  require file
+end
