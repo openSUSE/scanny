@@ -1,5 +1,9 @@
 require "scanny"
 
+RSpec.configure do |c|
+  c.color_enabled = true
+end
+
 module Scanny
   module Checks
     class TestCheck < Check
