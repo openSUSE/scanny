@@ -16,7 +16,7 @@ module Scanny
         # argument.
         return unless node.arguments.size == 1
 
-        issue :high, "The \"#{node.name}\" method can pass the executed command through shell expansion. (CWE-88,CWE-78)"
+        issue :high, "The \"#{node.name}\" method passes the executed command through shell expansion. (CWE-88,CWE-78)"
       end
     end
   end
