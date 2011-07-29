@@ -1,5 +1,21 @@
 require "scanny"
 
+module Scanny
+  module Checks
+    class TestCheck < Check
+      def pattern
+        'FixnumLiteral'
+      end
+
+      def check(node)
+        issue :high, "Hey, I found unsecure code!"
+        issue :high, "Hey, I found more unsecure code!"
+        issue :low,  "OK, this is unsecure too, but not that much"
+      end
+    end
+  end
+end
+
 RSpec::Matchers.define :parse do |input|
   chain :without_issues do
     @impact = nil
