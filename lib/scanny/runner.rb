@@ -3,7 +3,7 @@ require "machete"
 
 module Scanny
   class Runner
-    attr_reader :issues
+    attr_reader :checks
 
     def initialize(*checks)
       if checks.empty?
@@ -14,35 +14,20 @@ module Scanny
       end
     end
 
-    def check(filename, content)
-      @checks ||= load_checks
-      @issues = []
+    def check(file, input)
+      ast = input.to_ast
 
-      ast = parse(filename, content)
+      issues = []
       @checks.each do |check|
         Machete.find(ast, check.pattern).each do |node|
-          @issues += check.visit(filename, node)
+          issues += check.visit(file, node)
         end
       end
+      issues
     end
 
-    def check_content(content, filename = "dummy-file.rb")
-      check(filename, content)
-    end
-
-    def check_file(filename)
-      check(filename, File.read(filename))
-    end
-
-    private
-
-    def parse(filename, content)
-      begin
-        content.to_ast
-      rescue Exception => e
-        puts "#{filename} looks like it's not a valid Ruby file.  Skipping..." if ENV["ROODI_DEBUG"]
-        nil
-      end
+    def check_file(file)
+      check(file, File.read(file))
     end
   end
 end

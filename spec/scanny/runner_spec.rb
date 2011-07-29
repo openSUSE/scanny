@@ -9,7 +9,7 @@ module Scanny
 
       it "uses check from it" do
         # @runner.check_file(File.expand_path(File.dirname(__FILE__) + '/../fixtures/test_class.rb'))
-        content = <<-RUBY
+        input = <<-RUBY
           class TestClass
 
             def METHOD
@@ -17,8 +17,7 @@ module Scanny
             end
           end
         RUBY
-        @runner.check_content(content)
-        @runner.issues.should be_empty
+        @runner.check("scanned_file.rb", input).should be_empty
       end
     end
   end

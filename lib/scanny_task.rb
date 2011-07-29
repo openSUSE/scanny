@@ -18,13 +18,14 @@ class ScannyTask < Rake::TaskLib
     task name do
       runner = Scanny::Runner.new
 
+      issues = []
       patterns.each do |pattern|
-        Dir.glob(pattern).each { |file| runner.check_file(file) }
+        Dir.glob(pattern).each { |file| issues += runner.check_file(file) }
       end
 
-      runner.issues.each {|issue| puts issue}
+      issues.each {|issue| puts issue}
 
-      raise "Found #{runner.issues.size} issues." unless runner.issues.empty?
+      raise "Found #{issues.size} issues." unless issues.empty?
     end
     self
   end

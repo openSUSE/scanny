@@ -1,6 +1,6 @@
 require "scanny"
 
-RSpec::Matchers.define :parse do |content|
+RSpec::Matchers.define :parse do |input|
   chain :without_issues do
     @impact = nil
     @message = nil
@@ -11,8 +11,7 @@ RSpec::Matchers.define :parse do |content|
   end
 
   match do |scanny|
-    scanny.check_content(content)
-    issues = scanny.issues
+    issues = scanny.check("scanned_file.rb", input)
 
     if @impact && @message
       issues.size.should == 1

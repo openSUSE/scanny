@@ -5,12 +5,13 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/scanny")
 
 runner = Scanny::Runner.new
 
+issues = []
 ARGV.each do |arg|
-  Dir.glob(arg).each { |file| runner.check_file(file) }
+  Dir.glob(arg).each { |file| issues += runner.check_file(file) }
 end
 
-runner.issues.each {|issue| puts issue}
+issues.each {|issue| puts issue}
 
-puts "\nFound #{runner.issues.size} issues."
+puts "\nFound #{issues.size} issues."
 
-exit runner.issues.size
+exit issues.size
