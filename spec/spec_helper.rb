@@ -12,8 +12,8 @@ module Scanny
       end
 
       def check(node)
-        issue :high, "Hey, I found unsecure code!"
-        issue :high, "Hey, I found more unsecure code!"
+        issue :high, "Hey, I found unsecure code!", :cwe => 42
+        issue :high, "Hey, I found more unsecure code!", :cwe => 43
         issue :low,  "OK, this is unsecure too, but not that much"
       end
     end
@@ -22,12 +22,13 @@ end
 
 RSpec::Matchers.define :check do |input|
   chain :without_issues do
-    @impact = nil
+    @impact  = nil
     @message = nil
+    @cwe     = nil
   end
 
-  chain :with_issue do |impact, message|
-    @impact, @message = impact, message
+  chain :with_issue do |impact, message, cwe|
+    @impact, @message, @cwe = impact, message, cwe
   end
 
   match do |scanny|
@@ -37,6 +38,7 @@ RSpec::Matchers.define :check do |input|
       issues.size.should == 1
       issues[0].impact.should == @impact
       issues[0].message.should == @message
+      issues[0].cwe.should == @cwe
     else
       issues.should be_empty
     end

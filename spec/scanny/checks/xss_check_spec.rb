@@ -13,7 +13,7 @@ module Scanny::Checks
     describe "inspect send_file" do
       it "reports issues when :disposition is set to inline" do
         @runner.should check("send_file :disposition => 'inline' ").with_issue(:high,
-          "XSS issue")
+          "XSS issue", nil)
       end
 
       it "does not report issues when :disposition is not set to inline" do
@@ -24,7 +24,7 @@ module Scanny::Checks
     describe "inspect send_data" do
       it "reports issues when :disposition is set to inline" do
         @runner.should check("send_data :disposition => 'inline' ").with_issue(:high,
-          "XSS issue")
+          "XSS issue", nil)
       end
 
       it "does not report issues when :disposition is not set to inline" do

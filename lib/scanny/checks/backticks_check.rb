@@ -9,7 +9,8 @@ module Scanny
       end
 
       def check(node)
-        issue :high, "Backticks and %x{...} pass the executed command through shell expansion. (CWE-88,CWE-78)"
+        issue :high, "Backticks and %x{...} pass the executed command through shell expansion.",
+              :cwe => [88, 78]
       end
     end
   end
