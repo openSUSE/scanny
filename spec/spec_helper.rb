@@ -32,15 +32,15 @@ RSpec::Matchers.define :check do |input|
   end
 
   match do |scanny|
-    issues = scanny.check("scanned_file.rb", input)
+    report = scanny.check("scanned_file.rb", input)
 
     if @impact && @message
-      issues.size.should == 1
-      issues[0].impact.should == @impact
-      issues[0].message.should == @message
-      issues[0].cwe.should == @cwe
+      report.issues.size.should == 1
+      report.issues[0].impact.should == @impact
+      report.issues[0].message.should == @message
+      report.issues[0].cwe.should == @cwe
     else
-      issues.should be_empty
+      report.issues.should be_empty
     end
   end
 end

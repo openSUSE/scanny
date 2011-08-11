@@ -3,13 +3,14 @@
 require "rubygems"
 require File.expand_path(File.dirname(__FILE__) + "/../lib/scanny")
 
-runner = Scanny::Runner.new
-issues = []
+runner  = Scanny::Runner.new
+reports = []
+issues  = 0
 
 ARGV.each do |arg|
   Dir[arg].each do |file|
     begin
-      issues += runner.check_file(file)
+      reports << runner.check_file(file)
     rescue SyntaxError => e
       $stderr.puts "Can't parse #{file} as Ruby file."
       exit 2
@@ -17,13 +18,16 @@ ARGV.each do |arg|
   end
 end
 
-issues.each { |i| puts i }
+reports.each do |report|
+  issues += report.issues.size
+  puts report
+end
 puts
 
-if issues.empty?
+if issues == 0
   puts "Found no issues."
   exit 0
 else
-  puts "Found #{issues.size} issues."
+  puts "Found #{issues} issues."
   exit 1
 end

@@ -15,15 +15,19 @@ module Scanny
     end
 
     def check(file, input)
-      ast = input.to_ast
+      report = Report.new(file)
+      ast    = input.to_ast
 
-      issues = []
       @checks.each do |check|
-        Machete.find(ast, check.pattern).each do |node|
-          issues += check.visit(file, node)
+        nodes_to_inspect = Machete.find(ast, check.pattern)
+        report.checks_performed += 1 unless nodes_to_inspect.empty?
+        report.nodes_inspected  += nodes_to_inspect.size
+
+        nodes_to_inspect.each do |node|
+          report.issues += check.visit(file, node)
         end
       end
-      issues
+      report
     end
 
     def check_file(file)

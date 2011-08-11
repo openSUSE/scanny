@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + "/scanny/issue")
+require File.expand_path(File.dirname(__FILE__) + "/scanny/report")
 require File.expand_path(File.dirname(__FILE__) + "/scanny/runner")
 require File.expand_path(File.dirname(__FILE__) + "/scanny/checks/check")
 
