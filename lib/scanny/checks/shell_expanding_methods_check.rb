@@ -7,7 +7,7 @@ module Scanny
       SHELL_EXPANDING_METHODS = [:`, :exec, :system]
 
       def pattern
-        'SendWithArguments<receiver = Self | ConstantAccess<name = :Kernel>>'
+        'SendWithArguments<receiver = Self | ConstantAccess<name = :Kernel> >'
       end
 
       def check(node)
