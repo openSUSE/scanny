@@ -4,14 +4,11 @@ module Scanny
     # through shell expansion. This can cause unwanted code execution if the
     # command includes unescaped input.
     class ShellExpandingMethodsCheck < Check
-      SHELL_EXPANDING_METHODS = [:`, :exec, :system]
-
       def pattern
-        'SendWithArguments<receiver = Self | ConstantAccess<name = :Kernel> >'
+        'SendWithArguments<receiver = Self | ConstantAccess<name = :Kernel>, name = :` | :exec | :system>'
       end
 
       def check(node)
-        return unless SHELL_EXPANDING_METHODS.include?(node.name)
         # The command goes through shell expansion only if it is passed as one
         # argument.
         return unless node.arguments.size == 1
