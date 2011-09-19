@@ -18,11 +18,11 @@ module Scanny::Checks
     end
 
     it "reports %x{...} without interpolation" do
-      @runner.should check('`ls -l`').with_issue(@issue)
+      @runner.should check('%x{ls -l}').with_issue(@issue)
     end
 
     it "reports %x{...} with interpolation" do
-      @runner.should check('`ls #{options}`').with_issue(@issue)
+      @runner.should check('%x{ls #{options}}').with_issue(@issue)
     end
   end
 end
