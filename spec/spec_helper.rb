@@ -1,6 +1,13 @@
 require "scanny"
 
+module CheckSpecHelpers
+  def issue(*args)
+    Scanny::Issue.new("scanned_file.rb", 1, *args)
+  end
+end
+
 RSpec.configure do |c|
+  c.include CheckSpecHelpers
   c.color_enabled = true
 end
 
@@ -22,23 +29,19 @@ end
 
 RSpec::Matchers.define :check do |input|
   chain :without_issues do
-    @impact  = nil
-    @message = nil
-    @cwe     = nil
+    @issue = nil
   end
 
-  chain :with_issue do |impact, message, cwe|
-    @impact, @message, @cwe = impact, message, cwe
+  chain :with_issue do |issue|
+    @issue = issue
   end
 
   match do |scanny|
     report = scanny.check("scanned_file.rb", input)
 
-    if @impact && @message
+    if @issue
       report.issues.size.should == 1
-      report.issues[0].impact.should == @impact
-      report.issues[0].message.should == @message
-      report.issues[0].cwe.should == @cwe
+      report.issues[0].should == @issue
     else
       report.issues.should be_empty
     end

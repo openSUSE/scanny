@@ -4,6 +4,7 @@ module Scanny::Checks
   describe XssCheck do
     before :each do
       @runner = Scanny::Runner.new(XssCheck.new)
+      @issue = Scanny::Issue.new("scanned_file.rb", 1, :high, "XSS issue", 79)
     end
 
     it "does not report regular method calls" do
@@ -12,8 +13,7 @@ module Scanny::Checks
 
     describe "inspect send_file" do
       it "reports issues when :disposition is set to inline" do
-        @runner.should check("send_file :disposition => 'inline' ").with_issue(:high,
-          "XSS issue", 79)
+        @runner.should check("send_file :disposition => 'inline' ").with_issue(@issue)
       end
 
       it "does not report issues when :disposition is not set to inline" do
@@ -23,8 +23,7 @@ module Scanny::Checks
 
     describe "inspect send_data" do
       it "reports issues when :disposition is set to inline" do
-        @runner.should check("send_data :disposition => 'inline' ").with_issue(:high,
-          "XSS issue", 79)
+        @runner.should check("send_data :disposition => 'inline' ").with_issue(@issue)
       end
 
       it "does not report issues when :disposition is not set to inline" do
