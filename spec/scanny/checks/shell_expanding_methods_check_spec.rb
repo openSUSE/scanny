@@ -16,59 +16,29 @@ module Scanny::Checks
         [88, 78])
     end
 
-    it "reports \"Kernel.`\" calls" do
+    it "reports \"Kernel.`\" correctly" do
       @runner.should check('Kernel.` "ls -l"').with_issue(@backtick_issue)
-    end
-
-    it "does not report \"`\" calls on other classes/modules" do
       @runner.should check('Foo.` "ls -l"').without_issues
-    end
-
-    it "does not report \"`\" calls on random objects" do
       @runner.should check('foo.` "ls -l"').without_issues
     end
 
-    it "reports \"exec\" calls without a receiver" do
+    it "reports \"Kernel.exec\" correctly" do
       @runner.should check('exec "ls -l"').with_issue(@exec_issue)
-    end
-
-    it "reports \"Kernel.exec\" calls" do
       @runner.should check('Kernel.exec "ls -l"').with_issue(@exec_issue)
-    end
-
-    it "does not report \"exec\" calls on other classes/modules" do
       @runner.should check('Foo.exec "ls -l"').without_issues
-    end
-
-    it "does not report \"exec\" calls on random objects" do
       @runner.should check('foo.exec "ls -l"').without_issues
     end
 
-    it "reports \"system\" calls without a receiver" do
+    it "reports \"Kernel.system\" correctly" do
       @runner.should check('system "ls -l"').with_issue(@system_issue)
-    end
-
-    it "reports \"Kernel.system\" calls" do
       @runner.should check('Kernel.system "ls -l"').with_issue(@system_issue)
-    end
-
-    it "does not report \"system\" calls on other classes/modules" do
       @runner.should check('Foo.system "ls -l"').without_issues
-    end
-
-    it "does not report \"system\" calls on random objects" do
       @runner.should check('foo.system "ls -l"').without_issues
     end
 
-    it "does not report calls with no arguments" do
+    it "reports calls with one argument only" do
       @runner.should check('exec').without_issues
-    end
-
-    it "reports calls with one argument" do
       @runner.should check('exec "ls -l"').with_issue(@exec_issue)
-    end
-
-    it "does not report calls with multiple arguments" do
       @runner.should check('exec "ls", "-l"').without_issues
     end
   end

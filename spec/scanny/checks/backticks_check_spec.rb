@@ -9,19 +9,13 @@ module Scanny::Checks
         [88, 78])
     end
 
-    it "reports backticks without interpolation" do
+    it "reports backticks correctly" do
       @runner.should check('`ls -l`').with_issue(@issue)
-    end
-
-    it "reports backticks with interpolation" do
       @runner.should check('`ls #{options}`').with_issue(@issue)
     end
 
-    it "reports %x{...} without interpolation" do
+    it "reports %x{...} correctly" do
       @runner.should check('%x{ls -l}').with_issue(@issue)
-    end
-
-    it "reports %x{...} with interpolation" do
       @runner.should check('%x{ls #{options}}').with_issue(@issue)
     end
   end
