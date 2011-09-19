@@ -25,7 +25,7 @@ module Scanny
               next unless key.value == :disposition
               next unless value.is_a? Rubinius::AST::StringLiteral
               if value.string == 'inline'
-                issue :high, "XSS issue (CWE-79)"
+                issue :high, "XSS issue", :cwe => 79
               end
             end
           end
@@ -44,7 +44,7 @@ module Scanny
               next unless key.is_a? Rubinius::AST::SymbolLiteral
               next unless value.is_a? Rubinius::AST::StringLiteral
               if value.string =~ /params\s*\[/
-                issue :high, "XSS issue (CWE-79)"
+                issue :high, "XSS issue", :cwe => 79
               end
             end
           end
@@ -55,7 +55,7 @@ module Scanny
 #         if name == :flash ??? XXX ???
 #           params = node_to_hash node.find_node(:arglist).find_node(:hash)
 #           if params[:disposition] == 'inline'
-#             add_issue :high, "XSS issue (CWE-79)"
+#             add_issue :high, "XSS issue", 79
 #           end
 #         end
 
@@ -72,7 +72,7 @@ module Scanny
               next unless key.is_a? Rubinius::AST::SymbolLiteral
               next unless value.is_a? Rubinius::AST::StringLiteral
               if value.string =~ /params\s*\[/
-                issue :medium, "XSS issue (CWE-79)"
+                issue :medium, "XSS issue", :cwe => 79
               end
             end
           end
@@ -91,7 +91,7 @@ module Scanny
               next unless key.is_a? Rubinius::AST::SymbolLiteral
               next unless value.is_a? Rubinius::AST::StringLiteral
               if value.string =~ /#\{/
-                issue :low, "XSS issue (CWE-79)"
+                issue :low, "XSS issue", :cwe => 79
               end
             end
           end
