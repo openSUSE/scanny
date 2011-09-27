@@ -27,6 +27,68 @@ To scan one or more Ruby file, use the `bin/scanny` command and pass the files t
 
     Found 1 issues.
 
+Writing New Checks
+------------------
+Internally, Scanny consists of multiple *checks*, each responsible for finding and reporting one suspicious pattern in the code. You can easily extend Scanny by writing new checks.
+
+The checks are loaded automatically from files in the `lib/scanny/checks` directory. Let's look how a simple check may look like:
+
+    module Scanny
+      module Checks
+        # Finds all invocations of "boo" and "moo" methods.
+        class BooMooCheck < Check
+          def pattern
+            'Send<name = :boo | :moo> | SendWithArguments<name = :boo | :moo>'
+          end
+
+          def check(node)
+            issue :high, "The \"#{node.name}\" method indicates wandering cows in the code.",
+                  :cwe => 999
+          end
+        end
+      end
+    end
+
+Checks are subclasses of the `Scanny::Checks::Check` class and they implement two methods: `pattern` and `check`.
+
+### The `pattern` method
+
+The `pattern` method returns a [Machete](https://github.com/openSUSE/machete) pattern describing Rubinius AST nodes this check is interested in. See [Machete documentation](https://github.com/openSUSE/machete/blob/master/README.md) to learn about the pattern syntax.
+
+**Tip:** When creating a check pattern it's often useful to inspect how Rubinius transforms some Ruby constructs into AST nodes. You can do this using the `to_ast` method:
+
+    '42'.to_ast # => #<Rubinius::AST::FixnumLiteral:0x36fc @value=42 @line=1>
+
+### The `check` method
+
+The `check` method will be called on all AST nodes in the scanned files matched by the pattern returned by the `pattern` method. It will be passed the suspicious node. It can perform additional checks on it and report an issue if the node really is problematic.
+
+Issues are reported using the `issue` method. As its arguments it accepts issue impact level (`:info`, `:low`, `:medium` or `:high`) and a message for the user, optionally followed by an options hash. The only currently implemented option is `:cwe`, which allows associating the issue with a [CWE number](http://www.cvedetails.com/cwe-definitions.php) (or multiple numbers if you pass an array).
+
+### Tests
+
+Each check should be tested. The tests are written in RSpec and they are stored in  the `spec/scanny/checks` directory. This is how a test for our sample check may look like:
+
+    require "spec_helper"
+
+    module Scanny::Checks
+      describe BooMooCheck do
+        it "reports \"boo\" correctly" do
+          @runner.should check('boo').with_issue(
+            issue(:high, "The \"boo\" method indicates wandering cows in the code.", 999)
+          )
+        end
+
+        it "reports \"moo\" correctly" do
+          @runner.should check('moo').with_issue(
+            issue(:high, "The \"moo\" method indicates wandering cows in the code.", 999)
+          )
+        end
+      end
+    end
+
+Aim to create as simple test cases as possible. Also test different kinds of issues separately. See the existing tests to learn how more complex checks are tested.
+
 Acknowledgement
 ---------------
 
