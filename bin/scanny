@@ -1,7 +1,34 @@
 #!/usr/bin/env ruby
 
 require "rubygems"
+require "optparse"
 require File.expand_path(File.dirname(__FILE__) + "/../lib/scanny")
+
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: scanny [OPTIONS] files"
+  opt.separator  ""
+  opt.separator  "Options"
+
+  opt.on("-x","--xml","produce junit-compatible xml summaries.") do |environment|
+    options[:xml] = true
+  end
+
+  opt.on("-h","--help","help") do
+    puts opt_parser
+  end
+end
+
+opt_parser.parse!
+
+if options.has_key?(:xml)
+  if File.exists?('reports')
+    puts "Removing 'reports' directory"
+    FileUtils.rm_rf 'reports'
+  end
+  FileUtils.mkdir 'reports'
+end
 
 runner  = Scanny::Runner.new
 reports = []
@@ -21,6 +48,11 @@ end
 reports.each do |report|
   issues += report.issues.size
   puts report
+  if options.has_key? :xml
+    File.open("reports/Test-#{report.file}.xml", "w") do |file|
+      file << report.to_xml
+    end
+  end
 end
 puts
 
@@ -31,3 +63,4 @@ else
   puts "Found #{issues} issues."
   exit 1
 end
+

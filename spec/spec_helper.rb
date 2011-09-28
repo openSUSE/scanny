@@ -1,4 +1,5 @@
 require "scanny"
+require 'xpath_matcher'
 
 module CheckSpecHelpers
   def issue(*args)
