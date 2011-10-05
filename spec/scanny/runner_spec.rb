@@ -45,14 +45,14 @@ module Scanny
           end
 
           it "does not ignore lines before SCANNY_IGNORE" do
-            @runner.should_not check(<<-EOT).without_issues
+            @runner.should check(<<-EOT).with_n_issues(3)
               42
               boo # SCANNY_IGNORE
             EOT
           end
 
           it "does not ignore lines after SCANNY_IGNORE" do
-            @runner.should_not check(<<-EOT).without_issues
+            @runner.should check(<<-EOT).with_n_issues(3)
               boo # SCANNY_IGNORE
               42
             EOT
@@ -68,13 +68,13 @@ module Scanny
           end
 
           it "does not ignore a line with SCANNY_IGNORE_NEXT" do
-            @runner.should_not check(<<-EOT).without_issues
+            @runner.should check(<<-EOT).with_n_issues(3)
               42 # SCANNY_IGNORE_NEXT
             EOT
           end
 
           it "does not ignore 2nd line after SCANNY_IGNORE_NEXT" do
-            @runner.should_not check(<<-EOT).without_issues
+            @runner.should check(<<-EOT).with_n_issues(3)
               boo # SCANNY_IGNORE_NEXT
               boo
               42
@@ -93,13 +93,13 @@ module Scanny
           end
 
           it "does not ignore a line with SCANNY_IGNORE_NEXT_n" do
-            @runner.should_not check(<<-EOT).without_issues
+            @runner.should check(<<-EOT).with_n_issues(3)
               42 # SCANNY_IGNORE_NEXT_3
             EOT
           end
 
           it "does not ignore (n+1)th line after SCANNY_IGNORE_NEXT_n" do
-            @runner.should_not check(<<-EOT).without_issues
+            @runner.should check(<<-EOT).with_n_issues(3)
               boo # SCANNY_IGNORE_NEXT_3
               boo
               boo
