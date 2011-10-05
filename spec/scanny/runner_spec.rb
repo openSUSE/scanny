@@ -37,6 +37,78 @@ module Scanny
           @runner.check("rubbish.rb", "@$%")
         }.should raise_error(SyntaxError)
       end
+
+      describe "ignore comments" do
+        describe "SCANNY_IGNORE" do
+          it "ignores lines with SCANNY_IGNORE" do
+            @runner.should check('42 # SCANNY_IGNORE').without_issues
+          end
+
+          it "does not ignore lines before SCANNY_IGNORE" do
+            @runner.should_not check(<<-EOT).without_issues
+              42
+              boo # SCANNY_IGNORE
+            EOT
+          end
+
+          it "does not ignore lines after SCANNY_IGNORE" do
+            @runner.should_not check(<<-EOT).without_issues
+              boo # SCANNY_IGNORE
+              42
+            EOT
+          end
+        end
+
+        describe "SCANNY_IGNORE_NEXT" do
+          it "ignores line after SCANNY_IGNORE_NEXT" do
+            @runner.should check(<<-EOT).without_issues
+              boo # SCANNY_IGNORE_NEXT
+              42
+            EOT
+          end
+
+          it "does not ignore a line with SCANNY_IGNORE_NEXT" do
+            @runner.should_not check(<<-EOT).without_issues
+              42 # SCANNY_IGNORE_NEXT
+            EOT
+          end
+
+          it "does not ignore 2nd line after SCANNY_IGNORE_NEXT" do
+            @runner.should_not check(<<-EOT).without_issues
+              boo # SCANNY_IGNORE_NEXT
+              boo
+              42
+            EOT
+          end
+        end
+
+        describe "SCANNY_IGNORE_NEXT_n" do
+          it "ignores n lines after SCANNY_IGNORE_NEXT_n" do
+            @runner.should check(<<-EOT).without_issues
+              # SCANNY_IGNORE_NEXT_3
+              42
+              42
+              42
+            EOT
+          end
+
+          it "does not ignore a line with SCANNY_IGNORE_NEXT_n" do
+            @runner.should_not check(<<-EOT).without_issues
+              42 # SCANNY_IGNORE_NEXT_3
+            EOT
+          end
+
+          it "does not ignore (n+1)th line after SCANNY_IGNORE_NEXT_n" do
+            @runner.should_not check(<<-EOT).without_issues
+              boo # SCANNY_IGNORE_NEXT_3
+              boo
+              boo
+              boo
+              42
+            EOT
+          end
+        end
+      end
     end
 
     # We don't test #check_file since it's just a tiny wrapper around #check.
