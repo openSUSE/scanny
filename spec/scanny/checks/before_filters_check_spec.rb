@@ -20,6 +20,7 @@ module Scanny::Checks
         'self.before_filter :login_required'
       ).with_issue(@login_required_issue)
       @runner.should check('foo.before_filter :login_required').without_issues
+      @runner.should check('after_filter :login_required').without_issues
       @runner.should check(
         'before_filter :some_filter, :login_required, :another_filter'
       ).with_issue(@login_required_issue)
@@ -34,6 +35,7 @@ module Scanny::Checks
         'self.before_filter :admin_required'
       ).with_issue(@admin_required_issue)
       @runner.should check('foo.before_filter :admin_required').without_issues
+      @runner.should check('after_filter :admin_required').without_issues
       @runner.should check(
         'before_filter :some_filter, :admin_required, :another_filter'
       ).with_issue(@admin_required_issue)

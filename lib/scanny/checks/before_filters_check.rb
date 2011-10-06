@@ -7,6 +7,7 @@ module Scanny
         <<-EOT
           SendWithArguments<
             receiver  = Self,
+            name      = :before_filter,
             arguments = ActualArguments<
               array = [
                 any*,
