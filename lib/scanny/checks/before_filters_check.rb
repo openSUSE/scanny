@@ -1,8 +1,9 @@
 module Scanny
   module Checks
-    # Checks for use of the "before_filter" method with :login_required or
-    # :admin_required filters.
+    # Checks for use of the "before_filter" method with certain filters.
     class BeforeFiltersCheck < Check
+      FILTERS = [:login_required, :admin_required]
+
       def pattern
         <<-EOT
           SendWithArguments<
@@ -11,7 +12,7 @@ module Scanny
             arguments = ActualArguments<
               array = [
                 any*,
-                SymbolLiteral<value = :login_required | :admin_required>,
+                SymbolLiteral<value = #{FILTERS.map(&:inspect).join(' | ')}>,
                 any*
               ]
             >
@@ -22,7 +23,7 @@ module Scanny
       def check(node)
         filter_node = node.arguments.array.find do |argument|
           argument.is_a?(Rubinius::AST::SymbolLiteral) &&
-            [:login_required, :admin_required].include?(argument.value)
+            FILTERS.include?(argument.value)
         end
 
         issue :info,
