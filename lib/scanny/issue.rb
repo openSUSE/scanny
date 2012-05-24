@@ -17,7 +17,7 @@ module Scanny
 
     def to_s
       cwe_suffix = if @cwe
-        " (" + @cwe.to_a.map { |cwe| "CWE-#{cwe}" }.join(", ") + ")"
+        " (" + Array(@cwe).map { |cwe| "CWE-#{cwe}" }.join(", ") + ")"
       else
         ""
       end
