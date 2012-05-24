@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-require "rubygems"
 require "optparse"
-require File.expand_path(File.dirname(__FILE__) + "/../lib/scanny")
+require_relative "../lib/scanny"
 
 options = {}
 
