@@ -1,16 +1,16 @@
 module ConstSpecHelpers
   def with_const(const, &block)
-    saved_const = {}
+    saved_consts = {}
     const.each do |const, val|
-      saved_const[const] = Object.const_get(const)
+      saved_consts[const] = Object.const_get(const)
       Object.const_set(const, val)
     end
 
     begin
       block.call
     ensure
-      const.each do |const, _|
-        Object.const_set(const, saved_const[ const ])
+      const.each_key do |const|
+        Object.const_set(const, saved_consts[ const ])
       end
     end
   end
