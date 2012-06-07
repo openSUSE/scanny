@@ -1,9 +1,9 @@
 require "spec_helper"
 
 module Scanny::Checks
-  describe XssCheck do
+  describe XssSendCheck do
     before :each do
-      @runner = Scanny::Runner.new(XssCheck.new)
+      @runner = Scanny::Runner.new(XssSendCheck.new)
       @issue = Scanny::Issue.new("scanned_file.rb", 1, :high, "XSS issue", 79)
     end
 
