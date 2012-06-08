@@ -25,7 +25,7 @@ module Scanny
         "Assigning request parameters into render_api_error can lead to XSS issues."
       end
 
-      #high            CWE-79                  render_api_error.*params\s*\[
+      # render_api_error params[:password]
       def pattern_params
         <<-EOT
           SendWithArguments<
@@ -43,7 +43,7 @@ module Scanny
         EOT
       end
 
-      #medium          CWE-79                  render_api_error.*#\{
+      # render_api_error "#{secure_data}"
       def pattern_dynamic_string
         <<-EOT
           SendWithArguments<

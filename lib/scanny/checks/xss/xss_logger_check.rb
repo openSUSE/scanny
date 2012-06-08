@@ -20,7 +20,7 @@ module Scanny
         "Assigning request parameters into logger can lead to XSS issues."
       end
 
-      #low             CWE-79                  logger.*params\s*\[
+      # logger params[:password]
       def pattern_params
         <<-EOT
           SendWithArguments<
@@ -37,7 +37,7 @@ module Scanny
         EOT
       end
 
-      #low             CWE-79                  logger.*#\{
+      # logger "#{secure_data}"
       def pattern_dynamic_string
         <<-EOT
           SendWithArguments<
