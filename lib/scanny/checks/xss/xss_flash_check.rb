@@ -25,7 +25,7 @@ module Scanny
         "Assigning request parameters into flash can lead to XSS issues."
       end
 
-      #high            CWE-79                  flash\[\:warning\]\s*=\s*.*params\s*\[
+      # flash[:warning] = params[:password]
       def pattern_params
         <<-EOT
           ElementAssignment<
@@ -44,7 +44,7 @@ module Scanny
         EOT
       end
 
-      #medium          CWE-79                  flash\[\:warning\]\s*=\s*.*#\{
+      # flash[:warning] = "#{secure_data}"
       def pattern_dynamic_string
         <<-EOT
           ElementAssignment<

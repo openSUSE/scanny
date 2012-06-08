@@ -17,7 +17,7 @@ module Scanny
         "Marking string as safe can lead to XSS issues."
       end
 
-      #info           CWE-000                 (mark_as_xss_protected|mark_methods_as_xss_safe)
+      # mark_as_xss_protected
       def pattern_mark_as
         <<-EOT
           Send<name = :mark_as_xss_protected | :mark_methods_as_xss_safe>
