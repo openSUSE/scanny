@@ -13,13 +13,18 @@ module Scanny
 
       def check(node)
         if Machete.matches?(node, pattern_params)
-          issue :high, "XSS issue", :cwe => 79
+          issue :high, warning_message, :cwe => 79
         elsif Machete.matches?(node, pattern_dynamic_string)
-          issue :medium, "XSS issue", :cwe => 79
+          issue :medium, warning_message, :cwe => 79
         end
       end
 
       private
+
+      def warning_message
+        "Assigning request parameters into render_api_error can lead to XSS issues."
+      end
+
         #high            CWE-79                  render_api_error.*params\s*\[
         def pattern_params
           <<-EOT

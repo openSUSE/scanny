@@ -11,10 +11,14 @@ module Scanny
       end
 
       def check(node)
-        issue :low, "XSS issue", :cwe => 79
+        issue :low, warning_message, :cwe => 79
       end
 
       private
+
+      def warning_message
+        "Assigning request parameters into logger can lead to XSS issues."
+      end
 
         #low             CWE-79                  logger.*params\s*\[
         def pattern_params

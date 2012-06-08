@@ -10,10 +10,14 @@ module Scanny
       end
 
       def check(node)
-        issue :high, "XSS issue", :cwe => 79
+        issue :high, warning_message, :cwe => 79
       end
 
       private
+
+      def warning_message
+        "Send file or data to client in \"inline\" mode can lead to XSS issues."
+      end
 
         #medium          CWE-79                  send_file.*:disposition\s*=>\s*\'inline\'
         #medium          CWE-79                  send_data.*:disposition\s*=>\s*\'inline\'
