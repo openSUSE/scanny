@@ -1,9 +1,7 @@
 module Scanny
   module Checks
-    # TODO: change documentation
-    # Checks for methods executing external commands that pass the command
-    # through shell expansion. This can cause unwanted code execution if the
-    # command includes unescaped input.
+    # Checks for send_ methods that are called with :disposition => 'inline'.
+    # This can lead to download private file from server or to XSS issue.
     class XssSendCheck < Check
       def pattern
         pattern_send
