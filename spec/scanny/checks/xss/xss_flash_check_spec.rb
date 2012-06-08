@@ -11,11 +11,11 @@ module Scanny::Checks
 
     it "reports \"flash[:warning] = params[:password]\" correctly" do
       @runner.should check("flash[:warning] = params[:password]").with_issue(@issue_high)
-      @runner.should check("flash[:warning] = \"Static warning\"").without_issues
     end
 
     it "reports \"flash[:warning] = \"\#{interpolation}\" correctly" do
       @runner.should check('flash[:warning] = "#{value}"').with_issue(@issue_medium)
+      @runner.should check("flash[:warning] = \"Static warning\"").without_issues
     end
   end
 end
