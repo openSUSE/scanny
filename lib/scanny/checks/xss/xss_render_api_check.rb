@@ -6,8 +6,8 @@ module Scanny
     class XssRenderApiCheck < Check
       def pattern
         [
-          render_api_error_with_params,
-          render_api_error_with_dynamic_string
+          pattern_params,
+          pattern_dynamic_string
         ].join("|")
       end
 
@@ -26,7 +26,7 @@ module Scanny
         end
 
         #high            CWE-79                  render_api_error.*params\s*\[
-        def render_api_error_with_params
+        def pattern_params
           <<-EOT
             SendWithArguments<
               name = :render_api_error,
@@ -44,7 +44,7 @@ module Scanny
         end
 
         #medium          CWE-79                  render_api_error.*#\{
-        def render_api_error_with_dynamic_string
+        def pattern_dynamic_string
           <<-EOT
             SendWithArguments<
               arguments = ActualArguments<

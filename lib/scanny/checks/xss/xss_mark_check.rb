@@ -4,7 +4,7 @@ module Scanny
     # that are called and can mark dangerous string as safe for html.
     class XssMarkCheck < Check
       def pattern
-        mark_as_check
+        pattern_mark_as
       end
 
       def check(node)
@@ -14,7 +14,7 @@ module Scanny
       private
 
         #info           CWE-000                 (mark_as_xss_protected|mark_methods_as_xss_safe)
-        def mark_as_check
+        def pattern_mark_as
           <<-EOT
             Send<
               name = :mark_as_xss_protected | :mark_methods_as_xss_safe

@@ -6,7 +6,7 @@ module Scanny
     # command includes unescaped input.
     class XssSendCheck < Check
       def pattern
-        send_file_and_data
+        pattern_send
       end
 
       def check(node)
@@ -17,7 +17,7 @@ module Scanny
 
         #medium          CWE-79                  send_file.*:disposition\s*=>\s*\'inline\'
         #medium          CWE-79                  send_data.*:disposition\s*=>\s*\'inline\'
-        def send_file_and_data
+        def pattern_send
           <<-EOT
           SendWithArguments<
             name = :send_file | :send_data,

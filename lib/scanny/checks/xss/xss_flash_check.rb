@@ -6,8 +6,8 @@ module Scanny
     class XssFlashCheck < Check
       def pattern
         [
-          flash_warning_assignment_from_params,
-          flash_warning_assignment_from_dynamic_string
+          pattern_params,
+          pattern_dynamic_string
         ].join("|")
       end
 
@@ -26,7 +26,7 @@ module Scanny
         end
 
         #high            CWE-79                  flash\[\:warning\]\s*=\s*.*params\s*\[
-        def flash_warning_assignment_from_params
+        def pattern_params
           <<-EOT
             ElementAssignment<
               arguments = ActualArguments<
@@ -48,7 +48,7 @@ module Scanny
         end
 
         #medium          CWE-79                  flash\[\:warning\]\s*=\s*.*#\{
-        def flash_warning_assignment_from_dynamic_string
+        def pattern_dynamic_string
           <<-EOT
             ElementAssignment<
               arguments = ActualArguments<
