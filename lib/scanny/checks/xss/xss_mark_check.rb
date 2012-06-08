@@ -8,10 +8,14 @@ module Scanny
       end
 
       def check(node)
-        issue :info, "XSS issue", :cwe => 0
+        issue :info, warning_message, :cwe => 0
       end
 
       private
+
+      def warning_message
+        "Marking string as safe can lead to XSS issues."
+      end
 
         #info           CWE-000                 (mark_as_xss_protected|mark_methods_as_xss_safe)
         def pattern_mark_as
