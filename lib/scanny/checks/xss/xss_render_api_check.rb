@@ -12,19 +12,14 @@ module Scanny
       end
 
       def check(node)
-        if include_node?(node, Rubinius::AST::SendWithArguments)
+        if Machete.matches?(node, pattern_params)
           issue :high, "XSS issue", :cwe => 79
-        elsif include_node?(node, Rubinius::AST::DynamicString)
+        elsif Machete.matches?(node, pattern_dynamic_string)
           issue :medium, "XSS issue", :cwe => 79
         end
       end
 
       private
-
-        def include_node?(node, klass)
-          node.arguments.array.any? { |node| node.class == klass }
-        end
-
         #high            CWE-79                  render_api_error.*params\s*\[
         def pattern_params
           <<-EOT
