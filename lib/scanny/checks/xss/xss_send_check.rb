@@ -4,7 +4,6 @@ module Scanny
     # Checks for methods executing external commands that pass the command
     # through shell expansion. This can cause unwanted code execution if the
     # command includes unescaped input.
-
     class XssSendCheck < Check
       def pattern
         send_file_and_data
