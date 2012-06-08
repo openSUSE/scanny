@@ -20,9 +20,7 @@ module Scanny
       #info           CWE-000                 (mark_as_xss_protected|mark_methods_as_xss_safe)
       def pattern_mark_as
         <<-EOT
-          Send<
-            name = :mark_as_xss_protected | :mark_methods_as_xss_safe
-          >
+          Send<name = :mark_as_xss_protected | :mark_methods_as_xss_safe>
         EOT
       end
     end
