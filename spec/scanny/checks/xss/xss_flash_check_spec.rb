@@ -4,8 +4,9 @@ module Scanny::Checks
   describe XssFlashCheck do
     before :each do
       @runner = Scanny::Runner.new(XssFlashCheck.new)
-      @issue_high   = Scanny::Issue.new("scanned_file.rb", 1, :high,    "XSS issue", 79)
-      @issue_medium = Scanny::Issue.new("scanned_file.rb", 1, :medium,  "XSS issue", 79)
+      @warning_message = XssFlashCheck.new.send(:warning_message)
+      @issue_high = Scanny::Issue.new("scanned_file.rb", 1, :high, @warning_message, 79)
+      @issue_medium = Scanny::Issue.new("scanned_file.rb", 1, :medium, @warning_message, 79)
     end
 
     it "reports \"flash[:warning] = params[:password]\" correctly" do

@@ -4,7 +4,8 @@ module Scanny::Checks
   describe XssLoggerCheck do
     before :each do
       @runner = Scanny::Runner.new(XssLoggerCheck.new)
-      @issue  = Scanny::Issue.new("scanned_file.rb", 1, :low, "XSS issue", 79)
+      @warning_message = XssLoggerCheck.new.send(:warning_message)
+      @issue  = Scanny::Issue.new("scanned_file.rb", 1, :low, @warning_message, 79)
     end
 
     it "reports \"logger(params[:password])\" correctly" do

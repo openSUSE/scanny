@@ -4,7 +4,8 @@ module Scanny::Checks
   describe XssMarkCheck do
     before :each do
       @runner = Scanny::Runner.new(XssMarkCheck.new)
-      @issue  = Scanny::Issue.new("scanned_file.rb", 1, :info, "XSS issue", 0)
+      @warning_message = XssMarkCheck.new.send(:warning_message)
+      @issue  = Scanny::Issue.new("scanned_file.rb", 1, :info, @warning_message, 0)
     end
 
     it "reports \"mark_as_xss_protected\" correctly" do
