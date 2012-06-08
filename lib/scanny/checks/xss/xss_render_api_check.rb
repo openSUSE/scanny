@@ -25,43 +25,43 @@ module Scanny
         "Assigning request parameters into render_api_error can lead to XSS issues."
       end
 
-        #high            CWE-79                  render_api_error.*params\s*\[
-        def pattern_params
-          <<-EOT
-            SendWithArguments<
-              name = :render_api_error,
-              arguments = ActualArguments<
-                array = [
-                  any*,
-                  SendWithArguments<
-                    receiver = Send<name = :params>
-                  >,
-                  any*
-                ]
-              >
+      #high            CWE-79                  render_api_error.*params\s*\[
+      def pattern_params
+        <<-EOT
+          SendWithArguments<
+            name = :render_api_error,
+            arguments = ActualArguments<
+              array = [
+                any*,
+                SendWithArguments<
+                  receiver = Send<name = :params>
+                >,
+                any*
+              ]
             >
-          EOT
-        end
+          >
+        EOT
+      end
 
-        #medium          CWE-79                  render_api_error.*#\{
-        def pattern_dynamic_string
-          <<-EOT
-            SendWithArguments<
-              arguments = ActualArguments<
-                array = [
-                  DynamicString<
-                    array = [
-                      ToString<
-                        value = Send<name = any>
-                      >
-                    ]
-                  >
-                ]
-              >,
-              name = :render_api_error
-            >
-          EOT
-        end
+      #medium          CWE-79                  render_api_error.*#\{
+      def pattern_dynamic_string
+        <<-EOT
+          SendWithArguments<
+            arguments = ActualArguments<
+              array = [
+                DynamicString<
+                  array = [
+                    ToString<
+                      value = Send<name = any>
+                    >
+                  ]
+                >
+              ]
+            >,
+            name = :render_api_error
+          >
+        EOT
+      end
     end
   end
 end
