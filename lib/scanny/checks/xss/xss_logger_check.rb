@@ -20,44 +20,44 @@ module Scanny
         "Assigning request parameters into logger can lead to XSS issues."
       end
 
-        #low             CWE-79                  logger.*params\s*\[
-        def pattern_params
-          <<-EOT
-            SendWithArguments<
-              arguments = ActualArguments<
-                array = [
-                  SendWithArguments<
-                    name = :[],
-                    receiver = Send<
-                      name = :params
-                    >
+      #low             CWE-79                  logger.*params\s*\[
+      def pattern_params
+        <<-EOT
+          SendWithArguments<
+            arguments = ActualArguments<
+              array = [
+                SendWithArguments<
+                  name = :[],
+                  receiver = Send<
+                    name = :params
                   >
-                ]
-              >,
-              name = :logger
-            >
-          EOT
-        end
+                >
+              ]
+            >,
+            name = :logger
+          >
+        EOT
+      end
 
-        #low             CWE-79                  logger.*#\{
-        def pattern_dynamic_string
-          <<-EOT
-            SendWithArguments<
-              arguments = ActualArguments<
-                array = [
-                  DynamicString<
-                    array = [
-                      ToString<
-                        value = Send<name = any>
-                      >
-                    ]
-                  >
-                ]
-              >,
-              name = :logger
-            >
-          EOT
-        end
+      #low             CWE-79                  logger.*#\{
+      def pattern_dynamic_string
+        <<-EOT
+          SendWithArguments<
+            arguments = ActualArguments<
+              array = [
+                DynamicString<
+                  array = [
+                    ToString<
+                      value = Send<name = any>
+                    >
+                  ]
+                >
+              ]
+            >,
+            name = :logger
+          >
+        EOT
+      end
     end
   end
 end

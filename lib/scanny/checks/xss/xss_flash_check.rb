@@ -25,53 +25,53 @@ module Scanny
         "Assigning request parameters into flash can lead to XSS issues."
       end
 
-        #high            CWE-79                  flash\[\:warning\]\s*=\s*.*params\s*\[
-        def pattern_params
-          <<-EOT
-            ElementAssignment<
-              arguments = ActualArguments<
-                array = [
-                  SymbolLiteral<value = :warning>,
-                  SendWithArguments<
-                    name = :[],
-                    receiver = Send<
-                      name = :params>
-                  >
-                ]
-              >,
-              name = :[]=,
-              receiver = Send<
-                name = :flash
-              >
-            >
-          EOT
-        end
-
-        #medium          CWE-79                  flash\[\:warning\]\s*=\s*.*#\{
-        def pattern_dynamic_string
-          <<-EOT
-            ElementAssignment<
-              arguments = ActualArguments<
+      #high            CWE-79                  flash\[\:warning\]\s*=\s*.*params\s*\[
+      def pattern_params
+        <<-EOT
+          ElementAssignment<
+            arguments = ActualArguments<
               array = [
-                SymbolLiteral<
-                  value = :warning
-                >,
-                DynamicString<
-                  array = [
-                    ToString<
-                      value = Send<name = any>
-                    >
-                  ]
+                SymbolLiteral<value = :warning>,
+                SendWithArguments<
+                  name = :[],
+                  receiver = Send<
+                    name = :params>
                 >
               ]
-              >,
-              name = :[]=,
-              receiver = Send<
-                name = :flash
-              >
+            >,
+            name = :[]=,
+            receiver = Send<
+              name = :flash
             >
-          EOT
-        end
+          >
+        EOT
+      end
+
+      #medium          CWE-79                  flash\[\:warning\]\s*=\s*.*#\{
+      def pattern_dynamic_string
+        <<-EOT
+          ElementAssignment<
+            arguments = ActualArguments<
+            array = [
+              SymbolLiteral<
+                value = :warning
+              >,
+              DynamicString<
+                array = [
+                  ToString<
+                    value = Send<name = any>
+                  >
+                ]
+              >
+            ]
+            >,
+            name = :[]=,
+            receiver = Send<
+              name = :flash
+            >
+          >
+        EOT
+      end
     end
   end
 end
