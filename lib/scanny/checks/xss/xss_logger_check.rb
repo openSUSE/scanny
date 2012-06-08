@@ -5,8 +5,8 @@ module Scanny
     class XssLoggerCheck < Check
       def pattern
         [
-          send_params_to_logger,
-          send_dynamic_string_to_logger,
+          pattern_params,
+          pattern_dynamic_string,
         ].join("|")
       end
 
@@ -17,7 +17,7 @@ module Scanny
       private
 
         #low             CWE-79                  logger.*params\s*\[
-        def send_params_to_logger
+        def pattern_params
           <<-EOT
             SendWithArguments<
               arguments = ActualArguments<
@@ -36,7 +36,7 @@ module Scanny
         end
 
         #low             CWE-79                  logger.*#\{
-        def send_dynamic_string_to_logger
+        def pattern_dynamic_string
           <<-EOT
             SendWithArguments<
               arguments = ActualArguments<
