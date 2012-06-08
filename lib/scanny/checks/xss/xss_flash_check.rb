@@ -34,15 +34,12 @@ module Scanny
                 SymbolLiteral<value = :warning>,
                 SendWithArguments<
                   name = :[],
-                  receiver = Send<
-                    name = :params>
+                  receiver = Send<name = :params>
                 >
               ]
             >,
             name = :[]=,
-            receiver = Send<
-              name = :flash
-            >
+            receiver = Send<name = :flash>
           >
         EOT
       end
@@ -52,23 +49,19 @@ module Scanny
         <<-EOT
           ElementAssignment<
             arguments = ActualArguments<
-            array = [
-              SymbolLiteral<
-                value = :warning
-              >,
-              DynamicString<
-                array = [
-                  ToString<
-                    value = Send<name = any>
-                  >
-                ]
-              >
-            ]
+              array = [
+                SymbolLiteral<value = :warning>,
+                DynamicString<
+                  array = [
+                    ToString<
+                      value = Send<name = any>
+                    >
+                  ]
+                >
+              ]
             >,
             name = :[]=,
-            receiver = Send<
-              name = :flash
-            >
+            receiver = Send<name = :flash>
           >
         EOT
       end

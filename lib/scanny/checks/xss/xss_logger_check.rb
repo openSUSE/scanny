@@ -28,9 +28,7 @@ module Scanny
               array = [
                 SendWithArguments<
                   name = :[],
-                  receiver = Send<
-                    name = :params
-                  >
+                  receiver = Send<name = :params>
                 >
               ]
             >,
