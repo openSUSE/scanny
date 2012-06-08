@@ -1,5 +1,8 @@
 module Scanny
   module Checks
+    # Check for render_api_error method that are called with params or
+    # dynamic string. This allows us to avoid executing dangerous
+    # code on exception handler UI.
     class XssRenderApiCheck < Check
       def pattern
         [

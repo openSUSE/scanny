@@ -1,5 +1,8 @@
 module Scanny
   module Checks
+    # Check for flash method that are called with params or
+    # dynamic string. This allows us to avoid showing the user
+    # dangerous HTML code.
     class XssFlashCheck < Check
       def pattern
         [

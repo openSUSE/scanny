@@ -1,12 +1,13 @@
 module Scanny
   module Checks
+    # Check for methods mark_as_xss_protected and mark_methods_as_xss_safe
+    # that are called and can mark dangerous string as safe for html.
     class XssMarkCheck < Check
       def pattern
         mark_as_check
       end
 
       def check(node)
-
         issue :info, "XSS issue", :cwe => 0
       end
 

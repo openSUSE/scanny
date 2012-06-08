@@ -1,5 +1,7 @@
 module Scanny
   module Checks
+    # Check for logger method that are called with params or
+    # dynamic string. This allows us to avoid executing dangerous code.
     class XssLoggerCheck < Check
       def pattern
         [
