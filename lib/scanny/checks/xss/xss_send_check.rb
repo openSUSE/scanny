@@ -1,7 +1,7 @@
 module Scanny
   module Checks
-    # Checks for send_ methods that are called with :disposition => 'inline'.
-    # This can lead to download private file from server or to XSS issue.
+    # Checks for send_* methods that are called with :disposition => 'inline'.
+    # This can lead to download of private files from a server or to a XSS issue.
     class XssSendCheck < Check
       def pattern
         pattern_send

@@ -1,7 +1,7 @@
 module Scanny
   module Checks
-    # Check for logger method that are called with params or
-    # dynamic string. This allows us to avoid executing dangerous code.
+    # Check for logger methods that are called with request params or
+    # a dynamic string. This allows us to avoid executing dangerous code.
     class XssLoggerCheck < Check
       def pattern
         [
