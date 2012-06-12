@@ -4,7 +4,7 @@ module Scanny::Checks
   describe XssLoggerCheck do
     before :each do
       @runner = Scanny::Runner.new(XssLoggerCheck.new)
-      @warning_message = XssLoggerCheck.new.send(:warning_message)
+      @warning_message = "Assigning request parameters into logger can lead to XSS issues."
       @issue  = Scanny::Issue.new("scanned_file.rb", 1, :low, @warning_message, 79)
     end
 

@@ -4,7 +4,7 @@ module Scanny::Checks
   describe XssSendCheck do
     before :each do
       @runner = Scanny::Runner.new(XssSendCheck.new)
-      @warning_message = XssSendCheck.new.send(:warning_message)
+      @warning_message = "Send file or data to client in \"inline\" mode can lead to XSS issues."
       @issue = Scanny::Issue.new("scanned_file.rb", 1, :high, @warning_message, 79)
     end
 
