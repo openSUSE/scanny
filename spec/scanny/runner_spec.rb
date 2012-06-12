@@ -16,7 +16,7 @@ module Scanny
         checks = Runner.new.checks
 
         checks.any? { |ch| ch.is_a?(Checks::TestCheck) }.should be_true
-        checks.any? { |ch| ch.is_a?(Checks::XssCheck) }.should be_true
+        checks.any? { |ch| ch.is_a?(Checks::XssSendCheck) }.should be_true
       end
     end
 
