@@ -1,11 +1,12 @@
 require "spec_helper"
 
-module Scanny::Checks
+module Scanny::Checks::Sql
   describe FindByCheck do
     before do
       @runner = Scanny::Runner.new(FindByCheck.new)
       @message = "Use of external parameters in queries to the database " +
                  "can lead to SQL injection issue"
+      @issue_info = issue(:info, @message, 89)
       @issue_low = issue(:low, @message, 89)
       @issue_medium = issue(:medium, @message, 89)
       @issue_high = issue(:high, @message, 89)
@@ -42,6 +43,30 @@ module Scanny::Checks
     it "reports \"find\" calls with :limit key and session method as value correctly" do
       @runner.should check("find(:first, :limit => session[:password])").with_issue(@issue_high)
       @runner.should_not check("find(:first, :limit => no_session[:password])").with_issue(@issue_high)
+    end
+
+    it "reports \"execute\" calls on class correctly" do
+      @runner.should check('User.execute').with_issue(@issue_low)
+    end
+
+    it "reports \"find_by_sql\" calls on class correctly" do
+      @runner.should check('User.find_by_sql').with_issue(@issue_low)
+    end
+
+    it "reports \"paginate\" calls on class correctly" do
+      @runner.should check('User.paginate').with_issue(@issue_low)
+    end
+
+    it "reports \"execute\" calls on class with params correctly" do
+      @runner.should check('User.execute params[:password]').with_issue(@issue_high)
+    end
+
+    it "reports \"find_by_sql\" calls on class with params correctly" do
+      @runner.should check('User.find_by_sql params[:password]').with_issue(@issue_high)
+    end
+
+    it "reports \"paginate\" calls on class with params correctly" do
+      @runner.should check('User.paginate params[:password]').with_issue(@issue_high)
     end
   end
 end
