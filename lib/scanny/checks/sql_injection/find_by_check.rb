@@ -2,11 +2,24 @@ module Scanny
   module Checks
     class FindByCheck < Check
       def pattern
-        find_by_with_params
+        [
+          pattern_find_by_with_params,
+          pattern_find_by_with_conditions,
+          pattern_find_by_with_conditions_dynamic_string,
+          pattern_find_with_conditions_and_params_or_limit
+        ].join("|")
       end
 
       def check(node)
-        issue :low, warning_message, :cwe => 89
+        if Machete.matches?(node, pattern_find_by_with_params)
+          issue :low, warning_message, :cwe => 89
+        elsif Machete.matches?(node, pattern_find_by_with_conditions_dynamic_string)
+          issue :medium, warning_message, :cwe => 89
+        elsif Machete.matches?(node, pattern_find_with_conditions_and_params_or_limit)
+          issue :high, warning_message, :cwe => 89
+        elsif Machete.matches?(node, pattern_find_by_with_conditions)
+          issue :low, warning_message, :cwe => 89
+        end
       end
 
       private
@@ -37,7 +50,7 @@ module Scanny
         EOT
       end
 
-      # find_by_id(:conditions => "string")
+      # find(:first, :conditions => "string")
       def pattern_find_by_with_conditions
         <<-EOT
           SendWithArguments<
@@ -46,37 +59,66 @@ module Scanny
                 any*,
                 HashLiteral<
                   array = [
+                    any*,
                     SymbolLiteral<
                       value = :conditions
-                    >
+                    >,
+                    any*
                   ]
                 >,
                 any*
               ]
             >,
-            name ^= :find_by
-          >"
+            name = :find
+          >
         EOT
       end
 
-      # find_by_id(:conditions => "#{string}")
+      # find(:first, :conditions => "#{string}")
       def pattern_find_by_with_conditions_dynamic_string
         <<-EOT
           SendWithArguments<
             arguments = ActualArguments<
               array = [
+                any*,
                 HashLiteral<
                   array = [
-                    SymbolLiteral<
-                      value = :conditions
-                    >,
-                    DynamicString<any>
+                    any*,
+                    SymbolLiteral<value = :conditions>,
+                    DynamicString,
+                    any*
                   ]
-                >
+                >,
+                any*
               ]
             >,
-            name ^= :find_by
+            name = :find
           >
+        EOT
+      end
+
+      def pattern_find_with_conditions_and_params_or_limit
+        <<-EOT
+          SendWithArguments<
+            arguments = ActualArguments<
+              array = [
+                any*,
+                HashLiteral<
+                  array = [
+                    any*,
+                    SymbolLiteral<value = :limit | :conditions>,
+                    any*,
+                    SendWithArguments<
+                      name = :[],
+                      receiver = Send<name = :params | :session>
+                    >,
+                    any*
+                  ]
+                >,
+                any*
+              ]
+            >,
+            name = :find>
         EOT
       end
     end
