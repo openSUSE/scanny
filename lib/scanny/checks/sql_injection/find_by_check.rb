@@ -14,18 +14,19 @@ module Scanny
         end
 
         def check(node)
-          if Machete.matches?(node, pattern_find_by_sql_and_execute_on_models_with_params)
-            issue :high, warning_message, :cwe => 89
-          elsif Machete.matches?(node, pattern_find_by_sql_and_execute_on_models)
-            issue :low, warning_message, :cwe => 89
-          elsif Machete.matches?(node, pattern_find_by_with_params)
-              issue :low, warning_message, :cwe => 89
-          elsif Machete.matches?(node, pattern_find_by_with_conditions_dynamic_string)
-            issue :medium, warning_message, :cwe => 89
-          elsif Machete.matches?(node, pattern_find_with_conditions_and_params_or_limit)
-            issue :high, warning_message, :cwe => 89
-          elsif Machete.matches?(node, pattern_find_by_with_conditions)
-            issue :low, warning_message, :cwe => 89
+          impact(:low) do
+            report_issue(pattern_find_by_sql_and_execute_on_models, :cwe => 89)
+            report_issue(pattern_find_by_with_params, :cwe => 89)
+            report_issue(pattern_find_by_with_conditions, :cwe => 89)
+          end
+
+          impact(:medium) do
+            report_issue(pattern_find_by_with_conditions_dynamic_string, :cwe => 89)
+          end
+
+          impact(:high) do
+            report_issue(pattern_find_by_sql_and_execute_on_models_with_params, :cwe => 89)
+            report_issue(pattern_find_with_conditions_and_params_or_limit, :cwe => 89)
           end
         end
 

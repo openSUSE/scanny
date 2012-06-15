@@ -11,10 +11,13 @@ module Scanny
         end
 
         def check(node)
-          if Machete.matches?(node, pattern_sanitize_sql)
-            issue :info, warning_message, :cwe => 89
-          else
-            issue :high, warning_message, :cwe => 89
+          impact(:info) do
+            report_issue(pattern_sanitize_sql, :cwe => 89)
+          end
+
+          impact(:high) do
+            report_issue(pattern_options_with_select_in_select, :cwe => 89)
+            report_issue(pattern_params_in_select, :cwe => 89)
           end
         end
 
