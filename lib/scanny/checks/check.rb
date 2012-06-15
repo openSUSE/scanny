@@ -5,6 +5,7 @@ module Scanny
         @file = file
         @line = node.line
         @issues = []
+        @node = node
 
         check(node)
 
@@ -19,6 +20,17 @@ module Scanny
 
       def issue(impact, message, options = {})
         @issues << Issue.new(@file, @line, impact, message, options[:cwe])
+      end
+
+      def impact(impact)
+        @impact = impact
+        yield
+      end
+
+      def report_issue(pattern, options = {})
+        if Machete.matches?(@node, pattern)
+          issue @impact, warning_message, :cwe => options[:cwe]
+        end
       end
     end
   end
