@@ -12,13 +12,8 @@ module Scanny::Checks::Sql
       @issue_high = issue(:high, @message, 89)
     end
 
-    it "reports \"find_by_\" calls with \"params[:description]\" correctly" do
-      @runner.should check("find_by_description(params[:description])").with_issue(@issue_low)
-      @runner.should check("find_by_description(no_params[:description])").without_issues
-    end
-
     it "reports \"find\" calls with :conditions key and static value correctly" do
-      @runner.should check("find(:first, :conditions => { :id => 10 })").with_issue(@issue_low)
+      @runner.should chejck("find(:first, :conditions => { :id => 10 })").with_issue(@issue_low)
     end
 
     it "reports \"find\" calls with :conditions key and dynamic value correctly" do
