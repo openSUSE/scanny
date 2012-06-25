@@ -1,6 +1,6 @@
 require "spec_helper"
 
-module Scanny::Checks
+module Scanny::Checks::SystemTools
   describe GpgUsageCheck do
     before do
       @runner = Scanny::Runner.new(GpgUsageCheck.new)
