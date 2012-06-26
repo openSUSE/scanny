@@ -12,13 +12,13 @@ module Scanny
             arguments = ActualArguments<
               array = [
                 any*,
-                StringLiteral<string *= '#{method}'>,
+                StringLiteral<string @= /#{method}/>,
                 any*
               ]
             >
           >
           |
-          ExecuteString<string *= '#{method}'>
+          ExecuteString<string @= /#{method}/>
         EOT
         end
       end
