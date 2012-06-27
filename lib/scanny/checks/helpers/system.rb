@@ -1,10 +1,8 @@
 module Scanny
   module Checks
-    module SystemTools
-      class SystemCheck < Check
-        private
-
-        def check_usage_for(method)
+    module Helpers
+      module System
+        def build_pattern_exec_command(method)
         <<-EOT
           SendWithArguments
           <
@@ -12,13 +10,13 @@ module Scanny
             arguments = ActualArguments<
               array = [
                 any*,
-                StringLiteral<string @= /#{method}/>,
+                StringLiteral<string *= /#{method}/>,
                 any*
               ]
             >
           >
           |
-          ExecuteString<string @= /#{method}/>
+          ExecuteString<string *= /#{method}/>
         EOT
         end
       end

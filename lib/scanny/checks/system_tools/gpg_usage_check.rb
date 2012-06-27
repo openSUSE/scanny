@@ -1,14 +1,14 @@
-require_relative "system_check"
-
 module Scanny
   module Checks
     module SystemTools
-      class GpgUsageCheck < SystemCheck
+      class GpgUsageCheck < Check
+        include ::Scanny::Checks::Helpers
+
         def pattern
           [
             pattern_gpg_class,
             pattern_gpg_method,
-            check_usage_for(:gpg)
+            build_pattern_exec_command('gpg')
           ].join("|")
         end
 

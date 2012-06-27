@@ -1,20 +1,20 @@
-require_relative "system_check"
-
 module Scanny
   module Checks
     module SystemTools
-      class UnzipCheck < SystemCheck
+      class UnzipCheck < Check
+        include ::Scanny::Checks::Helpers
+
         def pattern
           [
-            check_usage_for('unzip\s+[^(=|&)]'),
-            check_usage_for('unzip.*-:')
+            build_pattern_exec_command('unzip\s+[^(=|&)]'),
+            build_pattern_exec_command('unzip.*-:')
           ].join("|")
         end
 
         def check(node)
-          if Machete.matches?(node, check_usage_for('unzip.*-:'))
+          if Machete.matches?(node, build_pattern_exec_command('unzip.*-:'))
             issue :high, warning_message, :cwe => [23, 88]
-          elsif Machete.matches?(node, check_usage_for('unzip\s+[^(=|&)]'))
+          elsif Machete.matches?(node, build_pattern_exec_command('unzip\s+[^(=|&)]'))
             issue :medium, warning_message, :cwe => [23, 88]
           end
         end

@@ -1,9 +1,11 @@
 module Scanny
   module Checks
     module SystemTools
-      class SudoCheck < SystemCheck
+      class SudoCheck < Check
+        include ::Scanny::Checks::Helpers
+
         def pattern
-          check_usage_for(:sudo)
+          build_pattern_exec_command('sudo')
         end
 
         def check(node)
