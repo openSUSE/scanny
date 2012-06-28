@@ -24,7 +24,7 @@ RSpec::Matchers.define :check do |input|
         report.issues.size.should == @count
 
       when :issue
-        report.issues.size.should == 1
+        report.issues.size.should > 0
         report.issues[0].should == @issue
 
       else
