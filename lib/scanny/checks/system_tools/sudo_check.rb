@@ -2,7 +2,7 @@ module Scanny
   module Checks
     module SystemTools
       class SudoCheck < Check
-        include ::Scanny::Checks::Helpers
+        include Scanny::Checks::Helpers
 
         def pattern
           build_pattern_exec_command('sudo')

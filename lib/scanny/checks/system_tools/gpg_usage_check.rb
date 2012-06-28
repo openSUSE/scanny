@@ -2,7 +2,7 @@ module Scanny
   module Checks
     module SystemTools
       class GpgUsageCheck < Check
-        include ::Scanny::Checks::Helpers
+        include Scanny::Checks::Helpers
 
         def pattern
           [

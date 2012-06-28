@@ -2,7 +2,7 @@ module Scanny
   module Checks
     module SystemTools
       class UnzipCheck < Check
-        include ::Scanny::Checks::Helpers
+        include Scanny::Checks::Helpers
 
         def pattern
           [
