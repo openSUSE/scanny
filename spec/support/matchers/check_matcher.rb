@@ -13,6 +13,11 @@ RSpec::Matchers.define :check do |input|
     @issue = issue
   end
 
+  chain :with_issues do |*issues|
+    @type = :issues
+    @issues = issues.flatten
+  end
+
   match do |scanny|
     report = scanny.check("scanned_file.rb", input)
 
@@ -26,6 +31,10 @@ RSpec::Matchers.define :check do |input|
       when :issue
         report.issues.size.should == 1
         report.issues[0].should == @issue
+
+      when :issues
+        report.issues.size.should == @issues.size
+        report.issues.should =~ @issues
 
       else
         raise "Unknown check type: #{type.inspect}."
