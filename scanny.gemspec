@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "scanny/version"
 
 Gem::Specification.new do |s|
   s.name        = "scanny"
-  s.version     = '0.0.1'
+  s.version     = Scanny::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Flavio Castelli', 'David Majda']
   s.email       = ['fcastelli@novell.com','dmajda@suse.cz']
@@ -14,6 +16,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "scanny"
 
   s.add_dependency "machete", "~> 0.4.0"
+  s.add_dependency "docopt", "~> 0.0.4"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
