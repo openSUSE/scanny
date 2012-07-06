@@ -1,39 +1,47 @@
 #!/usr/bin/env ruby
 
-require "optparse"
+require "docopt"
 require_relative "../lib/scanny"
 
-options = {}
+doc = "Scanny RoR secutiry scanner
 
-opt_parser = OptionParser.new do |opt|
-  opt.banner = "Usage: scanny [OPTIONS] files"
-  opt.separator  ""
-  opt.separator  "Options"
+Usage:
+  scanny [options] <files>...
+  scanny (--format <format> --output <output>) <files>...
+  scanny (--disable <check_class>) <files>...
+  scanny (--include <path>) <files>...
+  scanny (--pedantic) <files>...
+  scanny --version
+  scanny -h | --help
 
-  opt.on("-x","--xml","produce junit-compatible xml summaries.") do |environment|
-    options[:xml] = true
-  end
+Options:
+  -h, --help                        Show this screen.
+  -v, --version                     Show version.
+  -p, --pedantic                    Enable pedantic mode (for security guys) [default: false].
+  -f <format>, --format <format>    Output format (stdout, html, xml) [default: stdout].
+  -o <file>, --output <file>        Output file.
+  -d <check>, --disable <check>     Disable check class from scanning process.
+  -i <check>, --include <check>     Include check to scanning process (file or directory)."
 
-  opt.on("-h","--help","help") do
-    puts opt_parser
-  end
+options = Docopt(doc)
+
+if options[:version]
+  puts Scanny::VERSION
+  exit 0
 end
 
-opt_parser.parse!
+pedantic = options[:pedantic]
+format   = options[:format].to_s.to_sym
+output   = options[:output] ? options[:output].to_s : false
 
-if options.has_key?(:xml)
-  if File.exists?('reports')
-    puts "Removing 'reports' directory"
-    FileUtils.rm_rf 'reports'
-  end
-  FileUtils.mkdir 'reports'
-end
+Scanny::Tools.require_checks(options[:include])
+Scanny::Tools.disable_checks(options[:disable])
 
 runner  = Scanny::Runner.new
 reports = []
 issues  = 0
 
-ARGV.each do |arg|
+Scanny::Tools.build_paths.each do |arg|
   Dir[arg].each do |file|
     begin
       reports << runner.check_file(file)
@@ -44,13 +52,25 @@ ARGV.each do |arg|
   end
 end
 
+unless format == :stdout
+  if File.exists?('reports')
+    puts "Removing 'reports' directory"
+    FileUtils.rm_rf 'reports'
+  end
+  FileUtils.mkdir 'reports'
+end
+
 reports.each do |report|
   issues += report.issues.size
-  puts report
-  if options.has_key? :xml
-    File.open("reports/Test-#{report.file}.xml", "w") do |file|
-      file << report.to_xml
+  report_file = File.expand_path(report.file).gsub('/', '|')
+  report_path = output || "reports/Test-#{report_file}.#{format}"
+
+  unless format == :stdout
+    File.open(report_path, "a+") do |file|
+      file << report.send("to_#{format}")
     end
+  else
+    puts report
   end
 end
 puts
