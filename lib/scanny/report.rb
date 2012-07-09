@@ -58,6 +58,7 @@ module Scanny
     def method_missing(method, *args, &block)
       if method =~ /^to\_(.*)/
         puts "Format #{$1} is not supported"
+        exit 1
       else
         super
       end

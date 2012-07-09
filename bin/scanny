@@ -2,6 +2,7 @@
 
 require "docopt"
 require_relative "../lib/scanny"
+include Scanny::Tools
 
 doc = "Scanny RoR secutiry scanner
 
@@ -25,23 +26,20 @@ Options:
 
 options = Docopt(doc)
 
-if options[:version]
-  puts Scanny::VERSION
-  exit 0
-end
-
 pedantic = options[:pedantic]
 format   = options[:format].to_s.to_sym
 output   = options[:output] ? options[:output].to_s : false
 
-Scanny::Tools.require_checks(options[:include])
-Scanny::Tools.disable_checks(options[:disable])
+show_version if options[:version]
+
+require_checks(options[:include])
+disable_checks(options[:disable])
 
 runner  = Scanny::Runner.new
 reports = []
 issues  = 0
 
-Scanny::Tools.build_paths.each do |arg|
+build_paths.each do |arg|
   Dir[arg].each do |file|
     begin
       reports << runner.check_file(file)

@@ -1,6 +1,6 @@
 module Scanny
-  class Tools
-    def self.build_paths
+  module Tools
+    def build_paths
       paths = ARGV.map do |path|
         path += "/**/*.rb" if File.directory?(path)
         path
@@ -10,17 +10,17 @@ module Scanny
       paths
     end
 
-    def self.require_checks(checks)
+    def require_checks(checks)
       checks = checks.to_s.split(",").map(&:strip)
 
       checks.each do |directory|
-        Dir[directory + "/**/*_check.rb"].each do |file|
+        Dir[directory + "/**/*.rb"].each do |file|
           require file
         end
       end
     end
 
-    def self.disable_checks(checks)
+    def disable_checks(checks)
       checks = checks.to_s.split(",").map(&:strip)
 
       checks.each do |check|
@@ -37,6 +37,11 @@ module Scanny
           remove_const(delete)
         end
       end
+    end
+
+    def show_version
+      puts Scanny::VERSION
+      exit 0
     end
   end
 end
