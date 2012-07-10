@@ -2,6 +2,7 @@
 
 require "docopt"
 require_relative "../lib/scanny"
+include Scanny::CLI
 
 doc = "Scanny RoR secutiry scanner
 
@@ -17,7 +18,7 @@ runner  = Scanny::Runner.new
 reports = []
 issues  = 0
 
-ARGV.each do |arg|
+build_paths.each do |arg|
   Dir[arg].each do |file|
     begin
       reports << runner.check_file(file)
