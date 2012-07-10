@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "scanny"
 
   s.add_dependency "machete", "~> 0.4.0"
+  s.add_dependency "docopt", "~> 0.0.4"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact

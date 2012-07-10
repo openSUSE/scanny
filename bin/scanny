@@ -1,21 +1,17 @@
 #!/usr/bin/env ruby
 
-require "optparse"
+require "docopt"
 require_relative "../lib/scanny"
 
-options = {}
+doc = "Scanny RoR secutiry scanner
 
-opt_parser = OptionParser.new do |opt|
-  opt.banner = "Usage: scanny [OPTIONS] files"
-  opt.separator  ""
-  opt.separator  "Options"
+Usage:
+  scanny [options] <files_or_dirs>...
 
-  opt.on("-h","--help","help") do
-    puts opt_parser
-  end
-end
+Options:
+  -h, --help                        Show this screen."
 
-opt_parser.parse!
+options = Docopt(doc)
 
 runner  = Scanny::Runner.new
 reports = []
