@@ -42,4 +42,27 @@ describe "Command line interface" do
       end
     end
   end
+
+  context "require checks" do
+    before do
+      write_file('./checks/check.rb', 'puts "check loaded"')
+      write_file('./checks2/check.rb', 'puts "check2 loaded"')
+    end
+
+    describe "when given --include argument with one directory" do
+      before { run 'scanny --include ./checks' }
+
+      it { assert_partial_output "check loaded", all_stdout }
+      it { assert_no_partial_output "check2 loaded", all_stdout }
+      it { assert_exit_status 1 }
+    end
+
+    describe "when given --include argument with many directories" do
+      before { run 'scanny --include ./checks,./checks2' }
+
+      it { assert_partial_output "check loaded", all_stdout }
+      it { assert_partial_output "check2 loaded", all_stdout }
+      it { assert_exit_status 1 }
+    end
+  end
 end

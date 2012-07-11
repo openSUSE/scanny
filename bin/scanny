@@ -10,13 +10,16 @@ Usage:
   scanny [options] <files_or_dirs>...
 
 Options:
-  -h, --help                        Show this screen."
+  -h, --help                        Show this screen.
+  -i <check>, --include <check>     Include check to scanning process (file or directory)."
 
 options = Docopt(doc)
 
 runner  = Scanny::Runner.new
 reports = []
 issues  = 0
+
+require_checks(options[:include])
 
 build_paths.each do |arg|
   Dir[arg].each do |file|

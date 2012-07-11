@@ -9,5 +9,15 @@ module Scanny
 
       paths
     end
+
+    def require_checks(checks)
+      checks = checks.to_s.split(",").map(&:strip)
+
+      checks.each do |directory|
+        Dir[directory + "/**/*.rb"].each do |file|
+          require file
+        end
+      end
+    end
   end
 end
