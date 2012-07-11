@@ -11,11 +11,12 @@ Usage:
 
 Options:
   -h, --help                        Show this screen.
-  -i <check>, --include <check>     Include check to scanning process (file or directory)."
+  -i <check>, --include <check>     Include check to scanning process (file or directory).
+  -d <check>, --disable <check>     Disable check class from scanning process."
 
 options = Docopt(doc)
 
-runner  = Scanny::Runner.new
+runner  = runner_with_disabled_checks(options[:disable])
 reports = []
 issues  = 0
 

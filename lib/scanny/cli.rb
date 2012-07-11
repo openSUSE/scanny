@@ -19,5 +19,16 @@ module Scanny
         end
       end
     end
+
+    def runner_with_disabled_checks(checks)
+      checks = checks.to_s.split(",").map(&:strip)
+
+      runner = Scanny::Runner.new
+      runner.checks.reject! do |check|
+        checks.any? { |ch| check.class.name == ch }
+      end
+
+      runner
+    end
   end
 end
