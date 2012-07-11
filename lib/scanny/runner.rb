@@ -7,8 +7,7 @@ module Scanny
 
     def initialize(*checks)
       if checks.empty?
-        names = Scanny::Checks.constants.grep(/.+Check$/).map
-        @checks = names.map { |name| Scanny::Checks.const_get(name).new }
+        @checks = check_classes
       else
         @checks = checks
       end
@@ -38,6 +37,22 @@ module Scanny
     end
 
     private
+
+    def check_classes
+      # Get list of all subclasses of Scanny::Checks::Check.
+      classes = []
+      ObjectSpace.each_object(Class) do |klass|
+        classes << klass if klass < Scanny::Checks::Check
+      end
+
+      # Filter out classes that are a superclass of some other class in the list.
+      # This way only "leaf" classes remain.
+      classes.reject! do |klass|
+        classes.any? { |c| c < klass }
+      end
+
+      classes.map(&:new)
+    end
 
     def extract_ignored_lines(input)
       ignored_lines = []

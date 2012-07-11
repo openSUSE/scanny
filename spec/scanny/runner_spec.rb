@@ -18,6 +18,13 @@ module Scanny
         checks.any? { |ch| ch.is_a?(Checks::TestCheck) }.should be_true
         checks.any? { |ch| ch.is_a?(Checks::XssSendCheck) }.should be_true
       end
+
+      it "uses only \"leaf\" check classes" do
+        checks = Runner.new.checks
+
+        checks.any? { |ch| ch.class == Checks::ExtendCheck }.should be_false
+        checks.any? { |ch| ch.class == Checks::MyCheck }.should be_true
+      end
     end
 
     describe "check" do
