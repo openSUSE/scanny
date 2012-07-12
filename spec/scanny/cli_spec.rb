@@ -87,4 +87,21 @@ describe "Command line interface" do
       it { assert_exit_status 1 }
     end
   end
+
+  context "reports" do
+    before { write_file('test.rb', 'reset_session') }
+
+    describe "when given -f xml argument" do
+      before { run 'scanny -f xml ./test.rb' }
+      it { check_directory_presence(['reports'], true) }
+      it { check_file_presence(['reports/Test-.\\test.rb.xml'], TRUE) }
+      it { assert_exit_status 1 }
+    end
+
+    describe "when given -f strange_format argument" do
+      before { run 'scanny -f strange_format ./test.rb' }
+      it { assert_matching_output "Format strange_format is not supported", all_stderr }
+      it { assert_exit_status 1 }
+    end
+  end
 end

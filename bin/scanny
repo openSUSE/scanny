@@ -12,30 +12,36 @@ Usage:
 Options:
   -h, --help                        Show this screen.
   -i <check>, --include <check>     Include check to scanning process (file or directory).
-  -d <check>, --disable <check>     Disable check class from scanning process."
+  -d <check>, --disable <check>     Disable check class from scanning process.
+  -f <format>, --format <format>    Output format (stdout, html, xml) [default: stdout]."
+
 
 options = Docopt(doc)
 
-runner  = runner_with_disabled_checks(options[:disable])
-reports = []
-issues  = 0
-
 require_checks(options[:include])
 
-build_paths.each do |arg|
-  Dir[arg].each do |file|
-    begin
-      reports << runner.check_file(file)
-    rescue SyntaxError => e
-      $stderr.puts "Can't parse #{file} as Ruby file."
-      exit 2
-    end
-  end
+runner  = runner_with_disabled_checks(options[:disable])
+issues  = 0
+
+files = build_paths.map { |arg| Dir[arg].to_a }.flatten
+
+begin
+  runner.run(*files)
+rescue SyntaxError => e
+  $stderr.puts "Can't parse #{runner.file} as Ruby file."
+  exit 2
 end
 
-reports.each do |report|
-  issues += report.issues.size
-  puts report
+runner.checks_data.each do |check_data|
+  case options[:format]
+    when 'xml'
+      Scanny::Reporters::XMLReporter.new(check_data).report
+    when 'stdout'
+      Scanny::Reporters::SimpleReporter.new(check_data).report
+    else
+      raise "Format #{options[:format]} is not supported"
+  end
+  issues += check_data[:issues].size
 end
 puts
 
