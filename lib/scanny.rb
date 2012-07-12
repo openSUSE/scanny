@@ -1,4 +1,6 @@
 require_relative "scanny/ruby_version_check"
+require_relative "scanny/version"
+require_relative "scanny/tools"
 require_relative "scanny/issue"
 require_relative "scanny/report"
 require_relative "scanny/runner"

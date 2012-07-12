@@ -54,5 +54,14 @@ module Scanny
       doc.write(out, 2)
       out
     end
+
+    def method_missing(method, *args, &block)
+      if method =~ /^to\_(.*)/
+        puts "Format #{$1} is not supported"
+        exit 1
+      else
+        super
+      end
+    end
   end
 end
