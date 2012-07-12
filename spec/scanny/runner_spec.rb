@@ -29,10 +29,10 @@ module Scanny
 
     describe "check" do
       it "reports issues" do
-        report = @runner.check("unsecure.rb", '42')
+        check_data = @runner.check("unsecure.rb", '42')
 
-        report.file.should   == 'unsecure.rb'
-        report.issues.should == [
+        check_data[:file].should   == 'unsecure.rb'
+        check_data[:issues].should == [
           Issue.new("unsecure.rb", 1, :high, "Hey, I found unsecure code!", 42),
           Issue.new("unsecure.rb", 1, :high, "Hey, I found more unsecure code!", 43),
           Issue.new("unsecure.rb", 1, :low,  "OK, this is unsecure too, but not that much")
