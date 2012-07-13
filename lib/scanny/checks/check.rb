@@ -20,6 +20,10 @@ module Scanny
       def issue(impact, message, options = {})
         @issues << Issue.new(@file, @line, impact, message, options[:cwe])
       end
+
+      def strict?
+        false
+      end
     end
   end
 end
