@@ -20,12 +20,13 @@ module Scanny
       end
     end
 
-    def runner_with_disabled_checks(checks)
-      checks = checks.to_s.split(",").map(&:strip)
+    def runner_with_custom_checks(disabled_checks, strict = false)
+      disabled_checks = disabled_checks.to_s.split(",").map(&:strip)
 
       runner = Scanny::Runner.new
       runner.checks.reject! do |check|
-        checks.any? { |ch| check.class.name == ch }
+        disabled_checks.any? { |ch| check.class.name == ch } ||
+        (check.strict? && !strict)
       end
 
       runner

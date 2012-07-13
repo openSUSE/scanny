@@ -94,13 +94,29 @@ describe "Command line interface" do
     describe "when given -f xml argument" do
       before { run 'scanny -f xml ./test.rb' }
       it { check_directory_presence(['reports'], true) }
-      it { check_file_presence(['reports/Test-.\\test.rb.xml'], TRUE) }
+      it { check_file_presence(['reports/Test-.\\test.rb.xml'], true) }
       it { assert_exit_status 1 }
     end
 
     describe "when given -f strange_format argument" do
       before { run 'scanny -f strange_format ./test.rb' }
       it { assert_matching_output "Format strange_format is not supported", all_stderr }
+      it { assert_exit_status 1 }
+    end
+  end
+
+  context "strict" do
+    before { write_file("check.rb", "42") }
+
+    describe "when given --strict argument" do
+      before { run 'scanny --strict --include ../../spec/support/checks ./check.rb' }
+      it { assert_partial_output "strict checked", all_stdout }
+      it { assert_exit_status 1 }
+    end
+
+    describe "when given no argument" do
+      before { run 'scanny --include ../../spec/support/checks ./check.rb' }
+      it { assert_no_partial_output "strict checked", all_stdout }
       it { assert_exit_status 1 }
     end
   end
