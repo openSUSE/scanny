@@ -1,9 +1,10 @@
 require "yaml"
 require "machete"
+require "ostruct"
 
 module Scanny
   class Runner
-    attr_reader :checks
+    attr_reader :checks, :checks_data, :file
 
     def initialize(*checks)
       if checks.empty?
@@ -14,27 +15,40 @@ module Scanny
     end
 
     def check(file, input)
-      report        = Report.new(file)
-      ast           = input.to_ast
-      ignored_lines = extract_ignored_lines(input)
+      ast               = input.to_ast
+      ignored_lines     = extract_ignored_lines(input)
+      checks_performed  = 0
+      nodes_inspected   = 0
+      issues            = []
 
       @checks.each do |check|
         nodes_to_inspect = Machete.find(ast, check.pattern)
-        report.checks_performed += 1 unless nodes_to_inspect.empty?
-        report.nodes_inspected  += nodes_to_inspect.size
+        checks_performed += 1 unless nodes_to_inspect.empty?
+        nodes_inspected  += nodes_to_inspect.size
 
-        issues = []
         nodes_to_inspect.each do |node|
           issues += check.visit(file, node)
         end
-        report.issues += issues.reject { |i| ignored_lines.include?(i.line) }
+        issues.reject! { |i| ignored_lines.include?(i.line) }
       end
-      report
+
+      {
+        :issues             => issues,
+        :checks_performed   => checks_performed,
+        :nodes_inspected    => nodes_inspected,
+        :file               => file
+      }
     end
 
     def check_file(file)
-      check(file, File.read(file))
+      @file = file
+      (@checks_data ||= []) << check(file, File.read(file))
     end
+
+    def check_files(*files)
+      files.each { |f| check_file(f) }
+    end
+    alias :run :check_files
 
     private
 

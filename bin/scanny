@@ -1,57 +1,48 @@
 #!/usr/bin/env ruby
 
-require "optparse"
+require "docopt"
 require_relative "../lib/scanny"
+include Scanny::CLI
 
-options = {}
+doc = "Scanny RoR secutiry scanner
 
-opt_parser = OptionParser.new do |opt|
-  opt.banner = "Usage: scanny [OPTIONS] files"
-  opt.separator  ""
-  opt.separator  "Options"
+Usage:
+  scanny [options] <files_or_dirs>...
 
-  opt.on("-x","--xml","produce junit-compatible xml summaries.") do |environment|
-    options[:xml] = true
-  end
+Options:
+  -h, --help                        Show this screen.
+  -i <check>, --include <check>     Include check to scanning process (file or directory).
+  -d <check>, --disable <check>     Disable check class from scanning process.
+  -f <format>, --format <format>    Output format (stdout, html, xml) [default: stdout].
+  -s, --strict                      Enable strict mode (for security guys) [default: false]."
 
-  opt.on("-h","--help","help") do
-    puts opt_parser
-  end
-end
 
-opt_parser.parse!
+options = Docopt(doc)
 
-if options.has_key?(:xml)
-  if File.exists?('reports')
-    puts "Removing 'reports' directory"
-    FileUtils.rm_rf 'reports'
-  end
-  FileUtils.mkdir 'reports'
-end
+require_checks(options[:include])
 
-runner  = Scanny::Runner.new
-reports = []
+runner  = runner_with_custom_checks(options[:disable], options[:strict])
 issues  = 0
 
-ARGV.each do |arg|
-  Dir[arg].each do |file|
-    begin
-      reports << runner.check_file(file)
-    rescue SyntaxError => e
-      $stderr.puts "Can't parse #{file} as Ruby file."
-      exit 2
-    end
-  end
+files = build_paths.map { |arg| Dir[arg].to_a }.flatten
+
+begin
+  runner.run(*files)
+rescue SyntaxError => e
+  $stderr.puts "Can't parse #{runner.file} as Ruby file."
+  exit 2
 end
 
-reports.each do |report|
-  issues += report.issues.size
-  puts report
-  if options.has_key? :xml
-    File.open("reports/Test-#{report.file}.xml", "w") do |file|
-      file << report.to_xml
-    end
+runner.checks_data.each do |check_data|
+  case options[:format]
+    when 'xml'
+      Scanny::Reporters::XMLReporter.new(check_data).report
+    when 'stdout'
+      Scanny::Reporters::SimpleReporter.new(check_data).report
+    else
+      raise "Format #{options[:format]} is not supported"
   end
+  issues += check_data[:issues].size
 end
 puts
 
@@ -62,4 +53,3 @@ else
   puts "Found #{issues} issues."
   exit 1
 end
-
