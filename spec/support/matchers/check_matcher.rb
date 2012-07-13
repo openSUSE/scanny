@@ -19,22 +19,22 @@ RSpec::Matchers.define :check do |input|
   end
 
   match do |scanny|
-    report = scanny.check("scanned_file.rb", input)
+    check_data = scanny.check("scanned_file.rb", input)
 
     case @type
       when :no_issues
-        report.issues.should be_empty
+        check_data[:issues].should be_empty
 
       when :issue_count
-        report.issues.size.should == @count
+        check_data[:issues].size.should == @count
 
       when :issue
-        report.issues.size.should == 1
-        report.issues[0].should == @issue
+        check_data[:issues].size.should == 1
+        check_data[:issues][0].should == @issue
 
       when :issues
-        report.issues.size.should == @issues.size
-        report.issues.should =~ @issues
+        check_data[:issues].size.should == @issues.size
+        check_data[:issues].should =~ @issues
 
       else
         raise "Unknown check type: #{type.inspect}."
