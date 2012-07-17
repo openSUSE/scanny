@@ -15,6 +15,7 @@ module Scanny
 
         private
 
+        # sanitize_sql()
         def pattern_sanitize_sql
           "Send<name = :sanitize_sql>"
         end

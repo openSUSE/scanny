@@ -20,6 +20,7 @@ module Scanny
           "Execute system commands can lead the system to run dangerous code"
         end
 
+        # system("rm -rf /")
         def pattern_system_calls
           <<-EOT
             SendWithArguments | Send
@@ -33,6 +34,7 @@ module Scanny
           EOT
         end
 
+        # FileUtils.mv("one_file", "sec_file")
         def pattern_file_utils_methods
           <<-EOT
             SendWithArguments<
@@ -42,6 +44,7 @@ module Scanny
           EOT
         end
 
+        # `system_command`
         def pattern_execute_string
           "ExecuteString"
         end

@@ -16,6 +16,7 @@ module Scanny
         "can lead to unauthorized redirects"
       end
 
+      # redirect_to params[:input]
       def pattern_redirect
         <<-EOT
           SendWithArguments<

@@ -2,6 +2,7 @@ module Scanny
   module Checks
     # Checks for places where ENV["RAILS_ENV"] is set.
     class SetRailsEnvCheck < Check
+      # ENV["RAILS_ENV"] = "test"
       def pattern
         <<-EOT
           ElementAssignment<

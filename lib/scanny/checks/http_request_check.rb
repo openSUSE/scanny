@@ -16,9 +16,10 @@ module Scanny
 
       def warning_message
         "Connecting to the server without encryption" +
-            "can facilitate sniffing traffic"
+        "can facilitate sniffing traffic"
       end
 
+      # Net::HTTP.new
       def pattern_net_http
         <<-EOT
           SendWithArguments<
@@ -31,6 +32,7 @@ module Scanny
         EOT
       end
 
+      # Net::HTTP::Proxy('proxy.example.com', 8080)
       def pattern_net_http_proxy
         <<-EOT
           Send | SendWithArguments

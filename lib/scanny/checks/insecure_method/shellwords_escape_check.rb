@@ -20,6 +20,7 @@ module Scanny
           "can lead incomplete input filtering"
         end
 
+        # Shellwords.escape("string")
         def pattern_shellwords_escape
           <<-EOT
             SendWithArguments<
@@ -29,6 +30,7 @@ module Scanny
           EOT
         end
 
+        # shell_escape("string")
         def pattern_shell_escape
           "SendWithArguments<name = :shell_escape>"
         end

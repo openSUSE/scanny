@@ -2,6 +2,7 @@ module Scanny
   module Checks
     # Checks for places where :secret hash key is set.
     class SetSecretCheck < Check
+      # :secret
       def pattern
         <<-EOT
           HashLiteral<

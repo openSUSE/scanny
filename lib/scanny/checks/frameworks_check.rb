@@ -19,10 +19,12 @@ module Scanny
         "Using the methods from frameworks can lead to security problems"
       end
 
+      # xss_safe()
       def pattern_xss_safe
         "Send<name = :xss_safe>"
       end
 
+      # mark_as_xss_protected()
       def pattern_mark_as_safe
         <<-EOT
           Send<name =
@@ -33,6 +35,7 @@ module Scanny
         EOT
       end
 
+      # env["HTTP_X_USERNAME"]
       def pattern_http_username
         "StringLiteral<string *= /HTTP_X_USERNAME/>"
       end

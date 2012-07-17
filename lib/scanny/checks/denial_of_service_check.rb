@@ -16,6 +16,7 @@ module Scanny
         "the unavailability of the application"
       end
 
+      # User.find(:first, :conditions => "user LIKE %pattern%")
       def pattern_find_with_like
         <<-EOT
           SendWithArguments<

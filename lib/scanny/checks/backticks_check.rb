@@ -4,6 +4,7 @@ module Scanny
     # expansion. This can cause unwanted code execution if the command includes
     # unescaped input.
     class BackticksCheck < Check
+      # `command`
       def pattern
         'ExecuteString | DynamicExecuteString'
       end

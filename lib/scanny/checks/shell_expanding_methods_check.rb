@@ -4,6 +4,7 @@ module Scanny
     # through shell expansion. This can cause unwanted code execution if the
     # command includes unescaped input.
     class ShellExpandingMethodsCheck < Check
+      # system("command")
       def pattern
         <<-EOT
           SendWithArguments<

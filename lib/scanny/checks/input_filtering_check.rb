@@ -19,6 +19,7 @@ module Scanny
         "Possible injection vulnerabilities"
       end
 
+      # logger(params[:password])
       def pattern_logger_with_params
         <<-EOT
           SendWithArguments<
@@ -35,6 +36,7 @@ module Scanny
         EOT
       end
 
+      # params[:input]
       def pattern_params
         <<-EOT
           SendWithArguments<
@@ -44,6 +46,8 @@ module Scanny
         EOT
       end
 
+      # env["HTTP_HEADER"]
+      # headers["HTTP_HEADER"]
       def pattern_env_http
         <<-EOT
           SendWithArguments<

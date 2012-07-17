@@ -20,6 +20,7 @@ module Scanny
         "unauthorized access to data"
       end
 
+      # File.open("/app/path/tmp_file")
       def pattern_file_open
         <<-EOT
           SendWithArguments<
@@ -34,6 +35,7 @@ module Scanny
         EOT
       end
 
+      # mkdir_p("long/path/tmp/file")
       def pattern_mkdir_p
         <<-EOT
           SendWithArguments<
@@ -47,6 +49,7 @@ module Scanny
         EOT
       end
 
+      # Tempfile.new
       def pattern_tempfile
         <<-EOT
           Send | SendWithArguments<

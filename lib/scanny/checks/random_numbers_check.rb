@@ -20,6 +20,8 @@ module Scanny
         "This action indicates using low-entropy random number generator"
       end
 
+      # Kernel.srand
+      # Kernel.rand
       def pattern_rand
         <<-EOT
           Send<
@@ -34,6 +36,7 @@ module Scanny
         EOT
       end
 
+      # seed()
       def pattern_seed
         <<-EOT
           Send<name = :seed>
@@ -42,6 +45,7 @@ module Scanny
         EOT
       end
 
+      # File.open("/dev/urandom", "r").read(100)
       def pattern_urandom
         "StringLiteral<string *= /urandom/>"
       end
