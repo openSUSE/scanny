@@ -16,6 +16,7 @@ module Scanny
           "Execute eval method can lead the ruby interpreter to run dangerous code"
         end
 
+        # eval("ruby_code")
         def pattern_eval_call
           <<-EOT
             SendWithArguments | Send

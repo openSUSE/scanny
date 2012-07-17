@@ -16,6 +16,7 @@ module Scanny
           "Execute deserialize method can load to memory dangerous object"
         end
 
+        # deserialize()
         def pattern_deserialize_call
           <<-EOT
             SendWithArguments | Send

@@ -19,6 +19,7 @@ module Scanny
         "unauthorized access to data"
       end
 
+      # File.open
       def pattern_file_open
         <<-EOT
           SendWithArguments<
@@ -28,6 +29,7 @@ module Scanny
         EOT
       end
 
+      # FileUtils.any_method
       def pattern_fileutils
         <<-EOT
           SendWithArguments<

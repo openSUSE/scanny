@@ -16,6 +16,7 @@ module Scanny
         "can facilitate sniffing traffic"
       end
 
+      # "http://example.com"
       def pattern_http_url
         <<-EOT
           StringLiteral<string *= "http://">

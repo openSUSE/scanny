@@ -17,9 +17,10 @@ module Scanny
 
         def warning_message
           "Referring to a session in the wrong way" +
-              "can lead to errors that reduce security level"
+          "can lead to errors that reduce security level"
         end
 
+        # session[:password]
         def pattern_session_access
           <<-EOT
           SendWithArguments<
@@ -29,6 +30,7 @@ module Scanny
           EOT
         end
 
+        # session[:admin] = true
         def pattern_session_assignment
           <<-EOT
           ElementAssignment<

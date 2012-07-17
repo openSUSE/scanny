@@ -15,6 +15,7 @@ module Scanny
         "Incorrect validations may allow malicious data transmission"
       end
 
+      # validates_presence_of :email
       def pattern_validates
         <<-EOT
         SendWithArguments<

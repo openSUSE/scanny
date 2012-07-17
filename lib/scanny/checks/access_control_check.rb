@@ -3,6 +3,7 @@ module Scanny
     # Checks for use of "params[:id]" in parameters of certain methods that
     # requires authorizaton checks.
     class AccessControlCheck < Check
+      # User.new(params[:id])
       def pattern
         <<-EOT
           SendWithArguments<

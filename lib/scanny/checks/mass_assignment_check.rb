@@ -16,6 +16,7 @@ module Scanny
         "can cause dangerous errors in the database"
       end
 
+      # User.new(params[:user])
       def pattern_create_object_from_params
         <<-EOT
           SendWithArguments<

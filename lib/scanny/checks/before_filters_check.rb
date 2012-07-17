@@ -4,6 +4,7 @@ module Scanny
     class BeforeFiltersCheck < Check
       FILTERS = [:login_required, :admin_required]
 
+      # before_filter :login_required
       def pattern
         <<-EOT
           SendWithArguments<

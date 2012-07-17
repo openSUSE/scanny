@@ -22,6 +22,7 @@ module Scanny
           "Using gpg tool in the wrong way can lead to security problems"
         end
 
+        # GPG.method
         def pattern_gpg_class
           <<-EOT
           Send | SendWithArguments
@@ -37,6 +38,7 @@ module Scanny
           EOT
         end
 
+        # gpg()
         def pattern_gpg_method
           "Send | SendWithArguments<name = :gpg>"
         end

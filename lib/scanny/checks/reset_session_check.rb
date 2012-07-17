@@ -15,6 +15,7 @@ module Scanny
         "Improper resetting the session may lead to security problems"
       end
 
+      # reset_session()
       def pattern_reset_session
         "Send<name = :reset_session>"
       end

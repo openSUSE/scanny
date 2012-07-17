@@ -17,6 +17,7 @@ module Scanny
           "can lead to faulty accepted certificate"
         end
 
+        # OpenSSL::SSL::VERIFY_PEER
         def pattern_ssl_verify_peer
           <<-EOT
           ConstantAssignment<

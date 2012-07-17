@@ -18,6 +18,7 @@ module Scanny
         "There is a possibility of data leakage"
       end
 
+      # filter_parameter_logging()
       def pattern_logger_filter
         <<-EOT
           Send<name = :filter_parameter_logging>
@@ -26,6 +27,7 @@ module Scanny
         EOT
       end
 
+      # find_by_id(params[:input])
       def pattern_find
         <<-EOT
           SendWithArguments<

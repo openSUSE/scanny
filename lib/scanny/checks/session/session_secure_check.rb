@@ -40,6 +40,7 @@ module Scanny
           EOT
         end
 
+        # :session_secure
         def pattern_session_secure
           "SymbolLiteral<value = :session_secure | :secure>"
         end
