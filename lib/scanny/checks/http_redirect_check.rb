@@ -3,7 +3,6 @@ module Scanny
     class HTTPRedirectCheck < Check
       def pattern
         [
-          pattern_redirect,
           pattern_add_file_from_url,
           pattern_open_struct,
           pattern_open_uri,
@@ -12,34 +11,13 @@ module Scanny
       end
 
       def check(node)
-        if Machete.matches?(node, pattern_redirect)
-          issue :medium, warning_message, :cwe => [601, 698, 79]
-        else
-          issue :medium, warning_message, :cwe => 441
-        end
+        issue :medium, warning_message, :cwe => 441
       end
 
       private
 
       def warning_message
         "HTTP redirects can be emitted by the Application"
-      end
-
-      # redirect_to params[:input]
-      def pattern_redirect
-        <<-EOT
-          SendWithArguments<
-            arguments = ActualArguments<
-              array = [
-                SendWithArguments<
-                  name = :[],
-                  receiver = Send<name = :params>
-                >
-              ]
-            >,
-            name = :redirect_to
-          >
-        EOT
       end
 
       # save_file()
