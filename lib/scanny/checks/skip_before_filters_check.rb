@@ -9,6 +9,7 @@ module Scanny
         :authenticate
       ]
 
+      # skip_before_filer :login_required
       def pattern
         <<-EOT
           SendWithArguments<

@@ -20,6 +20,7 @@ module Scanny
           "lead to connect to an unauthorized server"
         end
 
+        # OpenSSL::SSL::VERIFY_NONE
         def pattern_ssl_verify_none
           <<-EOT
           ScopedConstant<
@@ -32,6 +33,8 @@ module Scanny
           EOT
         end
 
+        # @ca_file
+        # ca_file
         def pattern_ca_file
           <<-EOT
           LocalVariableAssignment | InstanceVariableAssignment

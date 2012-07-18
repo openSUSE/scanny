@@ -16,6 +16,7 @@ module Scanny
         "accept additional parameters from request"
       end
 
+      # verify :method => :post, :only => [:create]
       def pattern_verify
         <<-EOT
           SendWithArguments<

@@ -16,6 +16,7 @@ module Scanny
         "parameters can cause security problems"
       end
 
+      # User.find(:first, :conditions => params[:input])
       def pattern_user_find
       <<-EOT
         SendWithArguments<

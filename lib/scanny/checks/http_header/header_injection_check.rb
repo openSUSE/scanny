@@ -16,6 +16,8 @@ module Scanny
           "Directly use of the HTTP_* headers in code"
         end
 
+        # env["HTTP_HEADER"]
+        # headers["HTTP_HEADER"]
         def pattern_environment_params
           <<-EOT
             SendWithArguments<

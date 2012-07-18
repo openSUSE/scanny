@@ -2,6 +2,7 @@ module Scanny
   module Checks
     # Checks for places where :session_key hash key is set.
     class SetSessionKeyCheck < Check
+      # :session_key
       def pattern
         <<-EOT
           HashLiteral<

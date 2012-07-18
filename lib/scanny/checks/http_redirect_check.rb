@@ -25,6 +25,7 @@ module Scanny
         "HTTP redirects can be emitted by the Application"
       end
 
+      # redirect_to params[:input]
       def pattern_redirect
         <<-EOT
           SendWithArguments<
@@ -41,6 +42,7 @@ module Scanny
         EOT
       end
 
+      # save_file()
       def pattern_save_file
         <<-EOT
           Send<name = :save_file>
@@ -49,14 +51,17 @@ module Scanny
         EOT
       end
 
+      # add_file_from_url("http://example.com/file.txt")
       def pattern_add_file_from_url
         "SendWithArguments<name = :add_file_from_url>"
       end
 
+      # require 'open-uri'
       def pattern_open_uri
         "StringLiteral<string = 'open-uri'>"
       end
 
+      # OpenStruct.new(key: value)
       def pattern_open_struct
         <<-EOT
           Send<
