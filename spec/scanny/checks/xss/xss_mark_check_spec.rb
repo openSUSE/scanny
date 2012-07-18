@@ -8,12 +8,20 @@ module Scanny::Checks
       @issue  = Scanny::Issue.new("scanned_file.rb", 1, :info, @warning_message, 0)
     end
 
-    it "reports \"mark_as_xss_protected\" correctly" do
-      @runner.should check("mark_as_xss_protected").with_issue(@issue)
+    it "reports \"'string'.xss_safe\" correctly" do
+      @runner.should check("'string'.xss_safe").with_issue(@issue)
     end
 
-    it "reports \"mark_methods_as_xss_safe\" correctly" do
-      @runner.should check('mark_methods_as_xss_safe').with_issue(@issue)
+    it "reports \"'string'.mark_as_xss_protected\" correctly" do
+      @runner.should check("'string'.mark_as_xss_protected").with_issue(@issue)
+    end
+
+    it "reports \"'string'.mark_methods_as_xss_safe\" correctly" do
+      @runner.should check("'string'.mark_methods_as_xss_safe").with_issue(@issue)
+    end
+
+    it "reports \"'string'.to_s_xss_protected\" correctly" do
+      @runner.should check("'string'.to_s_xss_protected").with_issue(@issue)
     end
   end
 end
