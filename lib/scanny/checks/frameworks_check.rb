@@ -2,11 +2,7 @@ module Scanny
   module Checks
     class FrameworksCheck < Check
       def pattern
-        [
-          pattern_xss_safe,
-          pattern_mark_as_safe,
-          pattern_http_username
-        ].join("|")
+        pattern_http_username
       end
 
       def check(node)
@@ -17,22 +13,6 @@ module Scanny
 
       def warning_message
         "Using the methods from frameworks can lead to security problems"
-      end
-
-      # xss_safe()
-      def pattern_xss_safe
-        "Send<name = :xss_safe>"
-      end
-
-      # mark_as_xss_protected()
-      def pattern_mark_as_safe
-        <<-EOT
-          Send<name =
-            :mark_as_xss_protected |
-            :mark_methods_as_xss_safe |
-            :to_s_xss_protected
-          >
-        EOT
       end
 
       # env["HTTP_X_USERNAME"]
