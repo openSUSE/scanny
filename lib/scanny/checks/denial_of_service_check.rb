@@ -27,7 +27,7 @@ module Scanny
                   array = [
                     any*,
                     SymbolLiteral<value = :limit | :conditions>,
-                    StringLiteral<string *= /LIKE/>,
+                    StringLiteral<string *= 'LIKE'>,
                     any*
                   ]
                 >,
