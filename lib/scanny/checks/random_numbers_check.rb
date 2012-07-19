@@ -47,7 +47,7 @@ module Scanny
 
       # File.open("/dev/urandom", "r").read(100)
       def pattern_urandom
-        "StringLiteral<string *= /urandom/>"
+        "StringLiteral<string *= 'urandom'>"
       end
     end
   end

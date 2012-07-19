@@ -17,7 +17,7 @@ module Scanny
 
       # env["HTTP_X_USERNAME"]
       def pattern_http_username
-        "StringLiteral<string *= /HTTP_X_USERNAME/>"
+        "StringLiteral<string *= 'HTTP_X_USERNAME'>"
       end
     end
   end
