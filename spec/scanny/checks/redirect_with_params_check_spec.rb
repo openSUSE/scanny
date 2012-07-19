@@ -6,7 +6,7 @@ module Scanny::Checks
       @runner = Scanny::Runner.new(RedirectWithParamsCheck.new)
       @message =  "Use of external parameters in redirect_to method" +
                   "can lead to unauthorized redirects"
-      @issue = issue(:medium, @message, 113)
+      @issue = issue(:medium, @message, [79, 113, 601, 698])
     end
 
     it "reports \"redirect_to(params[:to])\" correctly" do

@@ -6,7 +6,7 @@ module Scanny
       end
 
       def check(node)
-        issue :medium, warning_message, :cwe => 113
+        issue :medium, warning_message, :cwe => [79, 113, 601, 698]
       end
 
       private
