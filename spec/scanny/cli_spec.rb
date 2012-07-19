@@ -68,8 +68,10 @@ describe "Command line interface" do
 
   context "disable checks" do
     before do
-      @check_output = "[medium] ./security.rb:1: HTTP redirects can be " +
-                      "emitted by the Application (CWE-601, CWE-698, CWE-79)"
+      @check_output = "[medium] ./security.rb:1: Use of external " +
+                      "parameters in redirect_to methodcan lead to " +
+                      "unauthorized redirects " +
+                      "(CWE-79, CWE-113, CWE-601, CWE-698)"
       write_file("./security.rb", "redirect_to params[:input]")
     end
 
@@ -81,7 +83,7 @@ describe "Command line interface" do
     end
 
     describe "when given --disable argument" do
-      before { run 'scanny --disable Scanny::Checks::HTTPRedirectCheck ./security.rb' }
+      before { run 'scanny --disable Scanny::Checks::RedirectWithParamsCheck ./security.rb' }
 
       it { assert_no_partial_output @check_output, all_stdout }
       it { assert_exit_status 1 }
