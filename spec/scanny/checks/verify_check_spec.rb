@@ -18,5 +18,10 @@ module Scanny::Checks
       @runner.should  check("verify :params => 'user', :only => :update_password").
                       without_issues
     end
+
+    it "does not report \"verify :argument, :method => :post\"" do
+      @runner.should  check("verify :argument, :method => :post").
+                      without_issues
+    end
   end
 end

@@ -14,6 +14,16 @@ module Scanny::Checks::Sql
                       with_issue(@issue_low)
     end
 
+    it "does not report \"find\" calls without first argument" do
+      @runner.should  check("find(:conditions => { :id => 10 })").
+                      without_issues
+    end
+
+    it "does not report \"find\" with wrong key" do
+      @runner.should  check("find(:first, :hello => :conditions)").
+                      without_issues
+    end
+
     it "reports \"find\" calls with :conditions key and dynamic value correctly" do
       @runner.should  check('find(:first, :conditions => "#{method}")').
                       with_issue(@issue_low)

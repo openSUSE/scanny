@@ -37,6 +37,16 @@ module Scanny::Checks::Sql
                           with_issue(@issue_high)
     end
 
+    it "does not report \"find\" calls when no first argument is given" do
+      @runner.should  check("find(:limit => session[:password])").
+                      without_issues
+    end
+
+    it "does not report \"find\" when hash keys are incorrect" do
+      @runner.should  check("find(:first, :key => :limit, params[:hello] => :value)").
+                      without_issues
+    end
+
     it "reports \"execute\" calls on class with params correctly" do
       @runner.should check('User.execute params[:password]').with_issue(@issue_high)
     end
