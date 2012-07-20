@@ -25,6 +25,7 @@ module Scanny
           name = :send_file | :send_data,
           arguments = ActualArguments<
             array = [
+              any{1},
               HashLiteral<
                 array = [
                   SymbolLiteral<value   = :disposition>,
