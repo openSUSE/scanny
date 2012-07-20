@@ -22,16 +22,15 @@ module Scanny
             SendWithArguments<
               arguments = ActualArguments<
                 array = [
-                  any*,
+                  any{1},
                   HashLiteral<
                     array = [
-                      any*,
+                      any{even},
                       SymbolLiteral<value = :conditions>,
                       DynamicString,
-                      any*
+                      any{even}
                     ]
-                  >,
-                  any*
+                  >
                 ]
               >,
               name = :find
