@@ -22,15 +22,13 @@ module Scanny
           SendWithArguments<
             arguments = ActualArguments<
               array = [
-                any*,
                 HashLiteral<
                   array = [
-                    any*,
+                    any{even},
                     SymbolLiteral<value = :method>,
-                    any*
+                    any{odd}
                   ]
-                >,
-                any*
+                >
               ]
             >,
             name = :verify
