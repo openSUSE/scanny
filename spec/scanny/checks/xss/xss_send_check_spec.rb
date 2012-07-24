@@ -9,13 +9,13 @@ module Scanny::Checks
     end
 
     it "reports \"send_file :disposition => 'inline'\" correctly" do
-      @runner.should check("send_file :disposition => 'inline' ").with_issue(@issue)
-      @runner.should check("send_file :disposition => 'attachment' ").without_issues
+      @runner.should check("send_file 'file', :disposition => 'inline' ").with_issue(@issue)
+      @runner.should check("send_file 'file', :disposition => 'attachment' ").without_issues
     end
 
     it "reports \"send_data :disposition => 'inline'\" correctly" do
-      @runner.should check("send_data :disposition => 'inline' ").with_issue(@issue)
-      @runner.should check("send_data :disposition => 'attachment' ").without_issues
+      @runner.should check("send_data 'file', :disposition => 'inline' ").with_issue(@issue)
+      @runner.should check("send_data 'file', :disposition => 'attachment' ").without_issues
     end
   end
 end

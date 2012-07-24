@@ -12,11 +12,17 @@ module Scanny::Checks
     it "reports \"User.find(:first, :conditions => \"name LIKE '%bob%'\" )\" correctly" do
       @runner.should  check("User.find(:first, :conditions => \"name LIKE '%bob%'\" )").
                       with_issue(@issue)
+      @runner.should  check("User.find(:conditions => \"name LIKE '%bob%'\")").
+                      without_issues
     end
 
     it "reports \"User.find(:first, :limit => \"name LIKE '%bob%'\" )\" correctly" do
       @runner.should  check("User.find(:first, :limit => \"name LIKE '%bob%'\" )").
-                          with_issue(@issue)
+                      with_issue(@issue)
+      @runner.should  check("User.find(:limit => \"name LIKE '%bob%'\")").
+                      without_issues
     end
+
+
   end
 end

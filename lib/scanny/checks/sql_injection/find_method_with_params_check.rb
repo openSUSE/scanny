@@ -45,20 +45,18 @@ module Scanny
             SendWithArguments<
               arguments = ActualArguments<
                 array = [
-                  any*,
+                  any{1,},
                   HashLiteral<
                     array = [
-                      any*,
+                      any{even},
                       SymbolLiteral<value = :limit | :conditions>,
-                      any*,
                       SendWithArguments<
                         name = :[],
                         receiver = Send<name = :params | :session>
                       >,
-                      any*
+                      any{even}
                     ]
-                  >,
-                  any*
+                  >
                 ]
               >,
               name = :find>
