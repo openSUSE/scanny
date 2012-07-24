@@ -24,6 +24,10 @@ module Scanny
       def strict?
         false
       end
+
+      def compiled_pattern
+        @compiled_pattern ||= Machete::Parser.new.parse(pattern)
+      end
     end
   end
 end

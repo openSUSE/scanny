@@ -12,5 +12,11 @@ module Scanny::Checks
         Scanny::Issue.new("unsecure.rb", 1, :low,  "OK, this is unsecure too, but not that much")
       ]
     end
+
+    it "returns compiled pattern" do
+      check = TestCheck.new
+      compiled_pattern = check.compiled_pattern
+      compiled_pattern.should be_kind_of(Machete::Matchers::NodeMatcher)
+    end
   end
 end
