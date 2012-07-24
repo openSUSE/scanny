@@ -10,7 +10,7 @@ module Scanny
         issues.each do |issue|
           string += "\n  - #{issue.to_s}"
         end
-        puts string
+        puts string unless issues.empty?
 
         string
       end
