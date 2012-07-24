@@ -52,7 +52,7 @@ module Scanny
       # Tempfile.new
       def pattern_tempfile
         <<-EOT
-          Send | SendWithArguments<
+          SendWithArguments<
             name = :new,
             receiver = ConstantAccess<name = :Tempfile>
           >

@@ -12,7 +12,7 @@ module Scanny
       private
 
       def warning_message
-        "Connecting to the server without encryption" +
+        "Connecting to the server without encryption " +
         "can facilitate sniffing traffic"
       end
 
