@@ -57,17 +57,16 @@ module Scanny
             SendWithArguments<
               arguments = ActualArguments<
                 array = [
-                  any*,
+                  any{1,},
                   HashLiteral<
                     array = [
-                      any*,
+                      any{even},
                       SymbolLiteral<
                         value = :conditions
                       >,
-                      any*
+                      any{odd}
                     ]
-                  >,
-                  any*
+                  >
                 ]
               >,
               name = :find
