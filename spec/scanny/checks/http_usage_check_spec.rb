@@ -4,7 +4,7 @@ module Scanny::Checks
   describe HTTPUsageCheck do
     before do
       @runner = Scanny::Runner.new(HTTPUsageCheck.new)
-      @message =  "Connecting to the server without encryption" +
+      @message =  "Connecting to the server without encryption " +
                   "can facilitate sniffing traffic"
       @issue = issue(:low, @message, 319)
     end

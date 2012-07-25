@@ -19,8 +19,9 @@ module Scanny
         # eval("ruby_code")
         def pattern_eval_call
           <<-EOT
-            SendWithArguments | Send
-              <name = :eval>
+            SendWithArguments<name = :eval>
+            |
+            Send<name = :eval>
           EOT
         end
       end

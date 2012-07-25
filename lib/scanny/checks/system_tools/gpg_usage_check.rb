@@ -25,7 +25,7 @@ module Scanny
         # GPG.method
         def pattern_gpg_class
           <<-EOT
-          Send | SendWithArguments
+          Send
           <
             receiver = ConstantAccess<
               name =
@@ -34,13 +34,22 @@ module Scanny
                 :GpgKey
             >
           >
-
+          |
+          SendWithArguments
+          <
+            receiver = ConstantAccess<
+              name =
+                :GPG |
+                :Gpg |
+                :GpgKey
+            >
+          >
           EOT
         end
 
         # gpg()
         def pattern_gpg_method
-          "Send | SendWithArguments<name = :gpg>"
+          "Send<name = :gpg> | SendWithArguments<name = :gpg>"
         end
       end
     end
