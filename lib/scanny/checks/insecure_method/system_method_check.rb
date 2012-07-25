@@ -28,8 +28,7 @@ module Scanny
                 :popen          |
                 :system         |
                 :spawn          |
-                :exec           |
-                :queue_command
+                :exec
               >
           EOT
         end
