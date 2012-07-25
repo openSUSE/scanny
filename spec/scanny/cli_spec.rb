@@ -12,26 +12,26 @@ describe "Command line interface" do
 
   context "scan files" do
     before do
-      write_file('test.rb', 'reset_session')
-      write_file('test/sub_test.rb', 'reset_session')
+      write_file('app/test.rb', 'reset_session')
+      write_file('app/test/sub_test.rb', 'reset_session')
     end
 
     describe "when given no argument" do
       before { run 'scanny' }
 
-      it "scans all files in current directory" do
-        assert_matching_output "./test.rb", all_stdout
+      it "scans all files in current app directory" do
+        assert_matching_output "./app/test.rb", all_stdout
       end
 
       it "scans all files in subdirectories" do
-        assert_matching_output "./test/sub_test.rb", all_stdout
+        assert_matching_output "./app/test/sub_test.rb", all_stdout
       end
 
       it { assert_exit_status 1 }
     end
 
     describe "when given path argument" do
-      before { run 'scanny ./test' }
+      before { run 'scanny ./app/test/' }
 
       it "scans all files in ./test directory" do
         assert_matching_output "./test/sub_test.rb", all_stdout

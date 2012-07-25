@@ -5,9 +5,9 @@ module Scanny
         path += "/**/*.rb" if File.directory?(path)
         path
       end
-      paths << "./**/*.rb" if paths.size == 0
+      paths << "./app/**/*.rb" if paths.size == 0
 
-      paths
+      paths.map { |path| path.gsub('//', '/') }
     end
 
     def require_checks(checks)
