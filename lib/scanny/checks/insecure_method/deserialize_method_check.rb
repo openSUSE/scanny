@@ -19,8 +19,9 @@ module Scanny
         # deserialize()
         def pattern_deserialize_call
           <<-EOT
-            SendWithArguments | Send
-              <name = :deserialize>
+            SendWithArguments<name = :deserialize>
+            |
+            Send<name = :deserialize>
           EOT
         end
       end

@@ -18,7 +18,7 @@ module Scanny
         end
 
         it "reports \"spawn\" correctly" do
-          @runner.should check("spawn").with_issue(@issue)
+          @runner.should check("spawn('rm -rf /')").with_issue(@issue)
         end
 
         it "reports \"queue_command\" correctly" do

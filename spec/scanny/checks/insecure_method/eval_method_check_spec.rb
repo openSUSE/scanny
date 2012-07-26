@@ -10,11 +10,11 @@ module Scanny
         end
 
         it "reports \"eval\" correctly" do
-          @runner.should check("eval").with_issue(@issue)
+          @runner.should check("eval").without_issues
         end
 
         it "reports \"eval('ruby_code')\" correctly" do
-          @runner.should check("eval").with_issue(@issue)
+          @runner.should check("eval('ruby_code')").with_issue(@issue)
         end
       end
     end
