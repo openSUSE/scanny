@@ -21,10 +21,6 @@ module Scanny
           @runner.should check("spawn('rm -rf /')").with_issue(@issue)
         end
 
-        it "reports \"queue_command\" correctly" do
-          @runner.should check("queue_command('command')").with_issue(@issue)
-        end
-
         it "reports \"`ls`\" correctly" do
           @runner.should check("`ls`").with_issue(@issue)
         end
