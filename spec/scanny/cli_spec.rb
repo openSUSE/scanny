@@ -54,7 +54,7 @@ describe "Command line interface" do
 
       it { assert_partial_output "check loaded", all_stdout }
       it { assert_no_partial_output "check2 loaded", all_stdout }
-      it { assert_exit_status 1 }
+      it { assert_exit_status 0 }
     end
 
     describe "when given --include argument with many directories" do
@@ -62,7 +62,7 @@ describe "Command line interface" do
 
       it { assert_partial_output "check loaded", all_stdout }
       it { assert_partial_output "check2 loaded", all_stdout }
-      it { assert_exit_status 1 }
+      it { assert_exit_status 0 }
     end
   end
 

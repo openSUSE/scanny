@@ -23,7 +23,7 @@ module Scanny
         # system("rm -rf /")
         def pattern_system_calls
           <<-EOT
-            SendWithArguments | Send
+            SendWithArguments
               <name =
                 :popen          |
                 :system         |

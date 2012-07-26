@@ -37,9 +37,15 @@ module Scanny
         # ca_file
         def pattern_ca_file
           <<-EOT
-          LocalVariableAssignment | InstanceVariableAssignment
+          InstanceVariableAssignment
           <
-            name = :ca_file | :ca_path | :@ca_file | :@ca_path,
+            name = :@ca_file | :@ca_path,
+            value = NilLiteral
+          >
+          |
+          LocalVariableAssignment
+          <
+            name = :ca_file | :ca_path,
             value = NilLiteral
           >
           EOT

@@ -20,7 +20,7 @@ module Scanny::Checks
     end
 
     it "reports \"Tempfile.new\" correctly" do
-      @runner.should check("Tempfile.new").with_issue(@issue)
+      @runner.should check("Tempfile.new").without_issues
       @runner.should check("Tempfile.new('foo')").with_issue(@issue)
     end
   end
