@@ -22,7 +22,7 @@ module Scanny
       issues            = []
 
       @checks.each do |check|
-        nodes_to_inspect = Machete.find(ast, check.pattern)
+        nodes_to_inspect = Machete.find(ast, check.compiled_pattern)
         checks_performed += 1 unless nodes_to_inspect.empty?
         nodes_inspected  += nodes_to_inspect.size
 
