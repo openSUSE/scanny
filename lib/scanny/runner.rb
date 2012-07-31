@@ -12,6 +12,8 @@ module Scanny
       else
         @checks = checks
       end
+
+      @checks_data = []
     end
 
     def check(file, input)
@@ -42,7 +44,7 @@ module Scanny
 
     def check_file(file)
       @file = file
-      (@checks_data ||= []) << check(file, File.read(file))
+      @checks_data << check(file, File.read(file))
     end
 
     def check_files(*files)
