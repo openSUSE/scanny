@@ -5,6 +5,7 @@ require_relative "scanny/reporters"
 require_relative "scanny/runner"
 require_relative "scanny/checks/check"
 require_relative "scanny/checks/helpers"
+require_relative "scanny/rake_task"
 
 Dir[File.dirname(__FILE__) + "/scanny/checks/**/*_check.rb"].each do |file|
   require file
