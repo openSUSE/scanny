@@ -1,7 +1,11 @@
 require "spec_helper"
 
 describe "Command line interface" do
-  before { @help_message_prefix = "Scanny RoR secutiry scanner" }
+  before(:all) do
+    @help_message_prefix = "Scanny RoR secutiry scanner"
+    @aruba_timeout_seconds = 10
+  end
+
   after { FileUtils.rm_rf(File.expand_path("../../../tmp", __FILE__)) }
 
   describe "when given --help argument" do
@@ -47,6 +51,7 @@ describe "Command line interface" do
     before do
       write_file('./checks/check.rb', 'puts "check loaded"')
       write_file('./checks2/check.rb', 'puts "check2 loaded"')
+      write_file('./app/project.rb', 'puts("hello world")')
     end
 
     describe "when given --include argument with one directory" do
