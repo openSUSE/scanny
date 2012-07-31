@@ -27,6 +27,25 @@ To scan one or more Ruby file, use the `bin/scanny` command and pass the files t
 
     Found 1 issues.
 
+Rake task
+---------
+
+To create scanny rake task you need to edit Rakefile.
+
+```ruby
+require "scanny/rake_task"
+
+Scanny::RakeTask.new do |t|
+  t.name    = "scanny"              # name of rake-task
+  t.include = "./custom/checks"     # directory with custom checks
+  t.disable = "HTTPRedirectCheck"   # checks to disable
+  t.format  = :stdout               # output format
+  t.strict  = true                  # scanny strict mode
+  t.path    = "./custom/app"        # path to scan
+  t.fail_on_error = true            # raise exception on error
+end
+```
+
 Writing New Checks
 ------------------
 Internally, Scanny consists of multiple *checks*, each responsible for finding and reporting one suspicious pattern in the code. You can easily extend Scanny by writing new checks.
