@@ -39,6 +39,8 @@ runner.checks_data.each do |check_data|
       Scanny::Reporters::XMLReporter.new(check_data).report
     when 'stdout'
       Scanny::Reporters::SimpleReporter.new(check_data).report
+    when 'brakeman'
+      Scanny::Reporters::BrakemanReporter.new(check_data).report
     else
       raise "Format #{options[:format]} is not supported"
   end
