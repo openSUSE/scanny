@@ -25,6 +25,11 @@ module Scanny
         checks.any? { |ch| ch.class == Checks::ExtendCheck }.should be_false
         checks.any? { |ch| ch.class == Checks::MyCheck }.should be_true
       end
+
+      it "initializes checks_data on start" do
+        runner = Runner.new
+        runner.checks_data.should_not be_nil
+      end
     end
 
     describe "check" do
