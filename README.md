@@ -46,6 +46,38 @@ Scanny::RakeTask.new do |t|
 end
 ```
 
+CI (Continuous Integration)
+---------------------------
+
+### Travis
+
+* Add to ```Gemfile``` scanny gem
+
+```ruby
+gem 'scanny'
+```
+
+* Create [Rake task](https://github.com/openSUSE/scanny#rake-task).
+
+```ruby
+Scanny::RakeTask.new do |t|
+  t.format  = :stdout       # you will see output on travis website
+  t.fail_on_error = false   # security errors should not break build
+end
+```
+
+* Update your ```.travis.yml``` file. You need add ```before_script``` section.
+
+```yaml
+before_script:
+- test -s "$HOME/.rvm/scripts/rvm" && source "$HOME/.rvm/scripts/rvm"
+- rvm rbx-19mode
+- bundle install
+- bundle exec rake scanny
+- rvm $TRAVIS_RUBY_VERSION
+```
+
+
 Writing New Checks
 ------------------
 Internally, Scanny consists of multiple *checks*, each responsible for finding and reporting one suspicious pattern in the code. You can easily extend Scanny by writing new checks.
