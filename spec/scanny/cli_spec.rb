@@ -127,4 +127,14 @@ describe "Command line interface" do
       it { assert_exit_status 1 }
     end
   end
+
+  context "parse warnings" do
+    before do
+      write_file("check.rb", "+1+")
+      run 'scanny ./check.rb'
+    end
+
+    it { assert_partial_output "Can't parse ./check.rb as Ruby file." , all_stderr }
+    it { assert_exit_status 0 }
+  end
 end
