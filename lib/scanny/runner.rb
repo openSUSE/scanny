@@ -17,7 +17,7 @@ module Scanny
     end
 
     def check(file, input)
-      ast               = input.to_ast
+      ast               = transform_to_ast(input)
       ignored_lines     = extract_ignored_lines(input)
       checks_performed  = 0
       nodes_inspected   = 0
@@ -40,6 +40,13 @@ module Scanny
         :nodes_inspected    => nodes_inspected,
         :file               => file
       }
+    end
+
+    def transform_to_ast(input)
+      input.to_ast
+    rescue SyntaxError
+      # fallback for ruby 1.8
+      Rubinius::Melbourne.new("(eval)", 1).parse_string(input)
     end
 
     def check_file(file)
