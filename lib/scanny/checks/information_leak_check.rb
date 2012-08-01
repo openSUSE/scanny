@@ -35,6 +35,11 @@ module Scanny
               array = [
                 any*,
                 SendWithArguments<
+                  arguments = ActualArguments<
+                    array = [
+                      SymbolLiteral<value = :id>
+                    ]
+                  >,
                   name = :[],
                   receiver = Send<name = :params>
                 >,

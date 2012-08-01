@@ -25,8 +25,8 @@ module Scanny::Checks
       @runner.should check("User.find_by_id(params[:id])").with_issue(@issue)
     end
 
-    it "reports \"User.find_by_name(params[:name])\" correctly" do
-      @runner.should check("User.find(params[:name])").with_issue(@issue)
+    it "reports \"User.find_by_object_id(params[:name])\" correctly" do
+      @runner.should check("User.find_by_object_id(params[:id])").with_issue(@issue)
     end
   end
 end
