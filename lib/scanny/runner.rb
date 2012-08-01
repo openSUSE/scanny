@@ -48,7 +48,13 @@ module Scanny
     end
 
     def check_files(*files)
-      files.each { |f| check_file(f) }
+      files.each do |f|
+        begin
+          check_file(f)
+        rescue SyntaxError
+          $stderr.puts "Can't parse #{f} as Ruby file."
+        end
+      end
     end
     alias :run :check_files
 

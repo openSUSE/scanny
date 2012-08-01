@@ -26,12 +26,7 @@ issues  = 0
 
 files = build_paths.map { |arg| Dir[arg].to_a }.flatten
 
-begin
-  runner.run(*files)
-rescue SyntaxError => e
-  $stderr.puts "Can't parse #{runner.file} as Ruby file."
-  exit 2
-end
+runner.run(*files)
 
 runner.checks_data.each do |check_data|
   case options[:format]
