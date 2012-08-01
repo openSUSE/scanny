@@ -123,6 +123,24 @@ module Scanny
       end
     end
 
+    describe "transform_to_ast" do
+      it "parses proper input" do
+        @runner.transform_to_ast("1+1").should be_kind_of(Rubinius::AST::SendWithArguments)
+      end
+
+      it "raises SyntaxError in case of invalid syntax" do
+        lambda {
+          @runner.transform_to_ast("+1+")
+        }.should raise_error(SyntaxError)
+      end
+
+      it "fallbacks to ruby 1.8 syntax" do
+        lambda {
+          @runner.transform_to_ast("case sym;when :mysql:  PathFinder::Mysql::Options; end")
+        }.should_not raise_error
+      end
+    end
+
     # We don't test #check_file since it's just a tiny wrapper around #check.
   end
 end
