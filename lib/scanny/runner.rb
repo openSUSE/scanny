@@ -4,9 +4,11 @@ require "ostruct"
 
 module Scanny
   class Runner
-    attr_reader :checks, :checks_data, :file
+    attr_reader :checks, :checks_data, :file, :parser
 
     def initialize(*checks)
+      options = checks.last.is_a?(Hash) ? checks.pop : {}
+
       if checks.empty?
         @checks = check_classes
       else
@@ -14,10 +16,11 @@ module Scanny
       end
 
       @checks_data = []
+      @parser = options[:parser] || Rubinius::Melbourne19
     end
 
     def check(file, input)
-      ast               = input.to_ast
+      ast               = parser.new("(eval)", 1).parse_string(input)
       ignored_lines     = extract_ignored_lines(input)
       checks_performed  = 0
       nodes_inspected   = 0
