@@ -127,4 +127,28 @@ describe "Command line interface" do
       it { assert_exit_status 1 }
     end
   end
+
+  context "parser mode" do
+    before { write_file("check.rb", "case s;when :m: P; end") }
+
+    describe "when given --mode 18 argument" do
+      before { run 'scanny --mode 18 ./check.rb' }
+      it { assert_no_partial_output "Can't parse ./check.rb as Ruby file", all_stderr }
+    end
+
+    describe "when given --mode 19 argument" do
+      before { run 'scanny --mode 19 ./check.rb' }
+      it { assert_partial_output "Can't parse ./check.rb as Ruby file", all_stderr }
+    end
+
+    describe "when given --mode invalid argument" do
+      before do
+        @message = "I can not recognize the version of the parser: invalid"
+        run 'scanny --mode invalid ./check'
+      end
+
+      it { assert_partial_output @message, all_stderr }
+      it { assert_exit_status 2 }
+    end
+  end
 end
