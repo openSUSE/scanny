@@ -20,16 +20,28 @@ module Scanny
       end
     end
 
-    def runner_with_custom_checks(disabled_checks, strict = false)
+    def runner_with_custom_checks(runner, disabled_checks, strict = false)
       disabled_checks = disabled_checks.to_s.split(",").map(&:strip)
 
-      runner = Scanny::Runner.new
       runner.checks.reject! do |check|
         disabled_checks.any? { |ch| check.class.name == ch } ||
         (check.strict? && !strict)
       end
 
       runner
+    end
+
+    def use_parser(version)
+      return unless version
+      case version
+        when '18'
+          Rubinius::Melbourne
+        when '19'
+          Rubinius::Melbourne19
+        else
+          $stderr.puts "I can not recognize the version of the parser: #{version}"
+          exit 2
+      end
     end
   end
 end
