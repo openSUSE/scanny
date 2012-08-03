@@ -151,4 +151,17 @@ describe "Command line interface" do
       it { assert_exit_status 2 }
     end
   end
+
+  context "parse error" do
+    before do
+      write_file("check.rb", "+1+")
+      @message =  "Parser currently is working in 19 mode.\n" +
+                  "It is possible that your project works with another version of ruby\n"
+                  "You can change parser mode with '-m' flag\n"
+      run 'scanny ./check.rb'
+    end
+
+    it { assert_partial_output @message , all_stderr }
+    it { assert_exit_status 2 }
+  end
 end
