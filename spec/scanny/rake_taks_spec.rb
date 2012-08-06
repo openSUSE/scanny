@@ -64,5 +64,19 @@ module Scanny
         }.should raise_error(RuntimeError)
       end
     end
+
+    describe "ruby parser mode" do
+      it "executes scanny with ruby 18 mode" do
+        task = RakeTask.new { |t| t.ruby_mode = "18" }
+        MockTask.last_instance.call
+        MockTask.last_cmd.should == "scanny -m 18"
+      end
+
+      it "executes scanny with ruby 19 mode" do
+        task = RakeTask.new { |t| t.ruby_mode = "19" }
+        MockTask.last_instance.call
+        MockTask.last_cmd.should == "scanny -m 19"
+      end
+    end
   end
 end
