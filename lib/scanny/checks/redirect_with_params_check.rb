@@ -22,6 +22,17 @@ module Scanny
           SendWithArguments<
             arguments = ActualArguments<
               array = [
+                HashLiteral<
+                  array = [
+                    any{odd},
+                    SendWithArguments<
+                      name = :[],
+                      receiver = Send<name = :params>
+                    >,
+                    any{even}
+                  ]
+                >
+                |
                 SendWithArguments<
                   name = :[],
                   receiver = Send<name = :params>
