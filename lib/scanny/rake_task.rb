@@ -17,6 +17,8 @@ module Scanny
     attr_accessor :path
     # raise exception on error
     attr_accessor :fail_on_error
+    # ruby mode
+    attr_accessor :ruby_mode
 
     def initialize(name=:scanny)
       @name           = name
@@ -26,6 +28,7 @@ module Scanny
       @strict         = nil
       @path           = nil
       @fail_on_error  = nil
+      @ruby_mode      = nil
 
       yield self if block_given?
       define
@@ -36,11 +39,12 @@ module Scanny
 
       task name do
         cmd =   ["scanny"]
-        cmd <<  ["-i"] + [@include] unless @include.empty?
-        cmd <<  ["-d"] + [@disable] unless @disable.empty?
-        cmd <<  ["-f #{@format}"]   if @format
-        cmd <<  ["-s"]              if @strict
-        cmd <<  [@path]             if @path
+        cmd <<  ["-i"] + [@include]   unless @include.empty?
+        cmd <<  ["-d"] + [@disable]   unless @disable.empty?
+        cmd <<  ["-f #{@format}"]     if @format
+        cmd <<  ["-s"]                if @strict
+        cmd <<  ["-m #{@ruby_mode}"]  if @ruby_mode
+        cmd <<  [@path]               if @path
         cmd = cmd.flatten.join(" ")
 
         unless system(cmd)
