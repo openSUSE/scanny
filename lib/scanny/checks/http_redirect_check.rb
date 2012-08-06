@@ -36,7 +36,16 @@ module Scanny
 
       # require 'open-uri'
       def pattern_open_uri
-        "StringLiteral<string = 'open-uri'>"
+        <<-EOT
+          SendWithArguments<
+            arguments = ActualArguments<
+              array = [
+                StringLiteral<string = 'open-uri'>
+              ]
+            >,
+            name = :require
+          >
+        EOT
       end
 
       # OpenStruct.new(key: value)
