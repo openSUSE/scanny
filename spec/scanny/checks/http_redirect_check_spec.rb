@@ -12,10 +12,6 @@ module Scanny::Checks
       @runner.should check("require 'open-uri'").with_issue(@issue)
     end
 
-    it "reports \"add_file_from_url(url)\" correctly" do
-      @runner.should check("add_file_from_url(url)").with_issue(@issue)
-    end
-
     it "reports \"OpenStruct.new\" correctly" do
       @runner.should check("OpenStruct.new").with_issue(@issue)
     end

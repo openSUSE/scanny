@@ -3,7 +3,6 @@ module Scanny
     class HTTPRedirectCheck < Check
       def pattern
         [
-          pattern_add_file_from_url,
           pattern_open_struct,
           pattern_open_uri
         ].join("|")
@@ -17,11 +16,6 @@ module Scanny
 
       def warning_message
         "HTTP redirects can be emitted by the Application"
-      end
-
-      # add_file_from_url("http://example.com/file.txt")
-      def pattern_add_file_from_url
-        "SendWithArguments<name = :add_file_from_url>"
       end
 
       # require 'open-uri'
