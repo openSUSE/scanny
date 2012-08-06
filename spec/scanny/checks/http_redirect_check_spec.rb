@@ -12,14 +12,6 @@ module Scanny::Checks
       @runner.should check("require 'open-uri'").with_issue(@issue)
     end
 
-    it "reports \"save_file\" correctly" do
-      @runner.should check("save_file").with_issue(@issue)
-    end
-
-    it "reports \"save_file(file)\" correctly" do
-      @runner.should check("save_file(file)").with_issue(@issue)
-    end
-
     it "reports \"add_file_from_url(url)\" correctly" do
       @runner.should check("add_file_from_url(url)").with_issue(@issue)
     end

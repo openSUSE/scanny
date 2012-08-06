@@ -5,8 +5,7 @@ module Scanny
         [
           pattern_add_file_from_url,
           pattern_open_struct,
-          pattern_open_uri,
-          pattern_save_file
+          pattern_open_uri
         ].join("|")
       end
 
@@ -18,15 +17,6 @@ module Scanny
 
       def warning_message
         "HTTP redirects can be emitted by the Application"
-      end
-
-      # save_file()
-      def pattern_save_file
-        <<-EOT
-          Send<name = :save_file>
-          |
-          SendWithArguments<name = :save_file>
-        EOT
       end
 
       # add_file_from_url("http://example.com/file.txt")
