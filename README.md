@@ -43,6 +43,7 @@ Scanny::RakeTask.new do |t|
   t.strict  = true                  # scanny strict mode
   t.path    = "./custom/app"        # path to scan
   t.fail_on_error = true            # raise exception on error
+  t.ruby_mode = "18"                # ruby parser mode (default 19)
 end
 ```
 
