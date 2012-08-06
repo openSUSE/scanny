@@ -49,7 +49,7 @@ end
 CI (Continuous Integration)
 ---------------------------
 
-### Travis
+### Common for all CLI
 
 * Add to ```Gemfile``` scanny gem
 
@@ -66,6 +66,8 @@ Scanny::RakeTask.new do |t|
 end
 ```
 
+### Travis
+
 * Update your ```.travis.yml``` file. You need add ```before_script``` section.
 
 ```yaml
@@ -76,6 +78,37 @@ before_script:
 - bundle exec rake scanny
 - rvm $TRAVIS_RUBY_VERSION
 ```
+
+### Jenkins
+
+* Add build step
+
+```
+bash -l -c '
+rvm rbx-head &&
+rvm gemset create scanny &&
+rvm gemset use scanny &&
+bundle install &&
+bundle exec rake scanny'
+```
+
+* Install [Log Parser Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Log+Parser+Plugin) for Jenkins
+* Create rules file
+
+```ruby
+# /var/lib/jenkins/rules
+
+info /- \[info\]/
+warning /- \[low\]/
+error /- \[(medium|high)\]/
+```
+
+* Go to ```Manage Jenkins > Configure System > Console Output Parsing```.
+Add path to rules with in **Parsing Rules File** field
+
+* Go to and check ```[Project] > Configure > Console output (build log) parsing```
+* Select proper **Select Parsing Rules**
+* Warnings you can find in ```[Build] > Parsed Console Output```
 
 
 Writing New Checks
