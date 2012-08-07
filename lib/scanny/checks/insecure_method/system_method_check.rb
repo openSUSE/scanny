@@ -5,7 +5,6 @@ module Scanny
         def pattern
           [
             pattern_system_calls,
-            pattern_file_utils_methods,
             pattern_execute_string
           ].join("|")
         end
@@ -30,16 +29,6 @@ module Scanny
                 :spawn          |
                 :exec
               >
-          EOT
-        end
-
-        # FileUtils.mv("one_file", "sec_file")
-        def pattern_file_utils_methods
-          <<-EOT
-            SendWithArguments<
-              receiver = ConstantAccess<name = :FileUtils>,
-              name = :mv | :cp
-            >
           EOT
         end
 
