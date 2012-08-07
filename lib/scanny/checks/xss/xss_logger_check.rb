@@ -5,13 +5,13 @@ module Scanny
     class XssLoggerCheck < Check
       def pattern
         [
-          pattern_params,
+          pattern_logger_with_params,
           pattern_dynamic_string,
         ].join("|")
       end
 
       def check(node)
-        issue :low, warning_message, :cwe => 79
+        issue :low, warning_message, :cwe => [20, 79]
       end
 
       private
@@ -20,17 +20,34 @@ module Scanny
         "Assigning request parameters into logger can lead to XSS issues."
       end
 
-      # logger params[:password]
-      def pattern_params
+      # logger(params[:password])
+      # logger("User password: #{params[:password]} is...")
+      def pattern_logger_with_params
         <<-EOT
           SendWithArguments<
             arguments = ActualArguments<
               array = [
+                any*,
                 SendWithArguments<
                   name = :[],
                   receiver = Send<name = :params>
                 >
+                |
+                DynamicString<
+                  array = [
+                    any*,
+                    ToString<
+                      value = SendWithArguments<
+                        name = :[],
+                        receiver = Send<name = :params>
+                      >
+                    >,
+                    any*
+                  ]
+                >,
+                any*
               ]
+
             >,
             name = :logger
           >

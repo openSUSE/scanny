@@ -3,7 +3,6 @@ module Scanny
     class InputFilteringCheck < Check
       def pattern
         [
-          pattern_logger_with_params,
           pattern_env_http,
           pattern_params
         ].join("|")
@@ -17,23 +16,6 @@ module Scanny
 
       def warning_message
         "Possible injection vulnerabilities"
-      end
-
-      # logger(params[:password])
-      def pattern_logger_with_params
-        <<-EOT
-          SendWithArguments<
-            arguments = ActualArguments<
-              array = [
-                SendWithArguments<
-                  name = :[],
-                  receiver = Send<name = :params>
-                >
-              ]
-            >,
-            name = :logger
-          >
-        EOT
       end
 
       # params[:input]
