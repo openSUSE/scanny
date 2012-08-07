@@ -53,9 +53,9 @@ module Scanny
                 SymbolLiteral<value = :warning>,
                 DynamicString<
                   array = [
-                    ToString<
-                      value = Send<name = any>
-                    >
+                    any*,
+                    ToString,
+                    any*
                   ]
                 >
               ]

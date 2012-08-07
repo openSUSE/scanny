@@ -15,6 +15,7 @@ module Scanny::Checks
 
     it "reports \"flash[:warning] = \"\#{interpolation}\" correctly" do
       @runner.should check('flash[:warning] = "#{value}"').with_issue(@issue_medium)
+      @runner.should check('flash[:warning] = "#{value} and #{value2}"').with_issue(@issue_medium)
       @runner.should check("flash[:warning] = \"Static warning\"").without_issues
     end
   end
