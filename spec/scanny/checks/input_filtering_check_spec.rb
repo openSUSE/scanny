@@ -9,10 +9,6 @@ module Scanny::Checks
     end
 
     it "reports \"logger(params[:password])\" correctly" do
-      @runner.should check("logger(params[:password])").with_issues([@issue, @issue])
-    end
-
-    it "reports \"logger(params[:password])\" correctly" do
       @runner.should check("params[:password]").with_issue(@issue)
     end
 
