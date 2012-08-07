@@ -13,6 +13,7 @@ module Scanny::Checks
     end
 
     it "reports \"logger(\"\#{interpolation}\")\" correctly" do
+      @runner.should check('logger("#{i1} and #{i1}")').with_issue(@issue)
       @runner.should check('logger("#{interpolation}")').with_issue(@issue)
     end
   end

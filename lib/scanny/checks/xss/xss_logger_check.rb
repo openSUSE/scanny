@@ -45,9 +45,9 @@ module Scanny
               array = [
                 DynamicString<
                   array = [
-                    ToString<
-                      value = Send<name = any>
-                    >
+                    any*,
+                    ToString,
+                    any*
                   ]
                 >
               ]
