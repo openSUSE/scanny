@@ -37,16 +37,13 @@ module Scanny
         # ca_file
         def pattern_ca_file
           <<-EOT
-          InstanceVariableAssignment
-          <
-            name = :@ca_file | :@ca_path,
-            value = NilLiteral
-          >
-          |
-          LocalVariableAssignment
-          <
-            name = :ca_file | :ca_path,
-            value = NilLiteral
+          AttributeAssignment<
+            arguments = ActualArguments<
+              array = [
+                NilLiteral
+              ]
+            >
+            name = :ca_path | :ca_file,
           >
           EOT
         end

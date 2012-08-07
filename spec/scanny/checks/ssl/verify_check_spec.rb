@@ -15,19 +15,11 @@ module Scanny::Checks::SSL
     end
 
     it "reports \"ca_file = nil\" correctly" do
-      @runner.should check("ca_file = nil").with_issue(@issue)
+      @runner.should check("ssl_context.ca_file = nil").with_issue(@issue)
     end
 
-    it "reports \"@ca_file = nil\" correctly" do
-      @runner.should check("@ca_file = nil").with_issue(@issue)
-    end
-
-    it "reports \"ca_path = nil\" correctly" do
-      @runner.should check("ca_path = nil").with_issue(@issue)
-    end
-
-    it "reports \"@ca_path = nil\" correctly" do
-      @runner.should check("@ca_path = nil").with_issue(@issue)
+    it "reports \"ca_file = nil\" correctly" do
+      @runner.should check("ssl_context.ca_path = nil").with_issue(@issue)
     end
   end
 end
