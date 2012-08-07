@@ -24,14 +24,6 @@ module Scanny
         it "reports \"`ls`\" correctly" do
           @runner.should check("`ls`").with_issue(@issue)
         end
-
-        it "reports \"FileUtils.cp\"" do
-          @runner.should check("FileUtils.cp('file', 'file2')").with_issue(@issue)
-        end
-
-        it "reports \"FileUtils.mv\"" do
-          @runner.should check("FileUtils.mv('file', 'file2')").with_issue(@issue)
-        end
       end
     end
   end
