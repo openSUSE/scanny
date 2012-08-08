@@ -5,7 +5,8 @@ module Scanny
         def pattern
           [
             pattern_system_calls,
-            pattern_execute_string
+            pattern_execute_string,
+            pattern_popen
           ].join("|")
         end
 
@@ -23,13 +24,16 @@ module Scanny
         def pattern_system_calls
           <<-EOT
             SendWithArguments
-              <name =
-                :popen          |
-                :system         |
-                :spawn          |
-                :exec
+              <
+                name =  :system         |
+                        :spawn          |
+                        :exec
               >
           EOT
+        end
+
+        def pattern_popen
+          "SendWithArguments<name ^= :popen>"
         end
 
         # `system_command`
