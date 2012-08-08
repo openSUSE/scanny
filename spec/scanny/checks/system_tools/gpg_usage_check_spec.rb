@@ -5,7 +5,7 @@ module Scanny::Checks::SystemTools
     before do
       @runner = Scanny::Runner.new(GpgUsageCheck.new)
       @message =  "Using gpg tool in the wrong way can lead to security problems"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"GPG.method\" correctly" do

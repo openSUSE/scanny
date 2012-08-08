@@ -6,7 +6,7 @@ module Scanny::Checks::Session
       @runner = Scanny::Runner.new(AccessToSessionCheck.new)
       @message =  "Referring to a session in the wrong way" +
                   "can lead to errors that reduce security level"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"session[:password]\" correctly" do

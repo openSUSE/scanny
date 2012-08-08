@@ -5,7 +5,7 @@ module Scanny::Checks
     before do
       @runner = Scanny::Runner.new(FrameworksCheck.new)
       @message = "Using the methods from frameworks can lead to security problems"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"env['HTTP_X_USERNAME']\" correctly" do
