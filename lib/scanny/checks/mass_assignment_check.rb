@@ -26,6 +26,17 @@ module Scanny
                   name = :[],
                   receiver = Send<name = :params>
                 >
+                |
+                HashLiteral<
+                array = [
+                  any{odd},
+                  SendWithArguments<
+                    name = :[],
+                    receiver = Send<name = :params>
+                  >,
+                  any{even}
+                ]
+                >
               ]
             >,
             name = :new | :create | :update_attributes
