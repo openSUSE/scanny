@@ -1,3 +1,5 @@
+require "spec_helper"
+
 module Scanny
   module Checks
     module InsecureMethod
@@ -11,6 +13,7 @@ module Scanny
 
         it "reports \"popen\" correctly" do
           @runner.should check("IO.popen(arguments)").with_issue(@issue)
+          @runner.should check("IO.popen3(arguments)").with_issue(@issue)
         end
 
         it "reports \"system\" correctly" do
