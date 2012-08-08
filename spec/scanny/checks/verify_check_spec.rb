@@ -6,7 +6,7 @@ module Scanny::Checks
       @runner = Scanny::Runner.new(VerifyMethodCheck.new)
       @message =  "Incorrect to use the verify method can lead to " +
                   "accept additional parameters from request"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"verify :method => :post, :only => [:create]\" correctly" do

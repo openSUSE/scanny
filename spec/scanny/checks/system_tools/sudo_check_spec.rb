@@ -6,7 +6,7 @@ module Scanny::Checks::SystemTools
       @runner = Scanny::Runner.new(SudoCheck.new)
       @message =  "Using sudo can lead to the execution" +
                   "of programs on root administrator rights"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"system('sudo shutdown -h now')\" correctly" do

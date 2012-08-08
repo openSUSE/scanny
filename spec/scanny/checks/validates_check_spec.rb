@@ -5,7 +5,7 @@ module Scanny::Checks
     before do
       @runner = Scanny::Runner.new(ValidatesCheck.new)
       @message = "Incorrect validations may allow malicious data transmission"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"validates_presence_of :email\" correctly" do

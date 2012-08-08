@@ -6,7 +6,7 @@ module Scanny::Checks
       @runner = Scanny::Runner.new(FileOpenCheck.new)
       @message =  "Operations on files in code can lead to" +
                   "unauthorized access to data"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"File.open('/home/app/tmp/file')\" correctly" do

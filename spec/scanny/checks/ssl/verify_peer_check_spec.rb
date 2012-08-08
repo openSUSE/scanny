@@ -6,7 +6,7 @@ module Scanny::Checks::SSL
       @runner = Scanny::Runner.new(VerifyPeerCheck.new)
       @message =  "Change the value of of VERIFY_PEER" +
                   "can lead to faulty accepted certificate"
-      @issue = issue(:info, @message, 0)
+      @issue = issue(:info, @message)
     end
 
     it "reports \"OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE\" correctly" do
