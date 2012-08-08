@@ -13,6 +13,11 @@ module Scanny::Checks
       @runner.should check("User.new(params[:user])").with_issue(@issue)
     end
 
+    it "reports \"User.new(:email => params[:input])\" correctly" do
+      @runner.should check("User.new(:email => params[:input])").with_issue(@issue)
+      @runner.should check("User.new(params[:input] => :value)").without_issues
+    end
+
     it "reports \"User.create(params[:user])\" correctly" do
       @runner.should check("User.create(params[:user])").with_issue(@issue)
     end
