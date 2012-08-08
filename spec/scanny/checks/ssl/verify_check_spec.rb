@@ -4,7 +4,7 @@ module Scanny::Checks::SSL
   describe VerifyCheck do
     before do
       @runner = Scanny::Runner.new(VerifyCheck.new)
-      @message =  "Disable certificate verification can" +
+      @message =  "Disable certificate verification can " +
                   "lead to connect to an unauthorized server"
       @issue = issue(:high, @message, [296, 297, 298, 299, 300, 599])
     end

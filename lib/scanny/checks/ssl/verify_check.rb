@@ -4,8 +4,8 @@ module Scanny
       class VerifyCheck < Check
         def pattern
           [
-              pattern_ssl_verify_none,
-              pattern_ca_file
+            pattern_ssl_verify_none,
+            pattern_ca_file
           ].join("|")
         end
 
@@ -16,7 +16,7 @@ module Scanny
         private
 
         def warning_message
-          "Disable certificate verification can" +
+          "Disable certificate verification can " +
           "lead to connect to an unauthorized server"
         end
 
@@ -33,8 +33,8 @@ module Scanny
           EOT
         end
 
-        # @ca_file
-        # ca_file
+
+        # ssl_context.ca_file = nil
         def pattern_ca_file
           <<-EOT
           AttributeAssignment<
@@ -42,8 +42,8 @@ module Scanny
               array = [
                 NilLiteral
               ]
-            >
-            name = :ca_path | :ca_file,
+            >,
+            name = :ca_path= | :ca_file=
           >
           EOT
         end
