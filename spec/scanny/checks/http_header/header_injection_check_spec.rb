@@ -4,7 +4,8 @@ module Scanny::Checks::HttpHeader
   describe HeaderInjectionCheck do
     before do
       @runner = Scanny::Runner.new(HeaderInjectionCheck.new)
-      @message = "Directly use of the HTTP_* headers in code"
+      @message =  "Directly use of the HTTP_* headers in code. " +
+                  "Possible injection vulnerabilities"
       @issue = issue(:medium, @message, [20, 113])
     end
 

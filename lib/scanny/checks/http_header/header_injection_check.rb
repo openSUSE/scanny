@@ -13,7 +13,8 @@ module Scanny
         private
 
         def warning_message
-          "Directly use of the HTTP_* headers in code"
+          "Directly use of the HTTP_* headers in code. " +
+          "Possible injection vulnerabilities"
         end
 
         # env["HTTP_HEADER"]
