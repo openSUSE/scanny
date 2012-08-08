@@ -5,7 +5,7 @@ module Scanny::Checks
     before :each do
       @runner = Scanny::Runner.new(XssMarkCheck.new)
       @warning_message = "Marking string as safe can lead to XSS issues."
-      @issue  = Scanny::Issue.new("scanned_file.rb", 1, :info, @warning_message, 0)
+      @issue  = Scanny::Issue.new("scanned_file.rb", 1, :info, @warning_message)
     end
 
     it "reports \"'string'.xss_safe\" correctly" do

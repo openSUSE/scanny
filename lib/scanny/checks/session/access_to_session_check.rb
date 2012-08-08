@@ -10,7 +10,7 @@ module Scanny
         end
 
         def check(node)
-          issue :info, warning_message, :cwe => 0
+          issue :info, warning_message
         end
 
         private
