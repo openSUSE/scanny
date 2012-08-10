@@ -35,15 +35,23 @@ module Scanny::Checks::Sql
     end
 
     it "reports \"execute\" calls on class correctly" do
-      @runner.should check('User.execute').with_issue(@issue_low)
+      @runner.should check('User.execute("sql")').with_issue(@issue_low)
     end
 
     it "reports \"find_by_sql\" calls on class correctly" do
-      @runner.should check('User.find_by_sql').with_issue(@issue_low)
+      @runner.should check('User.find_by_sql("sql")').with_issue(@issue_low)
     end
 
     it "reports \"paginate\" calls on class correctly" do
       @runner.should check('User.paginate').with_issue(@issue_low)
+    end
+
+    it "reports \"paginage\" calls on object correctly" do
+      @runner.should check("array.paginate").with_issue(@issue_low)
+    end
+
+    it "reports \"paginage\" calls on object with arguments correctly" do
+      @runner.should check("array.paginate(options)").with_issue(@issue_low)
     end
 
     it "reports \"find_by_sql\" calls on class with params correctly" do
