@@ -17,7 +17,7 @@ module Scanny
 
         # sanitize_sql()
         def pattern_sanitize_sql
-          "Send<name = :sanitize_sql>"
+          "SendWithArguments<name = :sanitize_sql>"
         end
       end
     end
