@@ -21,11 +21,13 @@ module Scanny
         private
 
         # User.find_by_sql
+        # @collection.paginate(options)
         def pattern_find_by_sql_and_execute_on_models
           <<-EOT
-            Send<
-              name = :execute | :find_by_sql | :paginate,
-              receiver = ConstantAccess
+            Send<name = :paginate>
+            |
+            SendWithArguments<
+              name = :execute | :find_by_sql | :paginate
             >
           EOT
         end
