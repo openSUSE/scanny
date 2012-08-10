@@ -8,14 +8,6 @@ module Scanny::Checks::Session
       @issue = issue(:info, @message, 614)
     end
 
-    it "reports \":session_secure\" correctly" do
-      @runner.should check(":session_secure").with_issue(@issue)
-    end
-
-    it "reports \":secure\" correctly" do
-      @runner.should check(":secure").with_issue(@issue)
-    end
-
     it "reports \"ActionController::Base.session_options[:session_secure] = false\" correctly" do
       @runner.should  check("ActionController::Base.session_options[:session_secure] = false").
                       with_issue(@issue)
