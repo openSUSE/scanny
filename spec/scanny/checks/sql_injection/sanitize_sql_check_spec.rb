@@ -10,7 +10,7 @@ module Scanny::Checks::Sql
     end
 
     it "reports \"sanitize_sql\" calls correctly" do
-      @runner.should check("'mysql_query'.sanitize_sql").with_issue(@issue_info)
+      @runner.should check("sanitize_sql('mysql_query')").with_issue(@issue_info)
     end
   end
 end
