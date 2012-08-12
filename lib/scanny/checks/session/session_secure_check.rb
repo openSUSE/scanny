@@ -3,10 +3,7 @@ module Scanny
     module Session
       class SessionSecureCheck < Check
         def pattern
-          [
-            pattern_session_settings,
-            pattern_session_secure
-          ].join("|")
+          pattern_session_settings
         end
 
         def check(node)
@@ -22,13 +19,14 @@ module Scanny
         # ActionController::Base.session_options[:session_secure]
         def pattern_session_settings
           <<-EOT
-            SendWithArguments<
+            ElementAssignment<
               arguments = ActualArguments<
                 array = [
-                  SymbolLiteral<value = :session_secure>
+                  SymbolLiteral<value = :session_secure | :secure>,
+                  any
                 ]
               >,
-              name = :[],
+              name = :[]=,
               receiver = Send<
                 name = :session_options,
                 receiver = ScopedConstant<
@@ -38,11 +36,6 @@ module Scanny
               >
             >
           EOT
-        end
-
-        # :session_secure
-        def pattern_session_secure
-          "SymbolLiteral<value = :session_secure | :secure>"
         end
       end
     end
