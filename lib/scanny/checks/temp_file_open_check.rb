@@ -5,8 +5,7 @@ module Scanny
         [
           pattern_temp,
           pattern_file_open,
-          pattern_mkdir_p,
-          pattern_tempfile
+          pattern_mkdir_p
         ].join("|")
       end
 
@@ -46,16 +45,6 @@ module Scanny
               ]
             >,
             name = :mkdir_p
-          >
-        EOT
-      end
-
-      # Tempfile.new
-      def pattern_tempfile
-        <<-EOT
-          SendWithArguments<
-            name = :new,
-            receiver = ConstantAccess<name = :Tempfile>
           >
         EOT
       end
