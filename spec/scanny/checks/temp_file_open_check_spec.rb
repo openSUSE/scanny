@@ -11,12 +11,12 @@ module Scanny::Checks
 
     it "reports \"File.open('/home/app/tmp/file')\" correctly" do
       @runner.should  check("File.open('/home/app/tmp/file')").
-                      with_issue(@issue)
+                      with_issues([@issue, @issue])
     end
 
     it "reports \"mkdir_p('/rails/tmp/my/dir')\" correctly" do
       @runner.should  check("mkdir_p('/rails/tmp/my/dir')").
-                      with_issue(@issue)
+                      with_issues([@issue, @issue])
     end
 
     it "reports \"Tempfile.new\" correctly" do

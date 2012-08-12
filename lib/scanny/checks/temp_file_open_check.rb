@@ -3,6 +3,7 @@ module Scanny
     class TempFileOpenCheck < Check
       def pattern
         [
+          pattern_temp,
           pattern_file_open,
           pattern_mkdir_p,
           pattern_tempfile
@@ -57,6 +58,10 @@ module Scanny
             receiver = ConstantAccess<name = :Tempfile>
           >
         EOT
+      end
+
+      def pattern_temp
+        'StringLiteral<string *= /\/tmp\//>'
       end
     end
   end
