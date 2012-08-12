@@ -18,10 +18,5 @@ module Scanny::Checks
       @runner.should  check("mkdir_p('/rails/tmp/my/dir')").
                       with_issues([@issue, @issue])
     end
-
-    it "reports \"Tempfile.new\" correctly" do
-      @runner.should check("Tempfile.new").without_issues
-      @runner.should check("Tempfile.new('foo')").with_issue(@issue)
-    end
   end
 end
