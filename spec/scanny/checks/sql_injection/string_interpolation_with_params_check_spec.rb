@@ -9,11 +9,7 @@ module Scanny::Checks::Sql
       @issue_high = issue(:high, @message, 89)
     end
 
-    it "reports string interpolation with \"options[:select]\" correctly" do
-      @runner.should check('"SELECT #{options[:select]}"').with_issue(@issue_high)
-    end
-
-    it "reports string interpolation with \"options[:select]\" correctly" do
+    it "reports string interpolation with \"params[:input]\" correctly" do
       @runner.should check('"SELECT #{params[:input]}"').with_issue(@issue_high)
     end
   end
