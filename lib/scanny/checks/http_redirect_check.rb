@@ -2,10 +2,7 @@ module Scanny
   module Checks
     class HTTPRedirectCheck < Check
       def pattern
-        [
-          pattern_open_struct,
-          pattern_open_uri
-        ].join("|")
+        pattern_open_uri
       end
 
       def check(node)
@@ -28,19 +25,6 @@ module Scanny
               ]
             >,
             name = :require
-          >
-        EOT
-      end
-
-      # OpenStruct.new(key: value)
-      def pattern_open_struct
-        <<-EOT
-          Send<
-            receiver = ConstantAccess<name = :OpenStruct>
-          >
-          |
-          SendWithArguments<
-            receiver = ConstantAccess<name = :OpenStruct>
           >
         EOT
       end
