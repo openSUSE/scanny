@@ -7,22 +7,20 @@ module Scanny
       def pattern
         [
           pattern_shell_expanding,
-          pattern_shell_execute,
           pattern_popen,
           pattern_execute_string
         ].join("|")
       end
 
       def check(node)
-        if Machete.matches?(node, pattern_shell_expanding)
-          # The command goes through shell expansion only if it is passed as one
-          # argument.
-          message = "The \"#{node.name}\" method passes the executed command through shell expansion."
-        else
-          message = "Execute system commands can lead the system to run dangerous code"
-        end
+        # The command goes through shell expansion only if it is passed as one
+        # argument.
+        issue :high, warning_message(node), :cwe => [88, 78]
+      end
 
-        issue :high, message, :cwe => [88, 78]
+      def warning_message(node = nil)
+        name = node.respond_to?(:name) ? node.name : "`"
+        "The \"#{name}\" method passes the executed command through shell expansion."
       end
 
       # system("rm -rf /")
@@ -30,21 +28,21 @@ module Scanny
         <<-EOT
           SendWithArguments<
             receiver  = Self | ConstantAccess<name = :Kernel>,
-            name      = :` | :exec | :system,
+            name      = :` | :exec | :system | :spawn,
             arguments = ActualArguments<array = [any]>
           >
         EOT
       end
 
-      # Kernel.spawn("ls -lA")
-      def pattern_shell_execute
-        "SendWithArguments<name = :system | :spawn | :exec>"
-      end
-
       # IO.popen
       # IO.popen3
       def pattern_popen
-        "SendWithArguments<name ^= :popen>"
+        <<-EOT
+          SendWithArguments<
+            name ^= :popen,
+            arguments = ActualArguments<array = [any]>
+          >
+        EOT
       end
 
       # `system_command`
