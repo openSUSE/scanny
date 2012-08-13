@@ -6,7 +6,8 @@ module Scanny
       def pattern
         [
           pattern_mark_as_safe,
-          pattern_xss_safe
+          pattern_xss_safe,
+          pattern_mark_methods_as_xss_safe
         ].join("|")
       end
 
@@ -29,10 +30,17 @@ module Scanny
       def pattern_mark_as_safe
         <<-EOT
           Send<name =
-            :mark_as_xss_protected |
-            :mark_methods_as_xss_safe |
+            :mark_as_xss_protected    |
             :to_s_xss_protected
           >
+        EOT
+      end
+
+      def pattern_mark_methods_as_xss_safe
+        <<-EOT
+          SendWithArguments<name = :mark_methods_as_xss_safe>
+          |
+          Send<name = :mark_methods_as_xss_safe>
         EOT
       end
     end
