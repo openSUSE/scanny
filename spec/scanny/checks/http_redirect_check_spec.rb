@@ -11,13 +11,5 @@ module Scanny::Checks
     it "reports \"require 'open-uri'\" correctly" do
       @runner.should check("require 'open-uri'").with_issue(@issue)
     end
-
-    it "reports \"OpenStruct.new\" correctly" do
-      @runner.should check("OpenStruct.new").with_issue(@issue)
-    end
-
-    it "reports \"OpenStruct.new(:key => :value)\" correctly" do
-      @runner.should check("OpenStruct.new(:key => :value)").with_issue(@issue)
-    end
   end
 end
