@@ -18,30 +18,6 @@ module Scanny
 
         private
 
-        # "SELECT #{options[:select]} FROM users"
-        def pattern_options_with_select_in_select
-          <<-EOT
-            DynamicString<
-              array = [
-                any*,
-                ToString<
-                  value = SendWithArguments<
-                    arguments = ActualArguments<
-                      array = [
-                        SymbolLiteral<value = :select>
-                      ]
-                    >,
-                    name = :[],
-                    receiver = Send<name = :options>
-                  >
-                >,
-                any*
-              ],
-              string ^= "SELECT"
-            >
-          EOT
-        end
-
         # "SELECT params[:input] FROM users"
         def pattern_params_in_select
           <<-EOT
