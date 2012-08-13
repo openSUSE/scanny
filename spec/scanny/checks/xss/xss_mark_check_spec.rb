@@ -20,6 +20,10 @@ module Scanny::Checks
       @runner.should check("'string'.mark_methods_as_xss_safe").with_issue(@issue)
     end
 
+    it "reports \"mark_methods_as_xss_safe('string')\" correctly" do
+      @runner.should check("mark_methods_as_xss_safe('string')").with_issue(@issue)
+    end
+
     it "reports \"'string'.to_s_xss_protected\" correctly" do
       @runner.should check("'string'.to_s_xss_protected").with_issue(@issue)
     end
