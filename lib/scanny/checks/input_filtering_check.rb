@@ -2,7 +2,10 @@ module Scanny
   module Checks
     class InputFilteringCheck < Check
       def pattern
-        pattern_params
+        [
+          pattern_terminal_escape_sequences,
+          pattern_params
+        ].join("|")
       end
 
       def check(node)
@@ -22,6 +25,13 @@ module Scanny
             name = :[],
             receiver = Send<name = :params>
           >
+        EOT
+      end
+
+      # system("\033]30;command\007")
+      def pattern_terminal_escape_sequences
+        <<-EOT
+          StringLiteral<string *= /\\033\]30;.*\\007/>
         EOT
       end
     end
