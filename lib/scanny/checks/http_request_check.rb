@@ -4,6 +4,7 @@ module Scanny
       def pattern
         [
           pattern_net_http,
+          pattern_net_http_method,
           pattern_net_http_proxy
         ].join("|")
       end
@@ -26,6 +27,23 @@ module Scanny
             receiver = ScopedConstant<
               name = :HTTP,
               parent = ConstantAccess<name = :Net>
+            >,
+            name = :new
+          >
+        EOT
+      end
+
+      def pattern_net_http_method
+        <<-EOT
+          SendWithArguments<
+            receiver = ScopedConstant<
+              name = any,
+              parent = ScopedConstant<
+                name = :HTTP,
+                parent = ConstantAccess<
+                  name = :Net
+                >
+              >
             >,
             name = :new
           >
