@@ -6,10 +6,7 @@ module Scanny
       # Checks for use of dynamic strings in when creating an SQL query
       class StringInterpolationWithParamsCheck < SqlCheck
         def pattern
-          [
-            pattern_options_with_select_in_select,
-            pattern_params_in_select
-          ].join("|")
+          pattern_params_in_select
         end
 
         def check(node)
