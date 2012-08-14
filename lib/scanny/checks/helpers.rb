@@ -10,7 +10,7 @@ module Scanny
         <<-EOT
             SendWithArguments
             <
-              name = :system | :exec,
+              name = :system | :exec | :spawn,
               arguments = ActualArguments<
                 array = [
                   any*,
