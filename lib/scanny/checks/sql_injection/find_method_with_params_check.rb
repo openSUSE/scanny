@@ -29,6 +29,19 @@ module Scanny
                   SendWithArguments<
                     name = :[],
                     receiver = Send<name = :params>
+                  >
+                  |
+                  DynamicString<
+                    array = [
+                      any*,
+                      ToString<
+                        value = SendWithArguments<
+                          name = :[],
+                          receiver = Send<name = :params>
+                        >
+                      >,
+                      any*
+                  ]
                   >,
                   any*
                 ]
