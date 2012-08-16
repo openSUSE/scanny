@@ -1,9 +1,9 @@
 module Scanny
   module Checks
     module InsecureMethod
-      class DeserializeMethodCheck < Check
+      class MarshalCheck < Check
         def pattern
-          pattern_deserialize_call
+          pattern_load_call
         end
 
         def check(node)
@@ -16,12 +16,15 @@ module Scanny
           "Execute deserialize method can load to memory dangerous object"
         end
 
-        # deserialize()
-        def pattern_deserialize_call
+        # Marshal.load(object)
+        def pattern_load_call
           <<-EOT
-            SendWithArguments<name = :deserialize>
-            |
-            Send<name = :deserialize>
+            SendWithArguments<
+              name = :load | :restore,
+              receiver = ConstantAccess<
+                name = :Marshal
+              >
+            >
           EOT
         end
       end
