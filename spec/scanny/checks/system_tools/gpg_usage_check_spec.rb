@@ -12,12 +12,24 @@ module Scanny::Checks::SystemTools
       @runner.should check("GPG.method").with_issue(@issue)
     end
 
-    it "reports \"GPG.method\" correctly" do
+    it "reports \"Gpg.method\" correctly" do
       @runner.should check("Gpg.method").with_issue(@issue)
     end
 
-    it "reports \"GPG.method\" correctly" do
+    it "reports \"GpgKey.method\" correctly" do
       @runner.should check("GpgKey.method").with_issue(@issue)
+    end
+
+    it "reports \"GPGME.method\" correctly" do
+      @runner.should check("GPGME.method").with_issue(@issue)
+    end
+
+    it "reports \"Gpgr.method\" correctly" do
+      @runner.should check("Gpgr.method").with_issue(@issue)
+    end
+
+    it "reports \"RubyGpg.method\" correctly" do
+      @runner.should check("RubyGpg.method").with_issue(@issue)
     end
 
     it "reports \"system('gpg --example-flag')\" correctly" do
