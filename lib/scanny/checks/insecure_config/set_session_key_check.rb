@@ -14,6 +14,10 @@ module Scanny
       def check(node)
         issue :info, "Setting :session_key."
       end
+
+      def strict?
+        true
+      end
     end
   end
 end

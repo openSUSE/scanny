@@ -16,6 +16,10 @@ module Scanny
           "Setting :secret can indicate using hard-coded cryptographic key.",
           :cwe => 321
       end
+
+      def strict?
+        true
+      end
     end
   end
 end
