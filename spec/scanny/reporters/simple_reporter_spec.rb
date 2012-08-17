@@ -10,6 +10,7 @@ module Scanny
             nodes_inspected  = 10
 
             reporter = SimpleReporter.new
+            reporter.stub(:puts)
             reporter.file             = 'foo.rb'
             reporter.checks_performed = checks_performed
             reporter.nodes_inspected  = nodes_inspected
@@ -26,6 +27,7 @@ module Scanny
             nodes_inspected  = 10
 
             reporter = SimpleReporter.new
+            reporter.stub(:puts)
             reporter.file             = 'foo.rb'
             reporter.checks_performed = checks_performed
             reporter.nodes_inspected  = nodes_inspected
