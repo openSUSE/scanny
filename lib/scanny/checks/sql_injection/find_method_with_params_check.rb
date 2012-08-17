@@ -46,8 +46,7 @@ module Scanny
                   any*
                 ]
               >,
-              name = :execute | :find_by_sql | :paginate,
-              receiver = ConstantAccess
+              name = :execute | :find_by_sql | :paginate
             >
           EOT
         end
