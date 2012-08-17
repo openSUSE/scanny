@@ -74,5 +74,20 @@ module Scanny::Checks::Sql
       @runner.should  check('User.paginate "#{params[:password]}"').
                       with_issue(@issue_high)
     end
+
+    it "reports \"execute\" calls on object with string interpolation correctly" do
+      @runner.should  check('@object.execute "#{params[:password]}"').
+                      with_issue(@issue_high)
+    end
+
+    it "reports \"find_by_sql\" calls on object with string interpolation correctly" do
+      @runner.should  check('@object.find_by_sql "#{params[:password]}"').
+                      with_issue(@issue_high)
+    end
+
+    it "reports \"paginate\" calls on object with string interpolation correctly" do
+      @runner.should  check('@object.paginate "#{params[:password]}"').
+                      with_issue(@issue_high)
+    end
   end
 end
