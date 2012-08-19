@@ -1,4 +1,5 @@
 .rbenv-version
 Gemfile.lock
 *.rbc
+.rbx
 reports
