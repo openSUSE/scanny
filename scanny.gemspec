@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = "scanny"
-  s.version     = '0.0.1'
+  s.version     = '0.1.0'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Thomas Biege', 'Flavio Castelli', 'David Majda', 'Piotr Niełacny']
   s.email       = ['thomas@suse.de', 'fcastelli@novell.com', 'dmajda@suse.cz', 'piotr.nielacny@gmail.com']
