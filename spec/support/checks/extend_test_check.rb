@@ -4,7 +4,7 @@ module Scanny
 
     class MyCheck < ExtendCheck
       def pattern
-        ''
+        'NilClass'
       end
     end
   end
