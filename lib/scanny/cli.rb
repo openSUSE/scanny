@@ -15,7 +15,7 @@ module Scanny
 
       checks.each do |directory|
         Dir[directory + "/**/*.rb"].each do |file|
-          require file
+          require File.expand_path(file, Dir.pwd)
         end
       end
     end
