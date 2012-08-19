@@ -8,20 +8,18 @@ Scanny is a Ruby on Rails security scanner. It parses Ruby files, looks for vari
 Installation
 ------------
 
-You need to install [Rubinius](http://rubini.us/) first. You can then install Scanny:
+You need to install the current development version of [Rubinius](http://rubini.us/) first. You can then install Scanny:
 
-    $ git clone git://github.com/openSUSE/scanny.git
-
-The scanner is not available as a gem yet (this will come soon hopefully).
+    $ gem install scanny
 
 Usage
 -----
 
-To scan one or more Ruby file, use the `bin/scanny` command and pass the files to scan as arguments. Scanny will check the files and print a nice report:
+To scan one or more Ruby file, use the `scanny` command and pass the files to scan as arguments. Scanny will check the files and print a nice report:
 
     $ cat bad.rb
     `ls #{ARGV[1]}`
-    $ bin/scanny bad.rb
+    $ scanny bad.rb
     bad.rb [2 checks done | 2 nodes inspected | 1 issues]
       - [high] bad.rb:1: Backticks and %x{...} pass the executed command through shell expansion. (CWE-88, CWE-78)
 
@@ -173,6 +171,11 @@ Each check should be tested. The tests are written in RSpec and they are stored 
     end
 
 Aim to create as simple test cases as possible. Also test different kinds of issues separately. See the existing tests to learn how more complex checks are tested.
+
+Compatibility
+-------------
+
+Scanny requires Rubinius 1.9 mode to run.
 
 Acknowledgement
 ---------------
