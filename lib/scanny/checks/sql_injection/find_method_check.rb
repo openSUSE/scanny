@@ -59,7 +59,7 @@ module Scanny
             SendWithArguments<
               arguments = ActualArguments<
                 array = [
-                  any{1,},
+                  any+,
                   HashLiteral<
                     array = [
                       any{even},
