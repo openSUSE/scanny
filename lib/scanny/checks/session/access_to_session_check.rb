@@ -13,6 +13,10 @@ module Scanny
           issue :info, warning_message
         end
 
+        def strict?
+          true
+        end
+
         private
 
         def warning_message

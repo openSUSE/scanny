@@ -10,6 +10,10 @@ module Scanny
       def check(node)
         issue :info, "The \"protect_from_forgery\" method is used.", :cwe => 352
       end
+
+      def strict?
+        true
+      end
     end
   end
 end
