@@ -14,6 +14,10 @@ module Scanny
           issue :high, warning_message, :cwe => [88, 78]
         end
 
+        def strict?
+          true
+        end
+
         private
 
         def warning_message

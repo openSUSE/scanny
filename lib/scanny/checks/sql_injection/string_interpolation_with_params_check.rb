@@ -13,6 +13,10 @@ module Scanny
           issue :high, warning_message, :cwe => 89
         end
 
+        def strict?
+          true
+        end
+
         private
 
         # "SELECT params[:input] FROM users"

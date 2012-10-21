@@ -18,6 +18,10 @@ module Scanny
           issue :low, warning_message, :cwe => 89
         end
 
+        def strict?
+          true
+        end
+
         private
 
         # User.find_by_sql
